@@ -1,112 +1,123 @@
-*{
-    padding: 0px;
-    margin: 0px;
-    box-sizing: border-box;
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
 }
 
 @font-face {
-    font-family: figTree;
-    src: url(../Fonts/Figtree-VariableFont_wght.ttf);
-  }
-  @font-face {
-    font-family: montserrat;
-    src: url(../Fonts/Montserrat-VariableFont_wght.ttf);
-  }
+  font-family: figTree;
+  src: url(../Fonts/Figtree-VariableFont_wght.ttf);
+}
 
-body{
-    background-color: var(--backGround-blue);
+@font-face {
+  font-family: montserrat;
+  src: url(../Fonts/Montserrat-VariableFont_wght.ttf);
+}
+
+body {
+  background-color: var(--dark-background);
+}
+
+.button {
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 :root {
-    --backGround-blue: #08152A;
-    --dark-blue: #050D1A;
-    --text-white: #E4E7EB;
-    --button-green: #329A3C;
-    --light-blue: #108DDE;
-    --gray: #707070;
-    }
+  --dark-background: #08152A;
+  --dark-foreground: #050D1A;
+  --dark-text: #E4E7EB;
+  --hover-blue: rgb(4 70 141 / 0.20);
+  --active-blue:rgba(20, 113, 212, 0.2);
+  --button-green: #1b7524;
+  --accent-blue: #108DDE;
+  --gray: #707070;
+}
 
 
 
 /*SELECT COMPONANT*/
-.selectMenu-container{
+.selectMenu-container {
   position: relative;
   width: 100%;
 }
 
 
 .select-container {
-    display: grid;
-    grid-template-columns:30px auto 16px;
-    grid-column-gap: 5px;
-    background-color: var(--backGround-blue);
-    border-radius: 10px;
-    padding: 5px 10px;
-    cursor: pointer;
-    border: solid 1px transparent;
-    transition: border-color 0.2s;
-    font-family: figTree;
-    user-select: none;
+  display: grid;
+  grid-template-columns: 30px auto 16px;
+  grid-column-gap: 5px;
+  background-color: var(--backGround-blue);
+  border-radius: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+  border: solid 1px transparent;
+  transition: border-color 0.2s;
+  font-family: figTree;
+  user-select: none;
 }
 
-.select-container-active{
+.select-container-active {
   border: solid 1px var(--light-blue);
 }
 
 .select-icon {
-    align-self: center;
-    width: 30px;
-    height: 30px;
-    max-width: 30px;
-    max-height: 30px;
+  align-self: center;
+  width: 30px;
+  height: 30px;
+  max-width: 30px;
+  max-height: 30px;
 }
 
 .select-data-container {
-    max-width: 100%;
-    justify-self: start;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: var(--text-white);
+  max-width: 100%;
+  justify-self: start;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-white);
 }
 
 .select-title {
-    color: var(--text-white);
-    display: block;
-    font-size: 12px;
-    font-weight: 200;
-    cursor: pointer;
+  color: var(--text-white);
+  display: block;
+  font-size: 12px;
+  font-weight: 200;
+  cursor: pointer;
 }
 
 
 .select-selected-item {
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    white-space: nowrap;
-    
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+
 }
 
 .triangle {
-    align-self: center;
-    width: 0px;
-    height: 0px;
-    border-top: solid 8px var(--dark-blue);
-    border-left: solid 8px transparent;
-    border-right: solid 8px transparent;
-    border-bottom: solid 8px transparent;
-    box-sizing: content-box;
-    translate: 0px 5px;
-    transition: transform 0.2s, border-top 0.2s, translate 0.2s;
+  align-self: center;
+  width: 0px;
+  height: 0px;
+  border-top: solid 8px var(--dark-blue);
+  border-left: solid 8px transparent;
+  border-right: solid 8px transparent;
+  border-bottom: solid 8px transparent;
+  box-sizing: content-box;
+  translate: 0px 5px;
+  transition: transform 0.2s, border-top 0.2s, translate 0.2s;
 }
 
-.triangle-active{
+.triangle-active {
   transform: rotate(180deg);
   translate: 0px -5px;
   border-top: solid 8px var(--light-blue);
 }
 
 
-.options-container{
+.options-container {
   border: 1px solid var(--light-blue);
   border-radius: 10px;
   background-color: var(--backGround-blue);
@@ -115,20 +126,20 @@ body{
   width: 100%;
   opacity: 1;
   transform: scaleY(1);
-  transition: opacity 0.2s,transform 0.2s;
+  transition: opacity 0.2s, transform 0.2s;
   overflow: hidden;
   z-index: 2;
-  max-height:300px;
-   overflow-y: scroll;
+  max-height: 300px;
+  overflow-y: scroll;
 }
 
-.options-container-closed{
+.options-container-closed {
   opacity: 0;
   transform: scaleY(0);
-  transition: opacity 0.2s,transform 0.2s;
+  transition: opacity 0.2s, transform 0.2s;
 }
 
-.greenButton{
+.greenButton {
   background-color: var(--button-green);
   font-family: montserrat;
   font-weight: 400;
@@ -141,46 +152,48 @@ body{
   margin: 0px 0px;
   transition: background-color 0.2s;
 }
-.greenButton:hover{
+
+.greenButton:hover {
   background-color: #52c25b;
 }
-.greenButton:active{
+
+.greenButton:active {
   background-color: #208d27;
 }
 
-.hidden{
-    display: none;
+.hidden {
+  display: none;
 }
 
 
 .input-text {
-    background-color: var(--backGround-blue);
-    font-family: figTree;
-    color: var(--text-white);
-    outline: none;
-    border: none;
-    border-radius: 10px;
-    outline: solid 1px transparent;
-    transition: outline-color 0.3s, color 0.3s;
+  background-color: var(--backGround-blue);
+  font-family: figTree;
+  color: var(--text-white);
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  outline: solid 1px transparent;
+  transition: outline-color 0.3s, color 0.3s;
 }
-.input-text:focus{
-    outline-color: var(--light-blue);  
-    color: var(--text-white);
+
+.input-text:focus {
+  outline-color: var(--light-blue);
+  color: var(--text-white);
 }
 
 .textArea {
-    background-color: var(--backGround-blue);
-    font-family: figTree;
-    color: var(--text-white);
-    outline: none;
-    border: none;
-    border-radius: 10px;
-    outline: solid 1px transparent;
-    transition: outline-color 0.3s;
-    resize: none;
+  background-color: var(--backGround-blue);
+  font-family: figTree;
+  color: var(--text-white);
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  outline: solid 1px transparent;
+  transition: outline-color 0.3s;
+  resize: none;
 }
 
 .textArea:focus {
-    outline-color: var(--light-blue);
+  outline-color: var(--light-blue);
 }
-
