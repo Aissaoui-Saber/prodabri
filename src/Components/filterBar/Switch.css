@@ -1,0 +1,36 @@
+.switch-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    user-select: none;
+    margin: 5px 0px;
+}
+.switch-container div:active{
+    background-color: rgb(102, 143, 197);
+}
+.switch-container div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 50%;
+    border-radius: 10px;
+    padding: 5px 0px;
+    transition: background-color 0.4s;
+}
+.switch-container label{
+    font-family: figTree;
+    font-size: 12px;
+    color: var(--text-white);
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+}
+.switch-container img{
+    width: 30px;
+    margin: 0px 5px;
+}
+
+.selected-switch{
+    background-color: var(--backGround-blue);
+}

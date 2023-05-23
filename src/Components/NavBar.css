@@ -1,0 +1,123 @@
+.navBarContainer{
+    background-color: var(--dark-blue);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: #00000080 0px 3px 5px;
+}
+#left-block{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+#right-block{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 50px;
+}
+#account{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--text-white);
+    font-family: figtree;
+    font-size: 18px;
+    font-weight: 400;
+    padding: 7px;
+    border-radius: 15px;
+    user-select: none;
+    cursor: pointer;
+    margin-left: 15px;
+}
+#account:hover{
+    background-color: #c7c7c72c;
+}
+#account:active{
+    background-color: #c7c7c75b;
+}
+
+#account label{
+margin-left: 10px;
+cursor: pointer;
+}
+#account img{
+    width: 40px;
+    height: 40px;
+}
+
+.logo{
+    width: 150px;
+    margin: 0px 50px;
+    visibility: initial;
+}
+.pages{
+    font-family: figTree;
+    font-weight: 600;
+    color: var(--text-white);
+    cursor: pointer;
+    margin: 0px 10px;
+    user-select: none;
+    font-size: 20px;
+}
+    .pages a {
+        color: var(--text-white);
+        text-decoration: none;
+    }
+
+.pages:hover{
+    text-decoration: underline;
+}
+
+.pages:active{
+    text-decoration: underline;
+    color: darkgray;
+}
+
+
+
+
+.icon{
+    cursor:pointer;
+}
+
+.icon-container{
+    height: 30px;
+    width: 30px;
+    margin: 0px 12px;
+    user-select: none;
+    cursor: pointer;
+}
+.icon-container div{
+    background-color: #FF580E;
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    border-radius: 50%;
+    color: var(--text-white);
+    font-family: figtree;
+    font-size: 12px;
+    position: relative;
+    right: -20px;
+    bottom: -20px;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    justify-content: center;
+
+}
+.icon-container img{
+    width: 30px;
+    height: 30px;
+    position: fixed;
+}
+
+#search-icon{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    user-select: none;
+    margin: 0px 10px;
+}

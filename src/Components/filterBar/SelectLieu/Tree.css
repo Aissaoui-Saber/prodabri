@@ -1,0 +1,58 @@
+.tree-Container{
+    margin: 10px 0px 10px 20px;
+    display: grid;
+    grid-template-columns: 15px 20px auto;
+    align-items: center;
+    grid-row-gap: 5px;
+
+}
+
+.tree-triangle{
+    width: 0px;
+    height: 0px;
+    border-top: solid 8px transparent;
+    border-left: solid 8px var(--text-white);
+    border-right: solid 8px transparent;
+    border-bottom: solid 8px transparent;
+    box-sizing: content-box;
+    transform: rotate(0deg);
+    translate: 0px 0px;
+    transition: translate 0.2s,transform 0.2s;
+  }
+  .tree-triangle:hover{
+    border-left: solid 8px var(--light-blue);
+  }
+  
+  .tree-triangle-open{
+    transform: rotate(90deg);
+    translate: -5px 4px;
+    transition: transform 0.2s, translate 0.2s;
+  }
+
+.children-container{
+    display: flex;
+    grid-column-start: 3;
+    grid-column-end: 4;    
+    flex-direction: column;
+    gap: 5px;
+}
+.children-container-closed{
+    display: none;
+}
+.parent-container{
+    grid-column-start: 2;
+    grid-column-end: 4;
+}
+.line{
+    width: 2px;
+    height: 100%;
+    background-color: var(--gray);
+    grid-column-start: 2;
+    grid-column-end: 3;
+    justify-self: center;
+    align-self: center;
+}
+.line-hidden{
+    display: none;
+}
+
