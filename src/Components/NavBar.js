@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 
 function NavBar() {
     let navigate = useNavigate();
-    console.log("hello world");
     return <div className='navBarContainer'>
         <div id='left-block'>
             <img src={logo} alt='logo' className='logo' onClick={() =>navigate("/")}></img>
