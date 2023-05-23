@@ -251,7 +251,7 @@ let offre = {
 };
 
 function OffreCreation() {
-	const [currentStep, setCurrentStep] = useState(5);
+	const [currentStep, setCurrentStep] = useState(2);
 	document.title = "Publication d'offre";
 	let steps = [
 		"Secteur",

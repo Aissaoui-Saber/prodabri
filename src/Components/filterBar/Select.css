@@ -1,59 +1,194 @@
-.options-list{
-    list-style-type: none;
+/*SELECT COMPONANT*/
+.selectMenu-container {
+    position: relative;
+    width: 100%;
+}
+
+/*select*/
+.select {
+    display: grid;
+    grid-template-columns: 30px auto 16px;
+    grid-column-gap: 5px;
+    background-color: var(--dark-background);
+    border-radius: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border: solid 1px transparent;
+    transition: border-color 0.2s;
+    font-family: figTree;
+    user-select: none;
+}
+
+.select--active {
+    border: solid 1px var(--accent-blue);
+}
+
+.select__icon {
+    align-self: center;
+    width: 30px;
+    height: 30px;
+    max-width: 30px;
+    max-height: 30px;
+}
+
+.select__data {
+    max-width: 100%;
+    justify-self: start;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--dark-text);
+}
+
+.select__data__title {
+    display: block;
+    font-size: 12px;
+    font-weight: 200;
+    cursor: pointer;
+}
+
+
+.select__data__value {
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+
+}
+
+.select__triangle {
+    align-self: center;
+    width: 0px;
+    height: 0px;
+    border-top: solid 8px var(--dark-foreground);
+    border-left: solid 8px transparent;
+    border-right: solid 8px transparent;
+    border-bottom: solid 8px transparent;
+    box-sizing: content-box;
+    translate: 0px 5px;
+    transition: transform 0.2s, border-top 0.2s, translate 0.2s;
+}
+
+.select__triangle--active {
+    transform: rotate(180deg);
+    translate: 0px -5px;
+    border-top: solid 8px var(--accent-blue);
+}
+
+/*options*/
+.options {
+    border: 1px solid var(--accent-blue);
+    border-radius: 10px;
+    background-color: var(--dark-background);
+    position: absolute;
+    margin-top: 5px;
+    width: 100%;
+    opacity: 1;
+    transform: scaleY(1);
+    transition: opacity 0.2s, transform 0.2s;
+    overflow: hidden;
+    z-index: 2;
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+.options--closed {
+    opacity: 0;
+    transform: scaleY(0);
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+/*TRI*/
+
+.options__tri {
+    display: grid;
+    grid-template-columns: 15% auto;
     font-family: Figtree;
     font-weight: 500;
     font-size: 18px;
-    color: var(--text-white);
+    color: var(--dark-text);
 }
 
-.options-list-item{
-    padding: 5px 0px 5px 50px;
+.options__tri__item {
+    justify-self: left;
+    grid-column-start: 2;
     cursor: default;
     user-select: none;
     transition: background-color 0.2s;
+    width: 100%;
+    padding: 6px 0px;
 }
 
-.options-list-item:hover{
-    background-color: #7a7a7a5d;
-    transition: background-color 0.2s;
+.options__tri__item:hover {
+    background-color: var(--hover-blue);
 }
 
 
+/*secteurs + demande types + countries*/
 
-.sector-list-item {
-    display: flex;
-    flex-direction: row;
-    list-style-type: none;
+.options__sectors,
+.options__demandeType,
+.options__countries {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.options__sectors__item,
+.options__demandeType__item,
+.options__countries__item {
+    display: grid;
+    grid-template-columns: 15% auto;
     font-family: Figtree;
     font-weight: 500;
     font-size: 14px;
     color: var(--text-white);
     align-items: center;
-    justify-content: left;
     user-select: none;
     cursor: default;
-    padding: 5px 0px 5px 20px;
+    padding: 5px 0px;
+    align-items: center;
 }
 
-    .sector-list-item:hover {
-        background-color: rgba(53, 96, 102, 0.205);
-    }
+.options__sectors__item:hover,
+.options__demandeType__item:hover,
+.options__countries__item:hover {
+    background-color: var(--hover-blue);
+}
 
-    .sector-list-item img {
-        width: 30px;
-    }
+.options__sectors__item__icon,
+.options__demandeType__item__icon,
+.options__countries__item__icon {
+    justify-self: center;
+    width: 30px;
+}
 
-    .sector-list-item li {
-        margin-left: 10px;
-    }
+.options__sectors__item__name,
+.options__demandeType__item__name,
+.options__countries__item__name {
+    font-family: Figtree;
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--dark-text);
+    justify-self: left;
+}
 
-.sector-name {
+.options__sectors__groupName {
     list-style-type: none;
     font-family: montserrat;
-    font-weight: 500;
+    font-weight: 700;
+    letter-spacing: 3px;
     font-size: 12px;
-    color: var(--light-blue);
+    color: var(--accent-blue);
     text-align: center;
     cursor: default;
     user-select: none;
+    margin-top: 10px;
+}
+
+.options__sectors__groupName::after {
+    content: "";
+    background-color: var(--accent-blue);
+    display: inline-block;
+    width: 90%;
+    height: 1px;
+    margin: 0px 5px;
 }

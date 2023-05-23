@@ -3,50 +3,51 @@ import './Select.css';
 //import '../../Assets/Styles/global_Style.css';
 import { useState, useEffect, useRef } from 'react';
 
-function SortOptions({ optionsData , handleItemSelect}) {
-    return <ul className='options-list'>
+function SortOptions({ optionsData, handleItemSelect }) {
+    return <div className='options__tri'>
         {optionsData.options.map(option => {
-            return <li className='options-list-item' key={option.id} data={option.id} onClick={handleItemSelect}>{option.text}</li>;
-        })}
-    </ul>;
+            return <label className='options__tri__item' data={option.id} onClick={handleItemSelect}>{option.text}</label>;
+        })}</div>;
 }
 
 function CountriesOptions({ optionsData, handleItemSelect }) {
-    return <ul>
+    return <div className='options__countries'>
         {
             optionsData.options.map(country => {
-                return <div onClick={handleItemSelect} data={country.id} key={"div" + country.id} className='sector-list-item'><img key={"i" + country.id} src={country.icon} alt='icon secteur'></img><li key={country.id} data={country.id} >{country.text}</li></div>;
+                return <div className='options__countries__item' onClick={handleItemSelect} data={country.id}><img className='options__countries__item__icon' onClick={handleItemSelect} data={country.id} src={country.icon} alt='flag'></img><label className='options__countries__item__name' data={country.id} onClick={handleItemSelect}>{country.text}</label></div>;
             })
-        }</ul>;
+        }</div>;
 }
 
 function SecteursOptions({ optionsData, handleItemSelect }) {
-    return <ul>
+    return <div className='options__sectors'>
         {optionsData.options.map(option => {
             if (option.id === 0) {
-                return <div key={"div" + option.id} className='sector-list-item'><img key={"i" + option.id} src={option.icon} alt='icon secteur'></img><li key={option.id} data={option.id} onClick={handleItemSelect}>{option.text}</li></div>;
+                return <div className='options__sectors__item' data={option.id} onClick={handleItemSelect}><img className="options__sectors__item__icon" src={option.icon} alt='secteur'></img><label className="options__sectors__item__name" data={option.id} onClick={handleItemSelect}>{option.text}</label></div>;
             } else {
                 return <>
-                    <h2 key={option.secteurName} className='sector-name'>{option.secteurName}</h2>
+                    <h2 className='options__sectors__groupName'>{option.secteurName}</h2>
                     {option.branches.map(branche => {
-                        return <div key={"div" + branche.id} className='sector-list-item'><img key={"i" + branche.id} src={branche.icon} alt='icon secteur'></img><li key={branche.id} data={branche.id} onClick={handleItemSelect}>{branche.text}</li></div>;
+                        return <div className='options__sectors__item'  data={branche.id} onClick={handleItemSelect}><img className='options__sectors__item__icon' onClick={handleItemSelect} data={branche.id} src={branche.icon} alt='secteur'></img><label className='options__sectors__item__name' data={branche.id} onClick={handleItemSelect}>{branche.text}</label></div>;
                     })}
                 </>
             }
 
         })}
-    </ul>
+    </div>
 }
 
 function TypeOptions({ optionsData, handleItemSelect }) {
-    return optionsData.options.map(option => {
-            return <div key={"div" + option.id} className='sector-list-item'><img key={"i" + option.id} src={option.icon} alt='icon secteur'></img><li key={option.id} data={option.id} onClick={handleItemSelect}>{option.text}</li></div>;
-        });
+    return <div className='options__demandeType'>{
+        optionsData.options.map(option => {
+            return <div className='options__demandeType__item' data={option.id} onClick={handleItemSelect}><img className='options__demandeType__item__icon' src={option.icon} alt='type de demande' data={option.id} onClick={handleItemSelect}></img><label className='options__demandeType__item__name' data={option.id} onClick={handleItemSelect}>{option.text}</label></div>;
+        })}
+    </div>
 }
 
 
 function Select({ data, optionsType }) {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
     const [selectedItem, setSelectedItem] = useState(data.defaultOption);
 
     function selectItem(event) {
@@ -56,30 +57,30 @@ function Select({ data, optionsType }) {
         setIsOpen(false);
     }
 
-    const refOne = useRef(null);
-    const refTwo = useRef(null);
+    const optionsRef = useRef(null);
+    const selectRef = useRef(null);
     useEffect(() => {
-        document.addEventListener("click", handleOutsideClick,false);
+        document.addEventListener("click", handleOutsideClick, false);
     }, []);
     const handleOutsideClick = (e) => {
-        if (refOne.current !== null) {
-            if (!refOne.current.contains(e.target)) {
-                if (!refTwo.current.contains(e.target)) {
+        if (optionsRef.current !== null) {
+            if (!optionsRef.current.contains(e.target)) {
+                if (!selectRef.current.contains(e.target)) {
                     setIsOpen(false);
                 }
             }
-		}
+        }
     }
     return <div className='selectMenu-container'>
-        <div className={isOpen ? "select-container select-container-active" : "select-container"} onClick={() => setIsOpen(!isOpen)} ref={refTwo}>
-            <img className='select-icon' src={data.getOption(selectedItem).icon} alt={data.title}></img>
-            <div className="select-data-container">
-                <label className='select-title'>{data.title}</label>
-                <label className='select-selected-item'>{data.getOption(selectedItem).text}</label>
+        <div className={isOpen ? "select select--active" : "select"} onClick={() => setIsOpen(!isOpen)} ref={selectRef}>
+            <img className='select__icon' src={data.getOption(selectedItem).icon} alt={data.title}></img>
+            <div className="select__data">
+                <label className='select__data__title'>{data.title}</label>
+                <label className='select__data__value'>{data.getOption(selectedItem).text}</label>
             </div>
-            <div className={isOpen ? "triangle triangle-active" : "triangle"}></div>
+            <div className={isOpen ? "select__triangle select__triangle--active" : "select__triangle"}></div>
         </div>
-        <div className={isOpen ? "options-container" : "options-container options-container-closed"} ref={refOne}>
+        <div className={isOpen ? "options" : "options options--closed"} ref={optionsRef}>
             {(() => {
                 switch (optionsType) {
                     case 'tri':
@@ -87,7 +88,7 @@ function Select({ data, optionsType }) {
                     case 'secteurs':
                         return <SecteursOptions optionsData={data} handleItemSelect={selectItem} />;
                     case 'type':
-                        return <ul><TypeOptions optionsData={data} handleItemSelect={selectItem} /></ul>;
+                        return <TypeOptions optionsData={data} handleItemSelect={selectItem} />;
                     case 'countries':
                         return <CountriesOptions optionsData={data} handleItemSelect={selectItem} />;
                     default:
