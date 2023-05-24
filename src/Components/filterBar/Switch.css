@@ -1,36 +1,47 @@
-.switch-container{
+.switch {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
     user-select: none;
-    margin: 5px 0px;
+    gap: 5px;
 }
-.switch-container div:active{
-    background-color: rgb(102, 143, 197);
-}
-.switch-container div{
+
+.switch__element,
+.switch__element--checked {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    gap: 5px;
     cursor: pointer;
     width: 50%;
     border-radius: 10px;
     padding: 5px 0px;
-    transition: background-color 0.4s;
+    transition: background-color 0.3s, border-color 0.3s;
 }
-.switch-container label{
+
+.switch__element {
+    border-color: transparent;
+}
+
+.switch__element--checked {
+    background-color: var(--dark-background);
+}
+
+.switch__element:hover {
+    background-color: rgba(0, 215, 223, 0.075);
+}
+.switch__element:active{
+    background-color: var(--accent-blue);
+}
+.switch__element__name {
     font-family: figTree;
-    font-size: 12px;
-    color: var(--text-white);
+    font-size: 14px;
+    color: var(--dark-text);
     font-weight: 600;
     cursor: pointer;
     text-align: center;
-}
-.switch-container img{
-    width: 30px;
-    margin: 0px 5px;
+    width: 60%;
 }
 
-.selected-switch{
-    background-color: var(--backGround-blue);
+.switch__element__icon {
+    width: 30px;
 }

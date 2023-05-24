@@ -47,7 +47,7 @@ function TypeOptions({ optionsData, handleItemSelect }) {
 
 
 function Select({ data, optionsType }) {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState(data.defaultOption);
 
     function selectItem(event) {
