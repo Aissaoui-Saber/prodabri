@@ -1,4 +1,4 @@
-.container{
+.filterBar{
     width: 350px;
     max-width: 350px;
     min-width: 350px;
@@ -7,36 +7,33 @@
     border-radius: 15px;
     background-color: var(--dark-foreground);
     box-shadow: rgba(0, 0, 0, 0.473) 0px 3px 6px;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 5px;
 }
 
-hr{
+.filterBar__line{
     width: 70%;
-    margin: 10px auto;
-    border-top: solid var(--gray) 1px;
+    margin: 2px auto;
+    border-top: solid var(--dark-background) 1px;
     border-left: solid transparent 1px;
     border-right: solid transparent 1px;
-    border-bottom: solid transparent 1px;
+    border-bottom: solid var(--dark-background) 1px;
 }
 
 
-.container input[type="button"]{
+.filterBar__rechercher{
     background-color: var(--button-green);
     font-family: montserrat;
     font-weight: 400;
-    border: none;
-    outline: none;
     color: var(--dark-text);
     padding: 10px 30px;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    display: block;
-    margin: auto;
+    width: fit-content;
+    justify-self: center;
   }
-  .container input[type="button"]:hover{
-    background-color: #52c25b;
+  .filterBar__rechercher:hover{
+    background-color: #0d9418;
   }
-  .container input[type="button"]:active{
-    background-color: #208d27;
+  .filterBar__rechercher:active{
+    background-color: #0f5513;
   }

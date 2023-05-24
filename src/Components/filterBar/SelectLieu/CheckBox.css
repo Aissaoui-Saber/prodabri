@@ -1,21 +1,22 @@
-.checkbox-icon{
-    width: 20px;
-    cursor: pointer;
-    margin-right: 5px;
-    user-select: none;
-  }
+.checkbox {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  align-items: center;
+  user-select: none;
+  gap: 5px;
+}
 
-  .checkbox{
-    display: flex;
-    justify-content: left;
-    flex-direction: row;
-    align-items: center;
-    user-select: none;
-  }
-  .checkbox-label{
-    font-family: figTree;
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--text-white);
-    user-select: none;
-  }
+.checkbox__icon {
+  width: 20px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox__label {
+  font-family: figTree;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--dark-text);
+  user-select: none;
+}

@@ -382,28 +382,29 @@ function FilterBar({filterType}){
 
     };
 
-    let offreFiltre = <div className="container">
+    let offreFiltre = <div className="filterBar">
         <Select data={offresFilterData.tri} optionsType="tri" />
         <Switch data={offresFilterData.affichage} isBinary={true}></Switch>
-        <hr></hr>
-        <SelectLieu data={offresFilterData.lieux_De_Production} handleCitiesChecks={offresFilterData.lieux_De_Production.handleChanges} title="Lieux de production"></SelectLieu>
-        <SelectLieu data={offresFilterData.lieux_De_Vente} handleCitiesChecks={offresFilterData.lieux_De_Vente.handleChanges} title="Lieux de vente" ></SelectLieu>
-        <SelectLieu data={offresFilterData.lieux_De_Livraison} handleCitiesChecks={offresFilterData.lieux_De_Livraison.handleChanges} title="Lieux de livraison"></SelectLieu>
+        <hr className="filterBar__line"></hr>
+        <SelectLieu data={offresFilterData.lieux_De_Production} handleCitiesChecks={offresFilterData.lieux_De_Production.handleChanges} title="Lieux de production" readOnly={false}></SelectLieu>
+        <SelectLieu data={offresFilterData.lieux_De_Vente} handleCitiesChecks={offresFilterData.lieux_De_Vente.handleChanges} title="Lieux de vente" readOnly={false}></SelectLieu>
+        <SelectLieu data={offresFilterData.lieux_De_Livraison} handleCitiesChecks={offresFilterData.lieux_De_Livraison.handleChanges} title="Lieux de livraison" readOnly={false}></SelectLieu>
         <Select data={offresFilterData.secteurs} optionsType="secteurs"></Select>
         <Switch data={offresFilterData.type} isBinary={false}></Switch>
-        <hr></hr>
+        <hr className="filterBar__line"></hr>
         <Switch data={offresFilterData.origine} isBinary={false}></Switch>
-        <hr></hr>
+        <hr className="filterBar__line"></hr>
         <Switch data={offresFilterData.durabilite} isBinary={false}></Switch>
-        <input type="button" value="Rechercher (18)" className="greenButton"></input>
+        <hr className="filterBar__line"></hr>
+        <input type="button" value="Rechercher (18)" className="button filterBar__rechercher"></input>
     </div>;
-    let demandeFilter = <div className="container">
+    let demandeFilter = <div className="filterBar">
         <Select data={demandesFilterData.tri} optionsType="tri"></Select>
         <Switch data={demandesFilterData.affichage} isBinary={true}></Switch>
-        <hr></hr>
+        <hr className="filterBar__line"></hr>
         <SelectLieu data={demandesFilterData.lieux_De_demande} handleCitiesChecks={demandesFilterData.lieux_De_demande.handleChanges} title="Lieux de la demande"></SelectLieu>
         <Select data={demandesFilterData.type} optionsType="type"></Select>
-        <input type="button" value="Rechercher (18)" className="greenButton"></input>
+        <input type="button" value="Rechercher (18)" className="button filterBar__rechercher"></input>
     </div>;
 
     return filterType === "demandes" ? demandeFilter : offreFiltre;

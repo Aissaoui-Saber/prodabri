@@ -97,6 +97,14 @@
     transition: opacity 0.2s, transform 0.2s;
 }
 
+/*trees*/
+.options__trees{
+    margin: 10px 0px;
+    display: grid;
+    grid-template-columns: 15% auto;
+    row-gap: 10px;
+}
+
 /*TRI*/
 
 .options__tri {
@@ -108,7 +116,7 @@
     color: var(--dark-text);
 }
 
-.options__tri__item {
+.options__tri__item{
     justify-self: left;
     grid-column-start: 2;
     cursor: default;

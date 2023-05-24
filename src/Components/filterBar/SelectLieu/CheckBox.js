@@ -16,8 +16,8 @@ function CheckBox({id, label, isChecked, handleChanges, labelOnClick}){
         setChecked(isChecked);
       }, [isChecked]);
     return <div className="checkbox" data={id}>
-        <img data={id} src={checked ? checkedBox : uncheckedBox} alt="checkBox" className="checkbox-icon" onClick={check}></img>
-        <label className='checkbox-label' data={id} onClick={labelOnClick}>{label}</label>
+        <img data={id} src={checked ? checkedBox : uncheckedBox} alt="checkBox" className="checkbox__icon" onClick={check}></img>
+        <label className='checkbox__label' data={id} onClick={labelOnClick}>{label}</label>
     </div>
 }
 
