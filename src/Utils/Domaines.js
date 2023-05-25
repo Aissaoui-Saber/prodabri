@@ -2,11 +2,11 @@
 const domaines_fr = [
     {
         id: 0,
-        name: "Droit & législation"
+        name: "Droit & lÃ©gislation"
     },
     {
         id: 1,
-        name: "Gestion financière & Comptabilité"
+        name: "Gestion financiÃ¨re & ComptabilitÃ©"
     },
     {
         id: 2,
@@ -14,7 +14,7 @@ const domaines_fr = [
     },
     {
         id: 3,
-        name: "Marketing & Publicité"
+        name: "Marketing & PublicitÃ©"
     },
     {
         id: 4,
@@ -22,7 +22,7 @@ const domaines_fr = [
     },
     {
         id: 5,
-        name: "Santé, Hygiène & Sécurité"
+        name: "SantÃ©, HygiÃ¨ne & SÃ©curitÃ©"
     },
     {
         id: 6,

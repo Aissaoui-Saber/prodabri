@@ -34,47 +34,47 @@ function AnnonceOffre({ data }) {
 			</div>
 			<img className='annonce__header__favorite' src={data.favorite ? favoriteChecked : favoriteUnchecked} alt='favorite'></img>
 		</div>
-		<div className='annonce__body offre__body'>
-			<img className="offre__image" src={productImage} alt='product'></img>
-			<div className='offre__info'>
-				<label className='offre__info__brand'>{data.brand_name}</label>
-				<label className='offre__info__title'>{data.title}</label>
-				<p className='offre__info__description--image'>{data.description}</p>
-				<div className="offre__info__lieux">
+		<div className='annonce__body'>
+			<img className="annonce__image" src={productImage} alt='product'></img>
+			<div className='annonce__info'>
+				<label className='annonce__info__brand'>{data.brand_name}</label>
+				<label className='annonce__info__title'>{data.title}</label>
+				<p className='annonce__info__description--image'>{data.description}</p>
+				<div className="annonce__info__lieux">
 					<SelectLieux title="Lieux de productions" value={47} data={data.lieux_de_production} readOnly={true}></SelectLieux>
 					<SelectLieux title="Lieux de vente" value={565} data={data.lieux_de_production} readOnly={true}></SelectLieux>
 					<SelectLieux title="Lieux de livraison" value={1541} data={data.lieux_de_production} readOnly={true}></SelectLieux>
 				</div>
-				<div className="offre__info__tiles">
-					<div className="offre__info__tiles__tile">
-						<img className="offre__info__tiles__tile__icon" src={data.origin === "DZ" ? algerien : etranger} alt="origine de produit"></img>
-						<label className="offre__info__tiles__tile__text">{data.origin === "DZ" ? "Produit Algérien" : "Produit étranger"}</label>
+				<div className="annonce__info__tiles">
+					<div className="annonce__info__tiles__tile">
+						<img className="annonce__info__tiles__tile__icon" src={data.origin === "DZ" ? algerien : etranger} alt="origine de produit"></img>
+						<label className="annonce__info__tiles__tile__text">{data.origin === "DZ" ? "Produit Algérien" : "Produit étranger"}</label>
 					</div>
-					<div className='offre__info__tiles__tile'>
-						<img className="offre__info__tiles__tile__icon" src={secteurs.getSecteur(data.secteur).fr.icon} alt="secteur d'activité"></img>
-						<label className="offre__info__tiles__tile__text">{secteurs.getSecteur(data.secteur).fr.text}</label>
+					<div className='annonce__info__tiles__tile'>
+						<img className="annonce__info__tiles__tile__icon" src={secteurs.getSecteur(data.secteur).fr.icon} alt="secteur d'activité"></img>
+						<label className="annonce__info__tiles__tile__text">{secteurs.getSecteur(data.secteur).fr.text}</label>
 					</div>
 					{(() => {
 						let m = [];
 						if (data.type === "CP") {
-							m.push(<div className='offre__info__tiles__tile'>
-								<img className="offre__info__tiles__tile__icon" src={consomation} alt="type de produit"></img>
-								<label className="offre__info__tiles__tile__text">Bien de consomation</label>
+							m.push(<div className='annonce__info__tiles__tile'>
+								<img className="annonce__info__tiles__tile__icon" src={consomation} alt="type de produit"></img>
+								<label className="annonce__info__tiles__tile__text">Bien de consomation</label>
 							</div>);
-							m.push(<div className='offre__info__tiles__tile'>
-							<img className="offre__info__tiles__tile__icon" src={production} alt="type de produit"></img>
-							<label className="offre__info__tiles__tile__text">Bien de production</label>
+							m.push(<div className='annonce__info__tiles__tile'>
+							<img className="annonce__info__tiles__tile__icon" src={production} alt="type de produit"></img>
+							<label className="annonce__info__tiles__tile__text">Bien de production</label>
 						</div>);
 						} else {
 							if (data.type === 'C'){
-								m.push(<div className='offre__info__tiles__tile'>
-								<img className="offre__info__tiles__tile__icon" src={consomation} alt="type de produit"></img>
-								<label className="offre__info__tiles__tile__text">Bien de consomation</label>
+								m.push(<div className='annonce__info__tiles__tile'>
+								<img className="annonce__info__tiles__tile__icon" src={consomation} alt="type de produit"></img>
+								<label className="annonce__info__tiles__tile__text">Bien de consomation</label>
 							</div>);
 							}else{
-								m.push(<div className='offre__info__tiles__tile'>
-								<img className="offre__info__tiles__tile__icon" src={production} alt="type de produit"></img>
-								<label className="offre__info__tiles__tile__text">Bien de production</label>
+								m.push(<div className='annonce__info__tiles__tile'>
+								<img className="annonce__info__tiles__tile__icon" src={production} alt="type de produit"></img>
+								<label className="annonce__info__tiles__tile__text">Bien de production</label>
 							</div>);
 							}
 						}
@@ -83,9 +83,9 @@ function AnnonceOffre({ data }) {
 						}));
 					})()}
 
-					<div className='offre__info__tiles__tile'>
-						<img className="offre__info__tiles__tile__icon" src={data.durabilite === "D" ? durable : nonDurable} alt="durabilité de produit"></img>
-						<label className="offre__info__tiles__tile__text">{data.durabilite === "D" ? "Durable" : "Non durable"}</label>
+					<div className='annonce__info__tiles__tile'>
+						<img className="annonce__info__tiles__tile__icon" src={data.durabilite === "D" ? durable : nonDurable} alt="durabilité de produit"></img>
+						<label className="annonce__info__tiles__tile__text">{data.durabilite === "D" ? "Durable" : "Non durable"}</label>
 					</div>
 				</div>
 			</div>

@@ -45,22 +45,22 @@ const secteurs_FR = [
             {
                 id: 1,
                 icon: agriculture,
-                text: "Agriculture, �levage des animaux"
+                text: "Agriculture, élevage des animaux"
             },
             {
                 id: 2,
                 icon: matiers,
-                text: "Mati�res premi�res (M�tal, Plastique, Bois, Papier, � etc.)"
+                text: "Matières premières (Métal, Plastique, Bois, Papier, ... etc.)"
             },
             {
                 id: 3,
                 icon: mine,
-                text: "Extraction (Forage, Mines, carri�re, � etc.)"
+                text: "Extraction (Forage, Mines, carrière, ... etc.)"
                 },
             {
                 id: 4,
                 icon: pecherie,
-                text: "P�cherie et exploitation maritime"
+                text: "Pècherie et exploitation maritime"
             },
         ]
 },
@@ -75,12 +75,12 @@ const secteurs_FR = [
             {
                 id: 6,
                 icon: btp,
-                text: "B�timents et travaux publics (BTP)"
+                text: "Bàtiments et travaux publics (BTP)"
             },
             {
                 id: 7,
                 icon: electronics,
-                text: "Industrie �lectronique"
+                text: "Industrie électronique"
             },
             {
                 id: 8,
@@ -100,7 +100,7 @@ const secteurs_FR = [
             {
                 id: 11,
                 icon: papetiere,
-                text: "Industrie papeti�re"
+                text: "Industrie papetière"
             },
             {
                 id: 12,
@@ -120,17 +120,17 @@ const secteurs_FR = [
             {
                 id: 15,
                 icon: metal,
-                text: "Industrie m�tallurgie"
+                text: "Industrie métallurgie"
             },
             {
                 id: 16,
                 icon: equipments,
-                text: "�quipements"
+                text: "Équipements"
             },
             {
                 id: 17,
                 icon: electromenager,
-                text: "Industrie �lectrom�nager"
+                text: "Industrie électroménager"
             },
         ]
     },
@@ -145,7 +145,7 @@ const secteurs_FR = [
             {
                 id: 19,
                 icon: serviceAlaPersonne,
-                text: "Service � la personne"
+                text: "Service à la personne"
             },
             {
                 id: 20,
@@ -160,7 +160,7 @@ const secteurs_FR = [
             {
                 id: 22,
                 icon: restauration,
-                text: "H�bergement et restauration"
+                text: "Hébergement et restauration"
             },
             {
                 id: 23,
@@ -188,12 +188,12 @@ const secteurs_AR = [
             {
                 id: 3,
                 icon: mine,
-                text: "Extraction (Forage, Mines, carri�re, � etc.)"
+                text: "Extraction (Forage, Mines, carrière,... etc.)"
             },
             {
                 id: 4,
                 icon: pecherie,
-                text: "P�cherie et exploitation maritime"
+                text: "Pècherie et exploitation maritime"
             },
         ]
     },
@@ -208,12 +208,12 @@ const secteurs_AR = [
             {
                 id: 6,
                 icon: btp,
-                text: "B�timents et travaux publics (BTP)"
+                text: "Bàtiments et travaux publics (BTP)"
             },
             {
                 id: 7,
                 icon: electronics,
-                text: "Industrie �lectronique"
+                text: "Industrie électronique"
             },
             {
                 id: 8,
@@ -233,7 +233,7 @@ const secteurs_AR = [
             {
                 id: 11,
                 icon: papetiere,
-                text: "Industrie papeti�re"
+                text: "Industrie papetière"
             },
             {
                 id: 12,
@@ -253,17 +253,17 @@ const secteurs_AR = [
             {
                 id: 15,
                 icon: metal,
-                text: "Industrie m�tallurgie"
+                text: "Industrie métallurgie"
             },
             {
                 id: 16,
                 icon: equipments,
-                text: "�quipements"
+                text: "Équipements"
             },
             {
                 id: 17,
                 icon: electromenager,
-                text: "Industrie �lectrom�nager"
+                text: "Industrie électroménager"
             },
         ]
     },
@@ -278,7 +278,7 @@ const secteurs_AR = [
             {
                 id: 19,
                 icon: serviceAlaPersonne,
-                text: "Service � la personne"
+                text: "Service à la personne"
             },
             {
                 id: 20,
@@ -293,7 +293,7 @@ const secteurs_AR = [
             {
                 id: 22,
                 icon: restauration,
-                text: "H�bergement et restauration"
+                text: "Hébergement et restauration"
             },
             {
                 id: 23,

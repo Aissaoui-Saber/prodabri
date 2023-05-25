@@ -12,7 +12,7 @@ const Types = [
     {
         id: 2,
         icon: produit,
-        text: "Produit & Matière"
+        text: "Produit & MatiÃ¨re"
     },
     {
         id: 3,

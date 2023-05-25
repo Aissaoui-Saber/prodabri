@@ -22,6 +22,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: 5px;
 }
 
 .annonce__header__creator__image {
@@ -62,7 +63,7 @@
     column-gap: 10px;
 }
 
-.offre__body {
+.annonce__body {
     grid-template-columns: 1fr 2fr;
     grid-template-rows: 1fr;
 }
@@ -72,7 +73,7 @@
     grid-template-rows: 1fr 2fr;
 }
 
-.offre__image {
+.annonce__image {
     width: 320px;
     height: 320px;
     border-radius: 10px;
@@ -81,53 +82,54 @@
 
 }
 
-.offre__info__brand {
+.annonce__info__brand {
     color: var(--accent-blue);
     font-weight: 700;
     display: block;
     font-family: figTree;
 }
 
-.offre__info__title {
+.annonce__info__title {
     font-size: 26px;
     font-weight: 700;
     color: var(--dark-text);
     font-family: figTree;
 }
 
-.offre__info__description--image {
+.annonce__info__description--image {
     height: 4.8em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: figTree;
+    color: var(--dark-text);
+    margin-bottom: 10px;
+}
+
+.annonce__info__description {
+    height: 320px;
+    max-height: 320px;
     overflow: hidden;
     text-overflow: ellipsis;
     font-family: figTree;
     color: var(--dark-text);
 }
 
-.description-without-image {
-    height: 320px;
-    max-height: 320px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    grid-row-start: 1;
-    grid-row-end: 3;
-}
 
-
-.offre__info__lieux {
+.annonce__info__lieux {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-column-gap: 5px;
-    margin: 5px 0px;
+    margin: 10px 0px 5px 0px;
 }
 
-.offre__info__tiles {
+.annonce__info__tiles {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 5px;
 
 }
 
-.offre__info__tiles__tile {
+.annonce__info__tiles__tile {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -135,16 +137,23 @@
     padding: 5px 10px;
 }
 
-.offre__info__tiles__tile__icon{
+.annonce__info__tiles__tile__icon {
     width: 30px;
     margin-right: 5px;
 }
-
-.offre__info__tiles__tile__text {
+.annonce__info__tiles__tile__data__title{
     font-family: figTree;
     color: var(--dark-text);
     font-size: 14px;
+    font-weight: 200;
+}
+.annonce__info__tiles__tile__text,
+.annonce__info__tiles__tile__data__value {
+    font-family: figTree;
+    color: var(--dark-text);
+    font-size: 16px;
     font-weight: 700;
+    width: 80%;
 }
 
 .annonce__footer {
@@ -179,7 +188,7 @@
     margin-left: 6px;
 }
 
-.annonce__footer__stats__comments{
+.annonce__footer__stats__comments {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -197,19 +206,19 @@
     justify-self: right;
 }
 
-.dommaines-container {
+.annonce__info__dommaines {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
 
-.dommaines-container label {
-    background-color: var(--backGround-blue);
+.annonce__info__dommaines__domaine {
+    background-color: var(--dark-background);
     border: solid 1px white;
     text-align: center;
     border-radius: 10px;
     padding: 5px 20px;
-    color: var(--text-white);
+    color: var(--dark-text);
     font-family: Figtree;
     font-size: 14px;
     font-weight: 500;

@@ -19,87 +19,50 @@ import SelectLieu from '../filterBar/SelectLieu/SelectLieu';
 
 
 function AnnonceDemande({ data }) {
-	return <div className='annonce-container'>
-		<div className='top'>
-			<div className='creation-container'>
-				<img src={creatorImage} alt="profile du cr�ateur"></img>
-				<label className='creator-username'>{data.creation.creator_name}</label>
-				<label className='creation-date'>{data.creation.creation_date}</label>
+	return <div className='annonce'>
+		<div className='annonce__header'>
+			<div className='annonce__header__creator'>
+				<img className='annonce__header__creator__image' src={creatorImage} alt="profile du créateur"></img>
+				<label className='annonce__header__creator__username'>{data.creation.creator_name}</label>
+				<label className='annonce__header__creator__date'>{data.creation.creation_date}</label>
 			</div>
-			<img src={data.favorite ? favoriteChecked : favoriteUnchecked} alt='favorite' className='favorite-button'></img>
+			<img src={data.favorite ? favoriteChecked : favoriteUnchecked} alt='favorite' className='annonce__header__favorite'></img>
 		</div>
-		{data.image !== null ?
-			<div className='middle demmande-middle-template'>
-				<img className="annonce-image" src={data.image} alt='product'></img>
-				<div className='top-info-container'>
-					<p className='description-with-image'>{data.description}</p>
-				</div>
-				<div className='bottom-info-container'>
-					<div className='annonce-other-info-container'>
-						<div className="info">
-							<img src={Demande.getType(data.type).icon} alt="origine de produit"></img>
-							<div>
-								<label className="info-title">Type de demande</label><br />
-								<label className="info-data">{Demande.getType(data.type).text}</label>
-							</div>
+		<div className='annonce__body'>
+			{data?.image ? <img className="annonce__image" src={data.image} alt='product'></img> : <p className='annonce__info__description'>{data.description}</p>}
+			<div className='annonce__info'>
+				{!data?.image ? "" : <p className='annonce__info__description--image'>{data.description}</p>}
+				<div className='annonce__info__tiles'>
+					<div className="annonce__info__tiles__tile">
+						<img className='annonce__info__tiles__tile__icon' src={Demande.getType(data.type).icon} alt="origine de produit"></img>
+						<div className='annonce__info__tiles__tile__data'>
+							<label className="annonce__info__tiles__tile__data__title">Type de demande</label><br />
+							<label className="annonce__info__tiles__tile__data__value">{Demande.getType(data.type).text}</label>
 						</div>
-						<div className='info'>
-							<img src={comments} alt="secteur d'activit�"></img>
-							<div>
-								<label className="info-title">Commentaires</label><br />
-								<label className="info-data">{data.comments}</label>
-							</div>
+					</div>
+					<div className='annonce__info__tiles__tile'>
+						<img className='annonce__info__tiles__tile__icon' src={comments} alt="secteur d'activité"></img>
+						<div>
+							<label className="annonce__info__tiles__tile__data__title">Commentaires</label><br />
+							<label className="annonce__info__tiles__tile__data__value">{data.comments}</label>
 						</div>
-						<SelectLieu title="Lieux de la demande" totalCities={1} data={data.lieux_de_demande}></SelectLieu>
 					</div>
-					<label className="info-title">Domaine d'expertise</label><br />
-					<div className="dommaines-container">
-						{
-							data.domaines.map(element => {
-								return <label>{domaines.getDomaine(element).name}</label>
-							})
-						}
-					</div>
+					<SelectLieu title="Lieux de la demande" totalCities={1} data={data.lieux_de_demande} readOnly={true}></SelectLieu>
 				</div>
-			</div> ://without image
-			<div className='middle demmande-middle-template'>
-				<p className='description-without-image'>{data.description}</p>
-				<div className='top-info-container'>
-					<div className='annonce-other-info-container'>
-						<div className="info">
-							<img src={Demande.getType(data.type).icon} alt="origine de produit"></img>
-							<div>
-								<label className="info-title">Type de demande</label><br />
-								<label className="info-data">{Demande.getType(data.type).text}</label>
-							</div>
-						</div>
-						<div className='info'>
-							<img src={comments} alt="secteur d'activit�"></img>
-							<div>
-								<label className="info-title">Commentaires</label><br />
-								<label className="info-data">{data.comments}</label>
-							</div>
-						</div>
-						<SelectLieu title="Lieux de la demande" totalCities={1} data={data.lieux_de_demande}></SelectLieu>
-					</div>
+				<label className="annonce__info__tiles__tile__data__title">Domaine d'expertise</label><br />
+				<div className="annonce__info__dommaines">
+					{
+						data.domaines.map(element => {
+							return <label className="annonce__info__dommaines__domaine">{domaines.getDomaine(element).name}</label>})
+					}
 				</div>
-				<div className='bottom-info-container'>
-					<label className="info-title">Domaine d'expertise</label><br />
-					<div className="dommaines-container">
-						{
-							data.domaines.map(element => {
-								return <label>{domaines.getDomaine(element).name}</label>
-							})
-						}
-					</div>
-				</div>
-			</div>}
-		<hr />
-
-		<div className='bottom'>
-			<div className='stat-container'>
 			</div>
-			<img src={arrow} alt='arrow' className='details-arrow'></img>
+		</div>
+
+		<div className='annonce__footer'>
+			<div className='annonce__footer__stats'>
+			</div>
+			<img src={arrow} alt='arrow' className='annonce__footer__arrow'></img>
 		</div>
 	</div>
 }
