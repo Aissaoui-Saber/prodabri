@@ -20,17 +20,9 @@
 
 
 .filterBar__rechercher{
-    background-color: var(--button-green);
     font-family: montserrat;
     font-weight: 400;
-    color: var(--dark-text);
     padding: 10px 30px;
     width: fit-content;
     justify-self: center;
-  }
-  .filterBar__rechercher:hover{
-    background-color: #0d9418;
-  }
-  .filterBar__rechercher:active{
-    background-color: #0f5513;
   }

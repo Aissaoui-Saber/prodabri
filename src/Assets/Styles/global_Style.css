@@ -26,6 +26,16 @@ body {
   transition: background-color 0.2s;
 }
 
+.button--green{
+  color: var(--dark-text);
+  background-color: var(--button-green);
+}
+.button--green:hover{
+  background-color: var(--button-green-hover);
+}
+.button--green:active{
+  background-color: var(--button-green-active);
+}
 :root {
   --dark-background: #08152A;
   --dark-foreground: #050D1A;
@@ -33,6 +43,8 @@ body {
   --hover-blue: rgb(4 70 141 / 0.20);
   --active-blue:rgba(20, 113, 212, 0.2);
   --button-green: #1b7524;
+  --button-green-hover: #0d9418;
+  --button-green-active: #0f5513;
   --accent-blue: #108DDE;
   --gray: #707070;
 }

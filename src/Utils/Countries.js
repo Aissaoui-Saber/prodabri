@@ -17,7 +17,7 @@ const fr = [
     },
     {
         "id": 3,
-        "text": "Algérie",
+        "text": "AlgÃ©rie",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/7/77/Flag_of_Algeria.svg"
     },
     {
@@ -52,7 +52,7 @@ const fr = [
     },
     {
         "id": 10,
-        "text": "Arménie",
+        "text": "ArmÃ©nie",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Flag_of_Armenia.svg"
     },
     {
@@ -72,7 +72,7 @@ const fr = [
     },
     {
         "id": 14,
-        "text": "Azerbaïdjan",
+        "text": "AzerbaÃ¯djan",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Flag_of_Azerbaijan.svg"
     },
     {
@@ -82,7 +82,7 @@ const fr = [
     },
     {
         "id": 16,
-        "text": "Bahreïn",
+        "text": "BahreÃ¯n",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Flag_of_Bahrain.svg"
     },
     {
@@ -107,7 +107,7 @@ const fr = [
     },
     {
         "id": 21,
-        "text": "Bénin",
+        "text": "BÃ©nin",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/0/0a/Flag_of_Benin.svg"
     },
     {
@@ -122,7 +122,7 @@ const fr = [
     },
     {
         "id": 24,
-        "text": "Biélorussie",
+        "text": "BiÃ©lorussie",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/8/85/Flag_of_Belarus.svg"
     },
     {
@@ -137,7 +137,7 @@ const fr = [
     },
     {
         "id": 27,
-        "text": "Bosnie-Herzégovine",
+        "text": "Bosnie-HerzÃ©govine",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/b/bf/Flag_of_Bosnia_and_Herzegovina.svg"
     },
     {
@@ -147,7 +147,7 @@ const fr = [
     },
     {
         "id": 29,
-        "text": "Brésil",
+        "text": "BrÃ©sil",
         "icon": "https://upload.wikimedia.org/wikipedia/en/0/05/Flag_of_Brazil.svg"
     },
     {
@@ -222,17 +222,17 @@ const fr = [
     },
     {
         "id": 44,
-        "text": "Congo (Rép. dém.)",
+        "text": "Congo (RÃ©p. dÃ©m.)",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Flag_of_the_Democratic_Republic_of_the_Congo.svg"
     },
     {
         "id": 45,
-        "text": "Corée du Nord",
+        "text": "CorÃ©e du Nord",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/5/51/Flag_of_North_Korea.svg"
     },
     {
         "id": 46,
-        "text": "Corée du Sud",
+        "text": "CorÃ©e du Sud",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg"
     },
     {
@@ -242,7 +242,7 @@ const fr = [
     },
     {
         "id": 48,
-        "text": "Côte dIvoire",
+        "text": "CÃ´te dIvoire",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_C%C3%B4te_d%27Ivoire.svg"
     },
     {
@@ -257,7 +257,7 @@ const fr = [
     },
     {
         "id": 51,
-        "text": "Curaçao",
+        "text": "CuraÃ§ao",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Flag_of_Cura%C3%A7ao.svg"
     },
     {
@@ -292,7 +292,7 @@ const fr = [
     },
     {
         "id": 58,
-        "text": "Erythrée",
+        "text": "ErythrÃ©e",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/2/29/Flag_of_Eritrea.svg"
     },
     {
@@ -347,7 +347,7 @@ const fr = [
     },
     {
         "id": 69,
-        "text": "Géorgie",
+        "text": "GÃ©orgie",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Flag_of_Georgia.svg"
     },
     {
@@ -362,7 +362,7 @@ const fr = [
     },
     {
         "id": 72,
-        "text": "Grèce",
+        "text": "GrÃ¨ce",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_Greece.svg"
     },
     {
@@ -387,17 +387,17 @@ const fr = [
     },
     {
         "id": 77,
-        "text": "Guinée",
+        "text": "GuinÃ©e",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Flag_of_Guinea.svg"
     },
     {
         "id": 78,
-        "text": "Guinée-Bissau",
+        "text": "GuinÃ©e-Bissau",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_Guinea-Bissau.svg"
     },
     {
         "id": 79,
-        "text": "Guinée-Équatoriale",
+        "text": "GuinÃ©e-Ã‰quatoriale",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/3/31/Flag_of_Equatorial_Guinea.svg"
     },
     {
@@ -407,7 +407,7 @@ const fr = [
     },
     {
         "id": 81,
-        "text": "Haïti",
+        "text": "HaÃ¯ti",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/5/56/Flag_of_Haiti.svg"
     },
     {
@@ -427,7 +427,7 @@ const fr = [
     },
     {
         "id": 85,
-        "text": "Île de Man",
+        "text": "ÃŽle de Man",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_the_Isle_of_Man.svg"
     },
     {
@@ -437,37 +437,37 @@ const fr = [
     },
     {
         "id": 87,
-        "text": "Îles Caïmans",
+        "text": "ÃŽles CaÃ¯mans",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Flag_of_the_Cayman_Islands.svg"
     },
     {
         "id": 88,
-        "text": "Îles Féroé",
+        "text": "ÃŽles FÃ©roÃ©",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/3/3c/Flag_of_the_Faroe_Islands.svg"
     },
     {
         "id": 89,
-        "text": "Îles Mariannes du Nord",
+        "text": "ÃŽles Mariannes du Nord",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Flag_of_the_Northern_Mariana_Islands.svg"
     },
     {
         "id": 90,
-        "text": "Îles Marshall",
+        "text": "ÃŽles Marshall",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/2/2e/Flag_of_the_Marshall_Islands.svg"
     },
     {
         "id": 91,
-        "text": "Îles Salomon",
+        "text": "ÃŽles Salomon",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/7/74/Flag_of_the_Solomon_Islands.svg"
     },
     {
         "id": 92,
-        "text": "Îles Turques-et-Caïques",
+        "text": "ÃŽles Turques-et-CaÃ¯ques",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Flag_of_the_Turks_and_Caicos_Islands.svg"
     },
     {
         "id": 93,
-        "text": "Îles Vierges britanniques",
+        "text": "ÃŽles Vierges britanniques",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/4/42/Flag_of_the_British_Virgin_Islands.svg"
     },
     {
@@ -477,7 +477,7 @@ const fr = [
     },
     {
         "id": 95,
-        "text": "Indonésie",
+        "text": "IndonÃ©sie",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Flag_of_Indonesia.svg"
     },
     {
@@ -507,7 +507,7 @@ const fr = [
     },
     {
         "id": 101,
-        "text": "Jamaïque",
+        "text": "JamaÃ¯que",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/0/0a/Flag_of_Jamaica.svg"
     },
     {
@@ -547,7 +547,7 @@ const fr = [
     },
     {
         "id": 109,
-        "text": "Koweït",
+        "text": "KoweÃ¯t",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Flag_of_Kuwait.svg"
     },
     {
@@ -602,7 +602,7 @@ const fr = [
     },
     {
         "id": 120,
-        "text": "Macédoine du Nord",
+        "text": "MacÃ©doine du Nord",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/7/79/Flag_of_North_Macedonia.svg"
     },
     {
@@ -652,7 +652,7 @@ const fr = [
     },
     {
         "id": 130,
-        "text": "Micronésie",
+        "text": "MicronÃ©sie",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Flag_of_the_Federated_States_of_Micronesia.svg"
     },
     {
@@ -672,7 +672,7 @@ const fr = [
     },
     {
         "id": 134,
-        "text": "Monténégro",
+        "text": "MontÃ©nÃ©gro",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/6/64/Flag_of_Montenegro.svg"
     },
     {
@@ -692,7 +692,7 @@ const fr = [
     },
     {
         "id": 138,
-        "text": "Népal",
+        "text": "NÃ©pal",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Flag_of_Nepal.svg"
     },
     {
@@ -707,17 +707,17 @@ const fr = [
     },
     {
         "id": 141,
-        "text": "Nigéria",
+        "text": "NigÃ©ria",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/7/79/Flag_of_Nigeria.svg"
     },
     {
         "id": 142,
-        "text": "Norvège",
+        "text": "NorvÃ¨ge",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Norway.svg"
     },
     {
         "id": 143,
-        "text": "Nouvelle-Zélande",
+        "text": "Nouvelle-ZÃ©lande",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Flag_of_New_Zealand.svg"
     },
     {
@@ -727,7 +727,7 @@ const fr = [
     },
     {
         "id": 145,
-        "text": "Ouzbékistan",
+        "text": "OuzbÃ©kistan",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/8/84/Flag_of_Uzbekistan.svg"
     },
     {
@@ -752,7 +752,7 @@ const fr = [
     },
     {
         "id": 150,
-        "text": "Papouasie-Nouvelle-Guinée",
+        "text": "Papouasie-Nouvelle-GuinÃ©e",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/e/e3/Flag_of_Papua_New_Guinea.svg"
     },
     {
@@ -767,7 +767,7 @@ const fr = [
     },
     {
         "id": 153,
-        "text": "Pérou",
+        "text": "PÃ©rou",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Peru.svg"
     },
     {
@@ -797,22 +797,22 @@ const fr = [
     },
     {
         "id": 159,
-        "text": "Québec",
+        "text": "QuÃ©bec",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Flag_of_Quebec.svg"
     },
     {
         "id": 160,
-        "text": "République centrafricaine",
+        "text": "RÃ©publique centrafricaine",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Flag_of_the_Central_African_Republic.svg"
     },
     {
         "id": 161,
-        "text": "République dominicaine",
+        "text": "RÃ©publique dominicaine",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Flag_of_the_Dominican_Republic.svg"
     },
     {
         "id": 162,
-        "text": "République tchèque",
+        "text": "RÃ©publique tchÃ¨que",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_Czech_Republic.svg"
     },
     {
@@ -837,12 +837,12 @@ const fr = [
     },
     {
         "id": 167,
-        "text": "Saint Martin (partie néerlandaise)",
+        "text": "Saint Martin (partie nÃ©erlandaise)",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/d/d3/Flag_of_Sint_Maarten.svg"
     },
     {
         "id": 168,
-        "text": "Saint-Christophe-et-Niévès",
+        "text": "Saint-Christophe-et-NiÃ©vÃ¨s",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Saint_Kitts_and_Nevis.svg"
     },
     {
@@ -852,7 +852,7 @@ const fr = [
     },
     {
         "id": 170,
-        "text": "Saint-Martin (partie française)",
+        "text": "Saint-Martin (partie franÃ§aise)",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/2/20/Flag_of_the_Netherlands.svg"
     },
     {
@@ -877,17 +877,17 @@ const fr = [
     },
     {
         "id": 175,
-        "text": "Samoa américaines",
+        "text": "Samoa amÃ©ricaines",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/8/87/Flag_of_American_Samoa.svg"
     },
     {
         "id": 176,
-        "text": "Sao Tomé-et-Principe",
+        "text": "Sao TomÃ©-et-Principe",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/0/0a/Flag_of_S%C3%A3o_Tom%C3%A9_and_Pr%C3%ADncipe.svg"
     },
     {
         "id": 177,
-        "text": "Sénégal",
+        "text": "SÃ©nÃ©gal",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/f/fd/Flag_of_Senegal.svg"
     },
     {
@@ -917,7 +917,7 @@ const fr = [
     },
     {
         "id": 183,
-        "text": "Slovénie",
+        "text": "SlovÃ©nie",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Flag_of_Slovenia.svg"
     },
     {
@@ -942,7 +942,7 @@ const fr = [
     },
     {
         "id": 188,
-        "text": "Suède",
+        "text": "SuÃ¨de",
         "icon": "https://upload.wikimedia.org/wikipedia/en/4/4c/Flag_of_Sweden.svg"
     },
     {
@@ -967,7 +967,7 @@ const fr = [
     },
     {
         "id": 193,
-        "text": "Taïwan",
+        "text": "TaÃ¯wan",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/7/72/Flag_of_the_Republic_of_China.svg"
     },
     {
@@ -987,7 +987,7 @@ const fr = [
     },
     {
         "id": 197,
-        "text": "Thaïlande",
+        "text": "ThaÃ¯lande",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Flag_of_Thailand.svg"
     },
     {
@@ -1007,7 +1007,7 @@ const fr = [
     },
     {
         "id": 201,
-        "text": "Trinité et Tobago",
+        "text": "TrinitÃ© et Tobago",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/6/64/Flag_of_Trinidad_and_Tobago.svg"
     },
     {
@@ -1017,7 +1017,7 @@ const fr = [
     },
     {
         "id": 203,
-        "text": "Turkménistan",
+        "text": "TurkmÃ©nistan",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Flag_of_Turkmenistan.svg"
     },
     {
@@ -1062,12 +1062,12 @@ const fr = [
     },
     {
         "id": 212,
-        "text": "Viêt Nam",
+        "text": "ViÃªt Nam",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Vietnam.svg"
     },
     {
         "id": 213,
-        "text": "Yémen",
+        "text": "YÃ©men",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/8/89/Flag_of_Yemen.svg"
     },
     {
@@ -1078,11 +1078,6 @@ const fr = [
     {
         "id": 215,
         "text": "Zimbabwe",
-        "icon": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Flag_of_Zimbabwe.svg"
-    },
-    {
-        "id": 216,
-        "text": "Zimbabw fejjoi feoijfz fjezoif oiezjf oijezf ijezif zie jfiezj jfezj e",
         "icon": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Flag_of_Zimbabwe.svg"
     }
 ];

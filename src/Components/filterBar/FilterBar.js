@@ -396,7 +396,7 @@ function FilterBar({filterType}){
         <hr className="filterBar__line"></hr>
         <Switch data={offresFilterData.durabilite} isBinary={false}></Switch>
         <hr className="filterBar__line"></hr>
-        <input type="button" value="Rechercher (18)" className="button filterBar__rechercher"></input>
+        <input type="button" value="Rechercher (18)" className="button button--green filterBar__rechercher"></input>
     </div>;
     let demandeFilter = <div className="filterBar">
         <Select data={demandesFilterData.tri} optionsType="tri"></Select>

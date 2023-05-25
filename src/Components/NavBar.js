@@ -13,7 +13,7 @@ function NavBar() {
             <label className='navbar__pages__page' onClick={() => navigate("/Demandes")}>Demandes</label>
             <label className='navbar__pages__page'>Aide</label>
         </div>
-        <input className='navbar__publish button' type='button' value='PUBLIER' onClick={() => navigate("/Publication")}></input>
+        <input className='navbar__publish button button--green' type='button' value='PUBLIER' onClick={() => navigate("/Publication")}></input>
         <div className='navbar__search'></div>
         <div className='navbar__notifications'></div>
         <div className='navbar__messages'></div>

@@ -38,19 +38,9 @@
 /*publish button*/
 .navbar__publish{
     padding: 10px 15px;
-    background-color: var(--button-green);
-    color: var(--dark-text);
     font-family: montserrat;
     font-weight: 400;
     letter-spacing: 2px;
-    transition: scale 0.2s;
-}
-.navbar__publish:hover{
-    background-color: green;
-}
-.navbar__publish:active{
-    background-color: darkgreen;
-    scale: 0.98;
 }
 
 /*search, notification, messages icons*/

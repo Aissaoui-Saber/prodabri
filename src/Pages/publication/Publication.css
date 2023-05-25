@@ -61,7 +61,7 @@
 	margin: auto;
 }
 
-.stepBar__names__name{
+.stepBar__names__name {
 	width: 12.5%;
 	text-align: center;
 	font-family: Figtree;
@@ -93,38 +93,107 @@
 	font-family: figTree;
 }
 
-.step__line{
+.step__line {
 	width: 70%;
-    margin: 10px auto;
-    border-top: solid var(--dark-background) 1px;
-    border-left: solid transparent 1px;
-    border-right: solid transparent 1px;
-    border-bottom: solid var(--dark-background) 1px;
+	margin: 10px auto;
+	border-top: solid var(--dark-background) 1px;
+	border-left: solid transparent 1px;
+	border-right: solid transparent 1px;
+	border-bottom: solid var(--dark-background) 1px;
 }
 
-.step__input__text{
-    font-size: 22px;
-    padding: 8px 14px;
+.step__input__text {
+	font-size: 22px;
+	padding: 8px 14px;
+	background-color: var(--dark-background);
+	color: var(--dark-text);
+}
+
+.step__input__text:focus {
+	outline-color: var(--accent-blue);
+}
+
+
+.buttons {
+	width: 30%;
+	margin: 20px auto 0px auto;
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+}
+
+
+
+.buttons__next{
+	padding: 10px;
+	font-family: montserrat;
+	font-size: 16px;
+}
+
+.buttons__previous{
+	font-family: montserrat;
+	color: var(--dark-text);
+	font-weight: 400;
+	cursor: pointer;
+	transition: color 0.3s;
+}
+.buttons__previous:hover{
+	color: var(--accent-blue);
+}
+
+
+.step__option{
+	display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
     background-color: var(--dark-background);
-    color: var(--dark-text);
+    border-radius: 10px;
+    padding: 10px;
+    user-select: none;
+    cursor: pointer;
+    border: solid 2px transparent;
+    transition: scale 0.2s, border-color 0.5s, background-color 0.3s;
+}
+.step__option:hover{
+	background-color: rgb(4 70 141 / 0.20);
+    scale: 1.015;
+}
+.step__option--selected{
+	border-color: var(--accent-blue);
+    background-color: rgb(4 70 141 / 0.40);
 }
 
-.step__input__text:focus{
-    outline-color: var(--accent-blue);
+.step__option__icon{
+	width: 50px;
+}
+
+.step__option__info__title{
+	color: var(--dark-text);
+	font-family: figTree;
+}
+
+.step__option__info__description{
+	color: var(--gray);
+	font-family: figTree;
 }
 
 
 
+.step__origine__option-etranger{
+	display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+    border-radius: 10px;
+    padding: 10px;
+    user-select: none;
+    cursor: pointer;
+    border: solid 2px var(--accent-blue);
+    transition: scale 0.2s, border-color 0.5s, background-color 0.3s;
+    background-color: rgb(4 70 141 / 0.40);
 
-
-
-
-
-
-
-
-
-
+}
 
 
 

@@ -4,16 +4,15 @@ import '../Publication.css';
 import StepBar from '../../../Components/StepBar';
 
 import Secteurs from './Secteurs';
+import Type from './Type';
+import Origine from './Origine';
+import Durabilite from './Durabilite';
+
 import functions from '../../../Utils/Functions';
 import { useState, useRef, useEffect } from 'react';
-import production from '../../../Assets/images/icons/filterBar/production.png';
-import consomation from '../../../Assets/images/icons/filterBar/consomation.png';
-import algerien from '../../../Assets/images/icons/filterBar/algerien.png';
+
 import etranger from '../../../Assets/images/icons/filterBar/etranger.png';
-import Select from '../../../Components/filterBar/Select';
 import countries from '../../../Utils/Countries';
-import durable from '../../../Assets/images/icons/filterBar/durable.png';
-import nonDurable from '../../../Assets/images/icons/filterBar/non-durable.png';
 import remove from '../../../Assets/images/delete.png';
 import SelectLieu from '../../../Components/filterBar/SelectLieu/SelectLieu';
 import pin from '../../../Assets/images/icons/filterBar/placeholder.png';
@@ -132,7 +131,7 @@ let offre = {
 			},
 			lieux: [
 				{
-					commune: { id: 220, name: "Commune 2", wilaya: "Adrar", wilayaNumber:1 },
+					commune: { id: 220, name: "Commune 2", wilaya: "Adrar", wilayaNumber: 1 },
 					points: [
 						[
 							27.864565,
@@ -265,10 +264,10 @@ function OffreCreation() {
 		"Récapitulatif"
 	];
 
-	
+
 
 	function nextStep() {
-		setCurrentStep(currentStep+1);
+		setCurrentStep(currentStep + 1);
 		/*switch (currentStep) {
 			case 0:
 				if (offre.secteur.new != undefined) {
@@ -326,165 +325,37 @@ function OffreCreation() {
 		<NavBar></NavBar>
 		<div className="creation-body-container">
 			<StepBar data={steps} currStep={currentStep} />
-				{(() => {
-					switch (currentStep) {
-						case 0:
-							return <Secteurs handleChanges={handleSecteurStepChanges} data={offre.secteur} />
-							break;
-						case 1:
-							return <Type handleChanges={handleTypeStepChanges} data={offre.type} />
-							break;
-						case 2:
-							return <Origine handleChanges={handleOrigineStepChanges} data={offre.origine} />
-							break;
-						case 3:
-							return <Durabilite data={offre.durabilite} />
-							break;
-						case 4:
-							return <Details data={offre.details}/>
-							break;
-						case 5:
-							return <Localisations data={offre.localisations} />
-							break;
-						case 6:
-							return <></>
-							break;
-						case 7:
-							return <></>
-							break;
-					}
-				})()}
-			<div style={{ width: 100 + "%", textAlign: "center", marginTop: "20px" }}><input type="button" className="greenButton" value={currentStep === steps.length - 1 ? "PUBLIER" : "POURSUIVRE"} onClick={() => nextStep()}></input></div>
-			
+			{(() => {
+				switch (currentStep) {
+					case 0:
+						return <Secteurs handleChanges={handleSecteurStepChanges} data={offre.secteur} />
+					case 1:
+						return <Type handleChanges={handleTypeStepChanges} data={offre.type} />
+					case 2:
+						return <Origine handleChanges={handleOrigineStepChanges} data={offre.origine} />
+					case 3:
+						return <Durabilite data={offre.durabilite} />
+					case 4:
+						return <Details data={offre.details} />
+					case 5:
+						return <Localisations data={offre.localisations} />
+					case 6:
+						return <></>
+					case 7:
+						return <></>
+				}
+			})()}
+			<div className='buttons'>
+				{currentStep > 0 ? <label className='buttons__previous' onClick={() => setCurrentStep(currentStep - 1)}>RETOUR</label> : ""}
+				<input type="button" className="button button--green buttons__next" value={currentStep === steps.length - 1 ? "PUBLIER" : "POURSUIVRE"} onClick={() => nextStep()}></input>
+			</div>
+
 		</div>
 	</>
 
 };
 
 
-function Type({ data, handleChanges }) {
-	const [selectedType, setSelectedType] = useState(data);
-
-	function selectType(type) {
-		if (type === 'C') {
-			if (selectedType === 'P') {
-				handleChanges('CP');
-				setSelectedType('CP');
-			} else if (selectedType === undefined) {
-				handleChanges('C');
-				setSelectedType('C');
-			} else if (selectedType === 'CP') {
-				handleChanges('P');
-				setSelectedType('P');
-			} else {
-				handleChanges(undefined);
-				setSelectedType(undefined);
-			}
-		} else {
-			if (selectedType === 'C') {
-				handleChanges('CP');
-				setSelectedType('CP');
-			} else if (selectedType === undefined) {
-				handleChanges('P');
-				setSelectedType('P');
-			} else if (selectedType === 'CP') {
-				handleChanges('C');
-				setSelectedType('C');
-			} else {
-				handleChanges(undefined);
-				setSelectedType(undefined);
-			}
-		}
-	}
-
-	return <div className="step-inner-container">
-		<h1>S�lectionner le type de votre produit ou service</h1>
-		<div className={selectedType === 'C' || selectedType === 'CP'? "branche-container selected-branche" : "branche-container"} onClick={() => selectType('C')}>
-			<img src={consomation} alt="consomation" />
-			<div>
-				<h2>Bien de consomation</h2>
-				<p>Le bien de consommation est celui qui peut �tre utilis� et connsom� tel quel.</p>
-			</div>
-		</div>
-		<br />
-		<div className={selectedType === 'P' || selectedType === 'CP' ? "branche-container selected-branche" : "branche-container"} onClick={() => selectType('P')}>
-			<img src={production} alt="production" />
-			<div>
-				<h2>Bien de production</h2>
-				<p>Le bien de production est celui qui permet d'obtenir un autre bien et qui rentre dans la production d'autre biens.</p>
-			</div>
-		</div>
-	</div>
-}
-
-function Origine({ data }) {
-	const [selectedOrigine, setSelectedOrigine] = useState(data);
-
-	function selectOrigine(origine) {
-		if (origine === 'DZ') {
-			offre.origine.pays.selectedItem = -1;
-		}
-		offre.origine.origine = origine;
-		setSelectedOrigine(origine);
-	}
-
-	return <div className="step-inner-container">
-		<h1>S�lectionner l'origine de votre produit ou service</h1>
-		<div className={selectedOrigine === 'DZ' ? "branche-container selected-branche" : "branche-container"} onClick={() => selectOrigine('DZ')}>
-			<img src={algerien} alt="algerie" />
-			<div>
-				<h2>Produit Alg�rien</h2>
-				<p>Le bien est fabriqu� et fournit en Alg�rie</p>
-			</div>
-		</div>
-		<br />
-		<div className={selectedOrigine === 'ETR' ? "branche-container selected-branche" : "branche-container"} onClick={() => selectOrigine('ETR')}>
-			<img src={etranger} alt="etranger" />
-			<div style={{ width: "100%", justifySelf: "start" }}>
-				<h2>Produit �tranger</h2>
-				<p>Le bien est fabriqu� ou fournit depuis �tranger</p>
-			</div>
-			{
-				selectedOrigine === 'ETR' ? <Select data={offre.origine.pays} optionsType="countries"  /> : ""
-			}
-			
-		</div>
-		
-	</div>
-}
-
-function Durabilite({ data}) {
-	const [selectedDurabilite, setSelectedDurabilite] = useState(data);
-
-	function selectDurabilite(durabilite) {
-		if (durabilite === selectedDurabilite) {
-			offre.durabilite = undefined;
-			setSelectedDurabilite(undefined);
-		} else {
-			offre.durabilite = durabilite;
-			setSelectedDurabilite(durabilite);
-		}
-	}
-
-	return <div className="step-inner-container">
-		<h1>Quel est la dur� d'utilisation de votre produit ou service</h1>
-		<div className={selectedDurabilite === 'D' ? "branche-container selected-branche" : "branche-container"} onClick={() => selectDurabilite('D')}>
-			<img src={durable} alt="consomation" />
-			<div>
-				<h2>Bien durable</h2>
-				<p>Le bien peut �tre utilis� de nombreuses fois</p>
-			</div>
-		</div>
-		<br />
-		<div className={selectedDurabilite === 'ND' ? "branche-container selected-branche" : "branche-container"} onClick={() => selectDurabilite('ND')}>
-			<img src={nonDurable} alt="production" />
-			<div>
-				<h2>Bien non durable</h2>
-				<p>Le bien est d�truit par le premier usage.</p>
-			</div>
-		</div>
-	</div>
-}
 
 function Details({ data }) {
 	const [nom, setNom] = useState(data.nom === undefined ? "" : data.nom);
@@ -592,12 +463,12 @@ function Details({ data }) {
 	return <div className="step-inner-container">
 		<h1>D�tails sur le bien</h1>
 		<div className="coordinates-container">
-			<input type="text" placeholder="Nom" className="input-text" onChange={handleInputTextChange} value={nom} onBlur={handleInputBlur} data="input-nom"/>
+			<input type="text" placeholder="Nom" className="input-text" onChange={handleInputTextChange} value={nom} onBlur={handleInputBlur} data="input-nom" />
 			<input type="text" placeholder="Marque (optionel)" className="input-text" onChange={handleInputTextChange} value={brand} onBlur={handleInputBlur} data="input-brand" />
 		</div>
 		<br />
-		<textarea rows="12" className="textArea" placeholder="Description" data="input-description" onChange={handleInputTextChange} value={description} onBlur={handleInputBlur}/>
-		<hr/>
+		<textarea rows="12" className="textArea" placeholder="Description" data="input-description" onChange={handleInputTextChange} value={description} onBlur={handleInputBlur} />
+		<hr />
 		<h1>Liens externes</h1>
 		<div className="links-container">
 			{
@@ -614,9 +485,9 @@ function Details({ data }) {
 		<div className="new-link-container">
 			<input ref={linkUrlRef} type="text" placeholder="https://www.example.net" className="input-text" data="input-link-url" value={linkURL} onPaste={handleInputTextChange} onChange={handleInputTextChange}></input>
 			<input ref={linkTitleRef} type="text" placeholder="Titre" className="input-text" data="input-link-title" value={linkTitle} onChange={handleInputTextChange}></input>
-			<label onClick={()=>addNewLink()}>Ajouter</label>
+			<label onClick={() => addNewLink()}>Ajouter</label>
 		</div>
-		<hr/>
+		<hr />
 		<h1>Coordonn�es de contacte</h1>
 		<div className="coordinates-container">
 			<input type="text" placeholder="Email" className={emailClassName} data="input-email" value={email} onChange={handleInputTextChange} onBlur={handleInputBlur}></input>
@@ -638,7 +509,7 @@ function Localisations({ data }) {
 				setEcommerceSelected(true);
 			}
 		}
-		
+
 	}
 	function handleInputTextChange(e) {
 		setOnlineStoreLink(functions.stringRemoveAllSpaces(e.target.value));
@@ -646,12 +517,12 @@ function Localisations({ data }) {
 	return <div className="step-inner-container">
 		<div class="lieux-header-container">
 			<div><h1>Lieux de production (0 ville)</h1></div>
-			<SelectLieu data={data.lieux_de_production.select} handleCitiesChecks={data.lieux_de_production.select.handleChanges} title="Lieux de production"/>
+			<SelectLieu data={data.lieux_de_production.select} handleCitiesChecks={data.lieux_de_production.select.handleChanges} title="Lieux de production" />
 		</div>
 		<div class="lieux-list-container">
 			{
 				data.lieux_de_production.lieux.map(lieu => {
-					return <LieuCreation data={lieu}/>
+					return <LieuCreation data={lieu} />
 				})
 			}
 		</div>
@@ -702,18 +573,18 @@ function LieuCreation({ data }) {
 		<div className={lieuItemOpen ? "delete-button delete-button-lieu" : "delete-button delete-button-lieu hidden"}><img src={remove} alt="delete" /></div>
 		<div className={lieuItemOpen ? "lieu-map-container" : "lieu-map-container hidden"}>
 			<p>Pr�ciser la position exacte sur la carte des lieux de production dans cette ville</p>
-				<MapContainer center={data.points[0]} zoom={13} scrollWheelZoom={false}>
-					<TileLayer
-						attribution='&copy; <a href="https://www.google.com/intl/en-GB_ALL/permissions/geoguidelines/">Google Maps</a> contributors'
-						url="https://mt.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
-					/>
-					{
-						data.points.map(point => {
-							return <Marker position={point}>
-							</Marker>
-						})
-					}
-				</MapContainer>
+			<MapContainer center={data.points[0]} zoom={13} scrollWheelZoom={false}>
+				<TileLayer
+					attribution='&copy; <a href="https://www.google.com/intl/en-GB_ALL/permissions/geoguidelines/">Google Maps</a> contributors'
+					url="https://mt.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
+				/>
+				{
+					data.points.map(point => {
+						return <Marker position={point}>
+						</Marker>
+					})
+				}
+			</MapContainer>
 		</div>
 	</div>
 }
