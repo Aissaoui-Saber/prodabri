@@ -1,0 +1,44 @@
+.step__secteurs {
+    display: grid;
+    color: var(--text-white);
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+    margin: 20px 0px;
+}
+
+.step__secteurs__branche {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+    background-color: var(--dark-background);
+    border-radius: 10px;
+    padding: 10px;
+    user-select: none;
+    cursor: pointer;
+    border: solid 2px transparent;
+    transition: scale 0.2s, border-color 0.5s, background-color 0.3s;
+}
+.step__secteurs__branche:hover {
+    background-color: rgb(4 70 141 / 0.20);
+    scale: 1.05;
+}
+
+.step__secteurs__branche__icon {
+    width: 50px;
+}
+
+.step__secteurs__branche__name {
+    font-family: figTree;
+    color: var(--dark-text);
+    cursor: pointer;
+}
+
+.step__secteurs__branche--selected {
+    border-color: var(--accent-blue);
+    background-color: rgb(4 70 141 / 0.40);
+}
+
+.step__secteurs__new{
+    width: 50%;
+}

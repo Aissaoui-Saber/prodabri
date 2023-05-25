@@ -43,6 +43,14 @@ body {
   padding: 10px;
   column-gap: 10px;
 }
+
+.publication_page_template{
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 10px;
+  place-items: center;
+}
+
 .annonces{
   display: flex;
   flex-direction: column;
@@ -53,10 +61,8 @@ body {
 }
 
 
-.input-text {
-  background-color: var(--backGround-blue);
+.input__text {
   font-family: figTree;
-  color: var(--text-white);
   outline: none;
   border: none;
   border-radius: 10px;
@@ -64,10 +70,6 @@ body {
   transition: outline-color 0.3s, color 0.3s;
 }
 
-.input-text:focus {
-  outline-color: var(--light-blue);
-  color: var(--text-white);
-}
 
 .textArea {
   background-color: var(--backGround-blue);

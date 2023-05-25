@@ -7,10 +7,6 @@ import favoriteChecked from '../../Assets/images/icons/annonce/favorite-checked.
 import comments from '../../Assets/images/icons/annonce/comment.png';
 import arrow from '../../Assets/images/icons/annonce/right-arrow.png';
 
-import algerien from '../../Assets/images/icons/filterBar/algerien.png';
-import etranger from '../../Assets/images/icons/filterBar/etranger.png';
-
-
 import domaines from '../../Utils/Domaines';
 import Demande from '../../Utils/DemandeTypes';
 

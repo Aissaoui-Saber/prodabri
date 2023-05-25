@@ -2,18 +2,20 @@ import '../Assets/Styles/global_Style.css';
 import '../Pages/publication/Publication.css';
 import { useState, useEffect, useRef } from 'react';
 
-let darkBlue = "#050D1A";
-let lightBlue = "#108DDE";
 
 
 
-function StepBar({ data, currStep}) {
+
+function StepBar({ data, currStep }) {
 	const ref = useRef(null);
 	const [svgWidth, setSvgWidth] = useState(0);
 	const [currentStep, setCurrentStep] = useState(currStep);
 	let stepBarMarginLR = svgWidth / data.length / 2;
 	let stepBarStartPostitionX = stepBarMarginLR;
-	
+
+	let darkBlue = "#050D1A";
+	let lightBlue = "#108DDE";
+
 
 
 	function setEmptySteps() {
@@ -38,14 +40,14 @@ function StepBar({ data, currStep}) {
 		for (let i = 0; i < data.length; i++) {
 			if (i <= n && n < data.length && n >= 0) {
 
-				s.push(<td style={{ color: 'var(--light-blue)'}}>{data[i]}</td>);
+				s.push(<td className='stepBar__names__name' style={{ color: 'var(--accent-blue)' }}>{data[i]}</td>);
 			} else {
-				s.push(<td style={{ color: 'var(--text-white)' }}>{data[i]}</td>);
+				s.push(<td className='stepBar__names__name' style={{ color: 'var(--dark-text)' }}>{data[i]}</td>);
 			}
 		}
 		return s;
 	}
-	
+
 	useEffect(() => {
 		setSvgWidth(ref.current.offsetWidth);
 	}, [ref.current]);
@@ -53,9 +55,9 @@ function StepBar({ data, currStep}) {
 		setCurrentStep(currStep);
 	}, [currStep]);
 
-	return <div className="stepBar-container" ref={ref}>
+	return <div className="stepBar" ref={ref}>
 		<svg width={svgWidth} height="40">
-			<rect x={stepBarStartPostitionX} y="13" width={svgWidth - stepBarMarginLR*2} height="14" fill={darkBlue} />
+			<rect x={stepBarStartPostitionX} y="13" width={svgWidth - stepBarMarginLR * 2} height="14" fill={darkBlue} />
 			{
 				setEmptySteps(data)
 			}
@@ -63,12 +65,14 @@ function StepBar({ data, currStep}) {
 				goToStep(currentStep)
 			}
 		</svg>
-		<table className="steps-label-container">
-			<tr>
-				{
-					setTitlesColor(currentStep)
-				}
-			</tr>
+		<table className="stepBar__names">
+			<tbody>
+				<tr>
+					{
+						setTitlesColor(currentStep)
+					}
+				</tr>
+			</tbody>
 		</table>
 	</div>
 

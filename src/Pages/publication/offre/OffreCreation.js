@@ -2,7 +2,8 @@ import NavBar from '../../../Components/NavBar';
 import '../../../Assets/Styles/global_Style.css';
 import '../Publication.css';
 import StepBar from '../../../Components/StepBar';
-import secteurs from '../../../Utils/Secteurs';
+
+import Secteurs from './Secteurs';
 import functions from '../../../Utils/Functions';
 import { useState, useRef, useEffect } from 'react';
 import production from '../../../Assets/images/icons/filterBar/production.png';
@@ -251,17 +252,17 @@ let offre = {
 };
 
 function OffreCreation() {
-	const [currentStep, setCurrentStep] = useState(2);
+	const [currentStep, setCurrentStep] = useState(0);
 	document.title = "Publication d'offre";
 	let steps = [
 		"Secteur",
 		"Type",
 		"Origine",
-		"Durabilit�",
-		"D�taills",
+		"Durabilité",
+		"Détaills",
 		"Emplacements",
-		"M�dia",
-		"R�capitulatif"
+		"Média",
+		"Récapitulatif"
 	];
 
 	
@@ -325,8 +326,6 @@ function OffreCreation() {
 		<NavBar></NavBar>
 		<div className="creation-body-container">
 			<StepBar data={steps} currStep={currentStep} />
-			
-			<div className="step-body-container">
 				{(() => {
 					switch (currentStep) {
 						case 0:
@@ -355,7 +354,6 @@ function OffreCreation() {
 							break;
 					}
 				})()}
-			</div>
 			<div style={{ width: 100 + "%", textAlign: "center", marginTop: "20px" }}><input type="button" className="greenButton" value={currentStep === steps.length - 1 ? "PUBLIER" : "POURSUIVRE"} onClick={() => nextStep()}></input></div>
 			
 		</div>
@@ -363,83 +361,6 @@ function OffreCreation() {
 
 };
 
-function Secteurs({ data, handleChanges }) {
-	const [selectedBranche, setSelectedBranche] = useState(data.id);
-	const [newTypedBranche, setNewTypedBranche] = useState(data.new === undefined ? "" : data.new);
-
-	function selectBranche(brancheID) {
-		if (brancheID == selectedBranche) {
-			handleChanges({
-				id: undefined,
-				new: undefined
-			});
-			setSelectedBranche(undefined);
-		} else {
-			handleChanges({
-				id: brancheID,
-				new: undefined
-			});
-			setSelectedBranche(brancheID);
-		}
-		setNewTypedBranche("");
-	}
-
-	function handleInputTextChange(e) {
-		setSelectedBranche(undefined);
-		setNewTypedBranche(functions.stringRemoveMultipleSpaces(e.target.value));
-		handleChanges({
-			id: undefined,
-			new: functions.stringNormalizeSpaces(e.target.value)
-		});
-	}
-	function handleInputBlur(e) {
-		setNewTypedBranche(functions.stringNormalizeSpaces(e.target.value));
-
-	}
-	return <div className="step-inner-container">
-		<h1>S�lectionner le secteur dont votre produit appartient</h1>
-		<h2>S�cteur primaire</h2>
-		<p>Exploitation et extraction de ressources naturelles</p>
-		<div className="Secteurs-container">
-			{
-				secteurs.secteurs_FR[0].branches.map(branche => {
-					return <div className={branche.id === selectedBranche ? "branche-container selected-branche" : "branche-container"} onClick={() => selectBranche(branche.id)}>
-						<img src={branche.icon} alt="secteur"/>
-						<label>{branche.text}</label>
-					</div>
-				})
-			}
-		</div>
-		<h2>S�cteur secondaire</h2>
-		<p>Transformation des mati�res premi�res issues du secteur primaire</p>
-		<div className="Secteurs-container">
-			{
-				secteurs.secteurs_FR[1].branches.map(branche => {
-					return <div className={branche.id === selectedBranche ? "branche-container selected-branche" : "branche-container"} onClick={() => selectBranche(branche.id)}>
-						<img src={branche.icon} alt="secteur"/>
-						<label>{branche.text}</label>
-					</div>
-				})
-			}
-		</div>
-		<h2>S�cteur tertiaire</h2>
-		<p>Produire des services</p>
-		<div className="Secteurs-container">
-			{
-				secteurs.secteurs_FR[2].branches.map(branche => {
-					return <div className={branche.id === selectedBranche ? "branche-container selected-branche" : "branche-container"} onClick={() => selectBranche(branche.id)}>
-						<img src={branche.icon} alt="secteur" />
-						<label>{branche.text}</label>
-					</div>
-				})
-			}
-		</div>
-		<hr/>
-		<h1>Vous avez pas trouv� le bon secteur ?</h1>
-		<p>Pr�cisez le nom du secteur souhait�</p>
-		<input type="text" placeholder="Nom du secteur" className="input-text" onChange={handleInputTextChange} value={newTypedBranche} onBlur={handleInputBlur} />
-	</div>
-}
 
 function Type({ data, handleChanges }) {
 	const [selectedType, setSelectedType] = useState(data);
