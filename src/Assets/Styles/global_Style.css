@@ -82,19 +82,3 @@ body {
   transition: outline-color 0.3s, color 0.3s;
 }
 
-
-.textArea {
-  background-color: var(--backGround-blue);
-  font-family: figTree;
-  color: var(--text-white);
-  outline: none;
-  border: none;
-  border-radius: 10px;
-  outline: solid 1px transparent;
-  transition: outline-color 0.3s;
-  resize: none;
-}
-
-.textArea:focus {
-  outline-color: var(--light-blue);
-}

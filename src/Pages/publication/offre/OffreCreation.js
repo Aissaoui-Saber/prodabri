@@ -7,6 +7,7 @@ import Secteurs from './Secteurs';
 import Type from './Type';
 import Origine from './Origine';
 import Durabilite from './Durabilite';
+import Details from './Details';
 
 import functions from '../../../Utils/Functions';
 import { useState, useRef, useEffect } from 'react';
@@ -357,144 +358,7 @@ function OffreCreation() {
 
 
 
-function Details({ data }) {
-	const [nom, setNom] = useState(data.nom === undefined ? "" : data.nom);
-	const [brand, setBrand] = useState(data.brand === undefined ? "" : data.brand);
-	const [description, setDescription] = useState(data.description === undefined ? "" : data.description);
-	const [email, setEmail] = useState(data.email === undefined ? "" : data.email);
-	const [emailClassName, setEmailClassName] = useState("input-text");
-	const [phone, setPhone] = useState(data.phone === undefined ? "" : data.phone);
-	const [phoneClassName, setPhoneClassName] = useState("input-text");
-	const [linkURL, setLinkURL] = useState("");
-	const [linkTitle, setLinkTitle] = useState("");
-	const [links, setLinks] = useState(data.links);
-	const linkUrlRef = useRef();
-	const linkTitleRef = useRef();
 
-
-	function handleInputTextChange(e) {
-		switch (e.target.attributes.data.value) {
-			case "input-nom":
-				data.nom = functions.stringRemoveMultipleSpaces(e.target.value);
-				setNom(data.nom);
-				break;
-			case "input-brand":
-				setBrand(functions.stringRemoveMultipleSpaces(e.target.value));
-				break;
-			case "input-description":
-				data.description = functions.stringRemoveMultipleSpaces(e.target.value);
-				setDescription(data.description);
-				break;
-			case "input-link-title":
-				setLinkTitle(functions.stringRemoveMultipleSpaces(e.target.value));
-				break;
-			case "input-link-url":
-				setLinkURL(functions.stringRemoveAllSpaces(e.target.value));
-				break;
-			case "input-email":
-				setEmail(functions.stringRemoveMultipleSpaces(e.target.value));
-				break;
-			case "input-phone":
-				if (functions.stringIsNumber(e.target.value) && (e.target.value.length <= 10)) {
-					setPhone(e.target.value);
-				}
-				break;
-		}
-	}
-	function handleInputBlur(e) {
-		switch (e.target.attributes.data.value) {
-			case "input-nom":
-				setNom(functions.stringNormalizeSpaces(e.target.value));
-				break;
-			case "input-brand":
-				setBrand(functions.stringNormalizeSpaces(e.target.value));
-				break;
-			case "input-description":
-				setDescription(functions.stringNormalizeSpaces(e.target.value));
-				break;
-			case "input-link-title":
-				setLinkTitle(functions.stringNormalizeSpaces(e.target.value));
-				break;
-			case "input-link-url":
-				setLinkURL(functions.stringNormalizeSpaces(e.target.value));
-				break;
-			case "input-email":
-				if (e.target.value.length === 0) {
-					setEmailClassName("input-text");
-				} else {
-					if (functions.isValidEmail(e.target.value)) {
-						setEmailClassName("input-text valid-input");
-					} else {
-						setEmailClassName("input-text invalid-input");
-					}
-				}
-				break;
-			case "input-phone":
-				if (e.target.value.length === 0) {
-					setPhoneClassName("input-text");
-				} else {
-					if (functions.isValidPhoneNumber(e.target.value)) {
-						setPhoneClassName("input-text valid-input");
-					} else {
-						setPhoneClassName("input-text invalid-input");
-					}
-				}
-				break;
-		}
-	}
-
-	function deleteLink(id) {
-		data.links = links.filter((obj) => obj.id !== id);
-		setLinks(data.links);
-	}
-	function addNewLink() {
-		if (linkTitleRef.current.value.length > 0 && linkUrlRef.current.value.length > 0) {
-			data.links.push({
-				id: data.links.length,
-				name: linkTitleRef.current.value,
-				url: linkUrlRef.current.value,
-				icon: undefined
-			});
-			setLinkURL("");
-			setLinkTitle("");
-			setLinks(data.links);
-		}
-	}
-	return <div className="step-inner-container">
-		<h1>D�tails sur le bien</h1>
-		<div className="coordinates-container">
-			<input type="text" placeholder="Nom" className="input-text" onChange={handleInputTextChange} value={nom} onBlur={handleInputBlur} data="input-nom" />
-			<input type="text" placeholder="Marque (optionel)" className="input-text" onChange={handleInputTextChange} value={brand} onBlur={handleInputBlur} data="input-brand" />
-		</div>
-		<br />
-		<textarea rows="12" className="textArea" placeholder="Description" data="input-description" onChange={handleInputTextChange} value={description} onBlur={handleInputBlur} />
-		<hr />
-		<h1>Liens externes</h1>
-		<div className="links-container">
-			{
-				links.map(link => {
-					return <div className="link-container">
-						<div className="delete-button delete-button-link"><img src={remove} alt="delete" onClick={() => deleteLink(link.id)} /></div>
-						<img className="link-icon" src={link.icon === undefined ? etranger : link.icon} alt="link" />
-						<a className="link-title" href={link.url} target="_blank">{link.name}</a>
-						<a className="link-url" href={link.url} target="_blank">{link.url}</a>
-					</div>
-				})
-			}
-		</div>
-		<div className="new-link-container">
-			<input ref={linkUrlRef} type="text" placeholder="https://www.example.net" className="input-text" data="input-link-url" value={linkURL} onPaste={handleInputTextChange} onChange={handleInputTextChange}></input>
-			<input ref={linkTitleRef} type="text" placeholder="Titre" className="input-text" data="input-link-title" value={linkTitle} onChange={handleInputTextChange}></input>
-			<label onClick={() => addNewLink()}>Ajouter</label>
-		</div>
-		<hr />
-		<h1>Coordonn�es de contacte</h1>
-		<div className="coordinates-container">
-			<input type="text" placeholder="Email" className={emailClassName} data="input-email" value={email} onChange={handleInputTextChange} onBlur={handleInputBlur}></input>
-			<input type="text" placeholder="T�l�phone" className={phoneClassName} data="input-phone" value={phone} onChange={handleInputTextChange} onBlur={handleInputBlur}></input>
-		</div>
-	</div>
-}
 
 function Localisations({ data }) {
 	const [eCommerceSelected, setEcommerceSelected] = useState(false);
