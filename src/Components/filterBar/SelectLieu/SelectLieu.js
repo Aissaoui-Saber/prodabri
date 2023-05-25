@@ -25,11 +25,11 @@ function copyData(data) {
 }
 
 
-function SelectLieu({ data, handleCitiesChecks, title, readOnly }) {
-    const [wilayas, setWilayas] = useState(copyData(data.wilayas));
+function SelectLieu({ data, handleCitiesChecks, title, readOnly , value}) {
+    const [wilayas, setWilayas] = useState(readOnly ? data.wilaya : copyData(data.wilayas));
     const [isOpen, setIsOpen] = useState(false);
-    const [totalCities, setTotalCities] = useState(getTotalSelectedCities(wilayas));
-
+    const [totalCities, setTotalCities] = useState(readOnly ? value : getTotalSelectedCities(wilayas));
+    
     const refOne = useRef(null);
     const refTwo = useRef(null);
     useEffect(() => {
@@ -71,9 +71,13 @@ function SelectLieu({ data, handleCitiesChecks, title, readOnly }) {
         <div className={isOpen ? "options" : "options options--closed"} ref={refOne}>
             <div className='options__trees'>
                 {
-                    data.wilayas.map((wilaya) => {
+                    readOnly ? data.map((wilaya) => {
                         return <Tree className='options__trees__item' key={wilaya.wilayaNumber} data={wilaya} handleChanges={handleCitiesCheckedNumber} readOnly={readOnly ? true : false}></Tree>
-                    })}
+                    })
+                    : data.wilayas.map((wilaya) => {
+                        return <Tree className='options__trees__item' key={wilaya.wilayaNumber} data={wilaya} handleChanges={handleCitiesCheckedNumber} readOnly={readOnly ? true : false}></Tree>
+                    })
+                    }
             </div>
         </div>
     </div>

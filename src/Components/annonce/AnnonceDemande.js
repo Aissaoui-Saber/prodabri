@@ -15,14 +15,14 @@ import domaines from '../../Utils/Domaines';
 import Demande from '../../Utils/DemandeTypes';
 
 
-import Lieux from './Lieux';
+import SelectLieu from '../filterBar/SelectLieu/SelectLieu';
 
 
 function AnnonceDemande({ data }) {
 	return <div className='annonce-container'>
 		<div className='top'>
 			<div className='creation-container'>
-				<img src={creatorImage} alt="profile du créateur"></img>
+				<img src={creatorImage} alt="profile du crï¿½ateur"></img>
 				<label className='creator-username'>{data.creation.creator_name}</label>
 				<label className='creation-date'>{data.creation.creation_date}</label>
 			</div>
@@ -44,13 +44,13 @@ function AnnonceDemande({ data }) {
 							</div>
 						</div>
 						<div className='info'>
-							<img src={comments} alt="secteur d'activité"></img>
+							<img src={comments} alt="secteur d'activitï¿½"></img>
 							<div>
 								<label className="info-title">Commentaires</label><br />
 								<label className="info-data">{data.comments}</label>
 							</div>
 						</div>
-						<Lieux title="Lieux de la demande" totalCities={1} data={data.lieux_de_demande}></Lieux>
+						<SelectLieu title="Lieux de la demande" totalCities={1} data={data.lieux_de_demande}></SelectLieu>
 					</div>
 					<label className="info-title">Domaine d'expertise</label><br />
 					<div className="dommaines-container">
@@ -74,13 +74,13 @@ function AnnonceDemande({ data }) {
 							</div>
 						</div>
 						<div className='info'>
-							<img src={comments} alt="secteur d'activité"></img>
+							<img src={comments} alt="secteur d'activitï¿½"></img>
 							<div>
 								<label className="info-title">Commentaires</label><br />
 								<label className="info-data">{data.comments}</label>
 							</div>
 						</div>
-						<Lieux title="Lieux de la demande" totalCities={1} data={data.lieux_de_demande}></Lieux>
+						<SelectLieu title="Lieux de la demande" totalCities={1} data={data.lieux_de_demande}></SelectLieu>
 					</div>
 				</div>
 				<div className='bottom-info-container'>

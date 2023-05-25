@@ -1,5 +1,4 @@
 import NavBar from '../../Components/NavBar';
-import './Demandes.css';
 import '../../Assets/Styles/global_Style.css';
 import FilterBar from '../../Components/filterBar/FilterBar';
 import AnnonceDemande from '../../Components/annonce/AnnonceDemande';
@@ -118,9 +117,9 @@ function Demandes() {
     ];
     return <>
         <NavBar></NavBar>
-        <div className='body-container'>
+        <div className='offres_demmandes_page_template'>
             <FilterBar filterType="demandes"></FilterBar>
-            <div className='items-list-container'>
+            <div className='annonces'>
                 {demandesList.map(demande => {
                     return <AnnonceDemande data={demande}></AnnonceDemande>
                 })}

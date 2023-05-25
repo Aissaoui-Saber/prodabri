@@ -1,5 +1,4 @@
 import NavBar from '../../Components/NavBar';
-import './Offres.css';
 import '../../Assets/Styles/global_Style.css';
 import FilterBar from '../../Components/filterBar/FilterBar';
 import AnnonceOffre from '../../Components/annonce/AnnonceOffre';
@@ -56,6 +55,7 @@ function Offres() {
                         { id: 920, name: "Commune 9" },
                     ]
                 },
+                
             ],
             lieux_de_vente: [
                 {
@@ -238,7 +238,7 @@ function Offres() {
             ],
             origin: "ETR",
             secteur: 2,
-            type: "P",
+            type: "CP",
             durabilite: "D"
         },
         {
@@ -475,9 +475,9 @@ function Offres() {
     ];
     return <>
         <NavBar></NavBar>
-        <div className='body-container'>
+        <div className='offres_demmandes_page_template'>
             <FilterBar filterType="offre"></FilterBar>
-            <div className='items-list-container'>
+            <div className='annonces'>
                 {offresList.map(offre => {
                     return <AnnonceOffre data={offre}></AnnonceOffre>
                 })}

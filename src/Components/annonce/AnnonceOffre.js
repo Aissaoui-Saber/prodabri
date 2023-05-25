@@ -1,4 +1,5 @@
 import './Annonce.css';
+import SelectLieux from './../../Components/filterBar/SelectLieu/SelectLieu';
 import creatorImage from '../../Assets/images/profile.png';
 
 import favoriteUnchecked from '../../Assets/images/icons/annonce/favorite-unchecked.png';
@@ -21,72 +22,90 @@ import nonDurable from '../../Assets/images/icons/filterBar/non-durable.png';
 
 
 import productImage from '../../Assets/images/icons/annonce/product.jpg';
-import Lieux from './Lieux';
 
 
 function AnnonceOffre({ data }) {
-	return <div className='annonce-container'>
-		<div className='top'>
-			<div className='creation-container'>
-				<img src={creatorImage} alt="profile du créateur"></img>
-				<label className='creator-username'>{data.creation.creator_name}</label>
-				<label className='creation-date'>{data.creation.creation_date}</label>
+	return <div className='annonce'>
+		<div className='annonce__header'>
+			<div className='annonce__header__creator'>
+				<img className='annonce__header__creator__image' src={creatorImage} alt="profile du créateur"></img>
+				<label className='annonce__header__creator__username'>{data.creation.creator_name}</label>
+				<label className='annonce__header__creator__date'>{data.creation.creation_date}</label>
 			</div>
-			<img src={data.favorite ? favoriteChecked : favoriteUnchecked} alt='favorite' className='favorite-button'></img>
+			<img className='annonce__header__favorite' src={data.favorite ? favoriteChecked : favoriteUnchecked} alt='favorite'></img>
 		</div>
-		<div className='middle offre-middle-template'>
-			<img className="annonce-image" src={productImage} alt='product'></img>
-			<div className='top-info-container'>
-				<label className='brand-name'>{data.brand_name}</label>
-				<label className='offre-name'>{data.title}</label>
-				<p className='description-with-image'>{data.description}</p>
-			</div>
-			<div className='bottom-info-container'>
-				<div className="annonce-lieux-container">
-					<Lieux title="Lieux de productions" totalCities={47} data={data.lieux_de_production}></Lieux>
-					<Lieux title="Lieux de vente" totalCities={565} data={data.lieux_de_production}></Lieux>
-					<Lieux title="Lieux de livraison" totalCities={1541} data={data.lieux_de_production}></Lieux>
+		<div className='annonce__body offre__body'>
+			<img className="offre__image" src={productImage} alt='product'></img>
+			<div className='offre__info'>
+				<label className='offre__info__brand'>{data.brand_name}</label>
+				<label className='offre__info__title'>{data.title}</label>
+				<p className='offre__info__description--image'>{data.description}</p>
+				<div className="offre__info__lieux">
+					<SelectLieux title="Lieux de productions" value={47} data={data.lieux_de_production} readOnly={true}></SelectLieux>
+					<SelectLieux title="Lieux de vente" value={565} data={data.lieux_de_production} readOnly={true}></SelectLieux>
+					<SelectLieux title="Lieux de livraison" value={1541} data={data.lieux_de_production} readOnly={true}></SelectLieux>
 				</div>
-				<div className="annonce-other-info-container">
-					<div className="info">
-						<img src={data.origin === "DZ" ? algerien : etranger} alt="origine de produit"></img>
-						<label className="info-data">{data.origin === "DZ" ? "Produit Algérien" : "Produit étranger"}</label>
+				<div className="offre__info__tiles">
+					<div className="offre__info__tiles__tile">
+						<img className="offre__info__tiles__tile__icon" src={data.origin === "DZ" ? algerien : etranger} alt="origine de produit"></img>
+						<label className="offre__info__tiles__tile__text">{data.origin === "DZ" ? "Produit Algérien" : "Produit étranger"}</label>
 					</div>
-					<div className='info'>
-						<img src={secteurs.getSecteur(data.secteur).fr.icon} alt="secteur d'activité"></img>
-						<label className="info-data">{secteurs.getSecteur(data.secteur).fr.text}</label>
+					<div className='offre__info__tiles__tile'>
+						<img className="offre__info__tiles__tile__icon" src={secteurs.getSecteur(data.secteur).fr.icon} alt="secteur d'activité"></img>
+						<label className="offre__info__tiles__tile__text">{secteurs.getSecteur(data.secteur).fr.text}</label>
 					</div>
-					<div className='info'>
-						<img src={data.type === "C" ? consomation : production} alt="type de produit"></img>
-						<label className="info-data">{data.type === "C" ? "Bien de consomation" : "Bien de production"}</label>
-					</div>
-					<div className='info'>
-						<img src={data.type === "C" ? consomation : production} alt="type de produit"></img>
-						<label className="info-data">{data.type === "C" ? "Bien de consomation" : "Bien de production"}</label>
-					</div>
-					<div className='info'>
-						<img src={data.durabilite === "D" ? durable : nonDurable} alt="durabilité de produit"></img>
-						<label className="info-data">{data.durabilite === "D" ? "Durable" : "Non durable"}</label>
+					{(() => {
+						let m = [];
+						if (data.type === "CP") {
+							m.push(<div className='offre__info__tiles__tile'>
+								<img className="offre__info__tiles__tile__icon" src={consomation} alt="type de produit"></img>
+								<label className="offre__info__tiles__tile__text">Bien de consomation</label>
+							</div>);
+							m.push(<div className='offre__info__tiles__tile'>
+							<img className="offre__info__tiles__tile__icon" src={production} alt="type de produit"></img>
+							<label className="offre__info__tiles__tile__text">Bien de production</label>
+						</div>);
+						} else {
+							if (data.type === 'C'){
+								m.push(<div className='offre__info__tiles__tile'>
+								<img className="offre__info__tiles__tile__icon" src={consomation} alt="type de produit"></img>
+								<label className="offre__info__tiles__tile__text">Bien de consomation</label>
+							</div>);
+							}else{
+								m.push(<div className='offre__info__tiles__tile'>
+								<img className="offre__info__tiles__tile__icon" src={production} alt="type de produit"></img>
+								<label className="offre__info__tiles__tile__text">Bien de production</label>
+							</div>);
+							}
+						}
+						return (m.map(element => {
+							return element;
+						}));
+					})()}
+
+					<div className='offre__info__tiles__tile'>
+						<img className="offre__info__tiles__tile__icon" src={data.durabilite === "D" ? durable : nonDurable} alt="durabilité de produit"></img>
+						<label className="offre__info__tiles__tile__text">{data.durabilite === "D" ? "Durable" : "Non durable"}</label>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div className='bottom'>
-			<div className='stat-container'>
-				<div className='note-container'>
-					<img src={starChecked} alt='checked'></img>
-					<img src={starChecked} alt='checked'></img>
-					<img src={starChecked} alt='checked'></img>
-					<img src={starUnChecked} alt='unChecked'></img>
-					<img src={starUnChecked} alt='unChecked'></img>
-					<label>33</label>
+		<div className='annonce__footer'>
+			<div className='annonce__footer__stats'>
+				<div className='annonce__footer__stats__note'>
+					<img className='annonce__footer__stats__note__star' src={starChecked} alt='checked'></img>
+					<img className='annonce__footer__stats__note__star' src={starChecked} alt='checked'></img>
+					<img className='annonce__footer__stats__note__star' src={starChecked} alt='checked'></img>
+					<img className='annonce__footer__stats__note__star' src={starUnChecked} alt='unChecked'></img>
+					<img className='annonce__footer__stats__note__star' src={starUnChecked} alt='unChecked'></img>
+					<label className='annonce__footer__stats__note__total'>33</label>
 				</div>
-				<div className='comments-container'>
-					<img src={comments} alt='comments'></img>
-					<label>12</label>
+				<div className='annonce__footer__stats__comments'>
+					<img className='annonce__footer__stats__comments__icon' src={comments} alt='comments'></img>
+					<label className='annonce__footer__stats__comments__total'>12</label>
 				</div>
 			</div>
-			<img src={arrow} alt='arrow' className='details-arrow'></img>
+			<img src={arrow} alt='arrow' className='annonce__footer__arrow'></img>
 		</div>
 	</div>
 }

@@ -1,9 +1,6 @@
 .filterBar{
-    width: 350px;
-    max-width: 350px;
-    min-width: 350px;
+  align-self: self-start;
     padding: 15px;
-    margin: 10px;
     border-radius: 15px;
     background-color: var(--dark-foreground);
     box-shadow: rgba(0, 0, 0, 0.473) 0px 3px 6px;
