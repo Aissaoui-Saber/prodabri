@@ -2,25 +2,19 @@ import NavBar from '../../../Components/NavBar';
 import '../../../Assets/Styles/global_Style.css';
 import '../Publication.css';
 import StepBar from '../../../Components/StepBar';
+import './Localisations.css';
 
 import Secteurs from './Secteurs';
 import Type from './Type';
 import Origine from './Origine';
 import Durabilite from './Durabilite';
 import Details from './Details';
+import Localisations from './Localisations';
 
-import functions from '../../../Utils/Functions';
 import { useState, useRef, useEffect } from 'react';
 
 import etranger from '../../../Assets/images/icons/filterBar/etranger.png';
 import countries from '../../../Utils/Countries';
-import remove from '../../../Assets/images/delete.png';
-import SelectLieu from '../../../Components/filterBar/SelectLieu/SelectLieu';
-import pin from '../../../Assets/images/icons/filterBar/placeholder.png';
-import store from '../../../Assets/images/store.png';
-
-import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
 
 
 let offre = {
@@ -252,7 +246,7 @@ let offre = {
 };
 
 function OffreCreation() {
-	const [currentStep, setCurrentStep] = useState(0);
+	const [currentStep, setCurrentStep] = useState(5);
 	document.title = "Publication d'offre";
 	let steps = [
 		"Secteur",
@@ -356,101 +350,5 @@ function OffreCreation() {
 
 };
 
-
-
-
-
-function Localisations({ data }) {
-	const [eCommerceSelected, setEcommerceSelected] = useState(false);
-	const [onlineStoreLink, setOnlineStoreLink] = useState("");
-	const eCommerceLinkRef = useRef();
-	function selectEcommerce(e) {
-		if (eCommerceLinkRef.current !== e.target) {
-			if (eCommerceSelected) {
-				setEcommerceSelected(false);
-				setOnlineStoreLink("");
-			} else {
-				setEcommerceSelected(true);
-			}
-		}
-
-	}
-	function handleInputTextChange(e) {
-		setOnlineStoreLink(functions.stringRemoveAllSpaces(e.target.value));
-	}
-	return <div className="step-inner-container">
-		<div class="lieux-header-container">
-			<div><h1>Lieux de production (0 ville)</h1></div>
-			<SelectLieu data={data.lieux_de_production.select} handleCitiesChecks={data.lieux_de_production.select.handleChanges} title="Lieux de production" />
-		</div>
-		<div class="lieux-list-container">
-			{
-				data.lieux_de_production.lieux.map(lieu => {
-					return <LieuCreation data={lieu} />
-				})
-			}
-		</div>
-		<hr />
-		<div class="lieux-header-container">
-			<div><h1>Lieux de vente (0 ville)</h1></div>
-			<SelectLieu data={data.lieux_de_vente.select} handleCitiesChecks={data.lieux_de_vente.select.handleChanges} title="Lieux de vente" />
-		</div>
-		<div class="lieux-list-container">
-			{
-				data.lieux_de_vente.lieux.map(lieu => {
-					return <LieuCreation data={lieu} />
-				})
-			}
-		</div>
-		<div className={eCommerceSelected ? "branche-container selected-branche" : "branche-container"} onClick={selectEcommerce}>
-			<img src={store} alt="consomation" />
-			<div>
-				<h2>Boutique en ligne</h2>
-				<p>Vous avez une boutique sur internet pour le eCommerce</p>
-			</div>
-			<input ref={eCommerceLinkRef} className={eCommerceSelected ? "input-text" : "input-text hidden"} type="text" placeholder="https://www.nom-de-boutique.com" onPaste={handleInputTextChange} onChange={handleInputTextChange} value={onlineStoreLink} />
-		</div>
-		<hr />
-		<div class="lieux-header-container">
-			<div><h1>Lieux de Livraison (0 ville)</h1></div>
-			<SelectLieu data={data.lieux_de_livraison.select} handleCitiesChecks={data.lieux_de_livraison.select.handleChanges} title="Lieux de livraison" />
-		</div>
-	</div>
-}
-
-function LieuCreation({ data }) {
-	const [lieuItemOpen, setLieuItemOpen] = useState(false);
-	function openCloseLieuItem() {
-		if (lieuItemOpen) {
-			setLieuItemOpen(false);
-		} else {
-			setLieuItemOpen(true);
-		}
-	}
-	return <div className="lieu-item-container">
-		<div className={lieuItemOpen ? "tree-triangle tree-triangle-open" : "tree-triangle"} onClick={openCloseLieuItem}></div>
-		<img src={pin} alt="lieu" />
-		<div>
-			<label className="commune-name">{data.commune.name + " (" + data.points.length + " Lieux)"}</label>
-			<label className="wilaya-name">{data.commune.wilaya}</label>
-		</div>
-		<div className={lieuItemOpen ? "delete-button delete-button-lieu" : "delete-button delete-button-lieu hidden"}><img src={remove} alt="delete" /></div>
-		<div className={lieuItemOpen ? "lieu-map-container" : "lieu-map-container hidden"}>
-			<p>Pr�ciser la position exacte sur la carte des lieux de production dans cette ville</p>
-			<MapContainer center={data.points[0]} zoom={13} scrollWheelZoom={false}>
-				<TileLayer
-					attribution='&copy; <a href="https://www.google.com/intl/en-GB_ALL/permissions/geoguidelines/">Google Maps</a> contributors'
-					url="https://mt.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
-				/>
-				{
-					data.points.map(point => {
-						return <Marker position={point}>
-						</Marker>
-					})
-				}
-			</MapContainer>
-		</div>
-	</div>
-}
 
 export default OffreCreation;

@@ -71,6 +71,9 @@ body {
 .hidden {
   display: none;
 }
+.invisible{
+  visibility: hidden;
+}
 
 
 .input__text {
@@ -82,3 +85,9 @@ body {
   transition: outline-color 0.3s, color 0.3s;
 }
 
+
+.leaflet-container {
+	height: 500px;
+	border-radius: 15px;
+	box-shadow: rgba(0, 0, 0, 0.473) 0px 3px 6px;
+}
