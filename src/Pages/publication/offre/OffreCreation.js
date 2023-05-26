@@ -15,7 +15,7 @@ import { useState, useRef, useEffect } from 'react';
 
 import etranger from '../../../Assets/images/icons/filterBar/etranger.png';
 import countries from '../../../Utils/Countries';
-
+import Media from './media.js';
 
 let offre = {
 	secteur: {
@@ -242,11 +242,16 @@ let offre = {
 			},
 			lieux: []
 		},
+	},
+	media: {
+		images: [],
+		mainImage: undefined,
+		video: undefined
 	}
 };
 
 function OffreCreation() {
-	const [currentStep, setCurrentStep] = useState(5);
+	const [currentStep, setCurrentStep] = useState(6);
 	document.title = "Publication d'offre";
 	let steps = [
 		"Secteur",
@@ -335,7 +340,7 @@ function OffreCreation() {
 					case 5:
 						return <Localisations data={offre.localisations} />
 					case 6:
-						return <></>
+						return <Media data={offre.media}></Media>
 					case 7:
 						return <></>
 				}

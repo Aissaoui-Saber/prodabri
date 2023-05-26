@@ -111,7 +111,7 @@ function Localisations({ data }) {
 				<h2 className='step__option__info__title'>Boutique en ligne</h2>
 				<p className='step__option__info__description'>Vous avez une boutique sur internet ?</p>
 			</div>
-			<input autofocus ref={storeLinkRef} className={storeSelected ? "input__text step__input__text step__localisation__store__link" : "invisible"} type="text" placeholder="https://www.nom-de-boutique.com" onBlur={()=>storeLinkRef.current.value.length == 0 ? setStoreSelected(false) : setStoreSelected(true)} onPaste={handleInputTextChange} onChange={handleInputTextChange} value={storeLink} />
+			<input ref={storeLinkRef} className={storeSelected ? "input__text step__input__text step__localisation__store__link" : "invisible"} type="text" placeholder="https://www.nom-de-boutique.com" onBlur={()=>storeLinkRef.current.value.length == 0 ? setStoreSelected(false) : setStoreSelected(true)} onPaste={handleInputTextChange} onChange={handleInputTextChange} value={storeLink} />
 		</div>
 		<hr className='step__line'/>
 		<div class="step__localisation__header">
