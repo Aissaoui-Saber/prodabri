@@ -1,0 +1,204 @@
+.step__recap__header{
+    display: flex;
+    gap:10px;
+    align-items: center;
+}
+.step__recap__modifier{
+    font-family: figTree;
+    color: var(--accent-blue);
+    cursor: pointer;
+    font-weight: 400;
+    scale: 1;
+    border-bottom: solid 1px transparent;
+    transition: border-color 0.3s;
+    margin-top: 5px;
+}
+.step__recap__modifier:hover{
+    border-bottom-color: var(--accent-blue);
+}
+.step__recap__durabilite,
+.step__recap__type,
+.step__recap__branche{
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    background-color: var(--dark-background);
+    border-radius: 10px;
+    padding: 10px;
+    user-select: none;
+    margin: 10px 0px;
+    min-width: 33%;
+    width: fit-content;
+}
+.step__recap__durabilite,
+.step__recap__branche,
+.step__recap__origine{
+    display: flex;
+    
+}
+.step__recap__type{
+    display: inline-flex;
+    margin: 10px 10px 10px 0px;
+}
+
+.step__recap__branche__name{
+    font-family: figTree;
+    color: var(--dark-text);
+    font-weight: 600;
+    font-size: 18px;
+}
+
+
+
+.step__recap__origine{
+    display: grid;
+    grid-template-columns: 50px auto;
+    column-gap: 10px;
+    grid-template-rows: 1fr, 1fr;
+    align-items: center;
+    background-color: var(--dark-background);
+    border-radius: 10px;
+    padding: 10px;
+    user-select: none;
+    margin: 10px 0px;
+    min-width: 33%;
+    width: fit-content;
+}
+.step__recap__origine__icon{
+    grid-row-start: 1;
+    grid-row-end: 3;
+    width: 50px;
+}
+
+.step__recap__origine__country{
+    color: darkcyan;
+    font-family: figTree;
+    font-size: 16px;
+    font-style: italic;
+}
+
+.step__recap__details__title{
+    font-family: figTree;
+    font-size: 20px;
+    color: var(--gray);
+    margin-top: 10px;
+}
+.step__recap__details__text{
+    background-color: var(--dark-background);
+    border-radius: 10px;
+    padding: 10px;
+    font-family: figTree;
+    font-size: 18px;
+    color: var(--dark-text);
+    font-weight: 200;
+}
+
+.step__recap__details__link{
+    display: grid;
+    grid-template-columns: 30px auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    column-gap: 10px;
+    margin: 10px 0px;
+}
+.step__recap__details__link__icon{
+    width: 30px;
+    height: 30px;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+.step__recap__details__link__title{
+    font-family: figTree;
+    color: var(--dark-text);
+    font-weight: 800;
+    font-size: 14px;
+}
+.step__recap__details__link__url{
+    font-family: figTree;
+    color: var(--gray);
+    font-weight: 300;
+    font-size: 12px;
+}
+
+
+.recap__lieux{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    margin: 20px 0px;
+    background-color: var(--dark-background);
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.recap__lieux__villes{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 500px;
+}
+
+.recap__lieux__ville{
+    display: grid;
+    grid-template-columns: 30px auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    column-gap: 5px;
+    background-color: var(--dark-background);
+    padding: 5px 10px;
+    border-radius: 10px;
+    margin: 5px 0px;
+    translate: 0px 0px;
+    transition: background-color 0.3s, translate 0.3s;
+}
+.recap__lieux__ville:hover{
+    background-color: var(--active-blue);
+    translate: 10px 0px;
+}
+
+.recap__lieux__ville__icon{
+    width: 30px;
+    height: 30px;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+.recap__lieux__ville__commune{
+    font-family: figTree;
+    font-weight: 700;
+    color: var(--dark-text);
+}
+.recap__lieux__ville__wilaya{
+    font-family: figTree;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--accent-blue);
+}
+
+.step__recap__lieux__store{
+    background-color: var(--dark-background);
+    display: grid;
+    grid-template-columns: 50px auto;
+    grid-template-rows: auto auto;
+    column-gap: 10px;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.step__recap__lieux__store__icon{
+    width: 50px;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+.step__recap__lieux__store__title{
+    font-family: figTree;
+    font-weight: 700;
+    color: var(--dark-text);
+    font-size: 20px;
+}
+
+.step__recap__lieux__store__url{
+    color: var(--gray);
+    font-family: figTree;
+    font-size: 16px;
+}

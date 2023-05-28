@@ -5,18 +5,28 @@
 .step__media__add{
     padding:0px 10px;
 }
+.step__recap__media__grid,
 .step__media__grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     align-items: center;
     justify-items: center;
     gap: 20px;
+    
+}
+
+
+.step__recap__media__grid{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.step__media__grid{
     margin-top: 40px;
     margin-bottom: 20px;
 }
 
 
-
+.step__recap__media__image,
 .step__media__grid__image {
     display: grid;
     grid-template-columns: 1fr;
@@ -28,11 +38,19 @@
     border-color: var(--gray);
     border-radius: 10px;
     background-size: cover;
-    cursor: pointer;
     overflow: hidden;
     border-width: 1px;
     transition: border-color 0.3s, border-width 0.1s, scale 0.3s;
 }
+.step__recap__media__image,
+.step__media__grid__image{
+    cursor: pointer;
+}
+.step__recap__media__image,
+.step__recap__media__image--main{
+    cursor:default;
+}
+.step__recap__media__image--main,
 .step__media__grid__image--main{
     grid-template-rows: 15% 85%;
 }
@@ -72,6 +90,7 @@
 }
 
 
+.step__recap__media__image--main::before,
 .step__media__grid__image--main::before{
     content: "PRINCIPALE";
     font-family: figTree;

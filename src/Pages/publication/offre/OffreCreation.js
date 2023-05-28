@@ -16,6 +16,7 @@ import { useState, useRef, useEffect } from 'react';
 import etranger from '../../../Assets/images/icons/filterBar/etranger.png';
 import countries from '../../../Utils/Countries';
 import Media from './media.js';
+import Recapitulatif from './Recap';
 
 let offre = {
 	secteur: {
@@ -251,7 +252,7 @@ let offre = {
 };
 
 function OffreCreation() {
-	const [currentStep, setCurrentStep] = useState(6);
+	const [currentStep, setCurrentStep] = useState(0);
 	document.title = "Publication d'offre";
 	let steps = [
 		"Secteur",
@@ -268,6 +269,7 @@ function OffreCreation() {
 
 	function nextStep() {
 		setCurrentStep(currentStep + 1);
+		window.scrollTo(0, 0);
 		/*switch (currentStep) {
 			case 0:
 				if (offre.secteur.new != undefined) {
@@ -342,11 +344,11 @@ function OffreCreation() {
 					case 6:
 						return <Media data={offre.media}></Media>
 					case 7:
-						return <></>
+						return <Recapitulatif data={offre}></Recapitulatif>
 				}
 			})()}
 			<div className='buttons'>
-				{currentStep > 0 ? <label className='buttons__previous' onClick={() => setCurrentStep(currentStep - 1)}>RETOUR</label> : ""}
+				{currentStep > 0 ? <label className='buttons__previous' onClick={function (){setCurrentStep(currentStep - 1); window.scrollTo(0, 0);}}>RETOUR</label> : ""}
 				<input type="button" className="button button--green buttons__next" value={currentStep === steps.length - 1 ? "PUBLIER" : "POURSUIVRE"} onClick={() => nextStep()}></input>
 			</div>
 

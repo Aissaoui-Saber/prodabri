@@ -9,7 +9,7 @@
 .step__secteurs__branche {
     display: flex;
     flex-direction: row;
-    gap: 5px;
+    gap: 10px;
     align-items: center;
     background-color: var(--dark-background);
     border-radius: 10px;
