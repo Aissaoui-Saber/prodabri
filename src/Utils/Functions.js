@@ -1,7 +1,11 @@
 
 
 function stringRemoveMultipleSpaces(inputString) {
-	return inputString.replace(/  +/gm, " ");
+	if (inputString.length === 1 && inputString[0] === " "){
+		return "";
+	}else{
+		return inputString.replace(/  +/gm, " ");
+	}
 }
 
 function stringRemoveBeginingSpaces(inputString) {

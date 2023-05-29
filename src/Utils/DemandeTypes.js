@@ -27,12 +27,7 @@ const Types = [
 ];
 
 function getType(id) {
-    let i = Types.filter(elemnt => {
-        if (elemnt.id === id) {
-            return elemnt;
-        }
-    })
-    return i.length === 1 ? i[0] : null;
+    return Types.find(element => element.id === id);
 }
 
 let o = { Types, getType };

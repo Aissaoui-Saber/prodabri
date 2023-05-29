@@ -5,6 +5,7 @@
 
 .step__details__info__name,
 .step__details__info__brand {
+	margin-top: 20px;
     width: 100%;
 }
 

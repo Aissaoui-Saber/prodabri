@@ -30,12 +30,7 @@ function FilterBar({filterType}){
                 { id: 2, text: "Note", icon: sort}
             ],
             getOption: function (optionID) {
-                let o = offresFilterData.tri.options.filter(opt => {
-                    if (opt.id === optionID) {
-                        return opt;
-                    }
-                });
-                return o.length === 1 ? o[0] : null;
+                return offresFilterData.tri.options.find(opt => opt.id === optionID);
             },
             defaultOption: 0,
             selectedItem: 0,
@@ -285,12 +280,7 @@ function FilterBar({filterType}){
 
             },
             getOption: function (optionID) {
-                let o = demandesFilterData.tri.options.filter(opt => {
-                    if (opt.id === optionID) {
-                        return opt;
-                    }
-                });
-                return o.length === 1 ? o[0] : null;
+                return demandesFilterData.tri.options.find(opt => opt.id === optionID);
             },
         },
         affichage: {
@@ -371,12 +361,7 @@ function FilterBar({filterType}){
                 demandesFilterData.type.selectedItem = selectedItem;
             },
             getOption: function (optionID) {
-                let o = demandesFilterData.type.options.filter(opt => {
-                    if (opt.id === optionID) {
-                        return opt;
-                    }
-                });
-                return o.length === 1 ? o[0] : null;
+                return demandesFilterData.type.options.find(opt => opt.id === optionID);
             },
         }
 

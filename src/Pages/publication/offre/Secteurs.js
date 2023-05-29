@@ -36,7 +36,6 @@ function Secteurs({ data, handleChanges }) {
 	}
 	function handleInputBlur(e) {
 		setNewTypedBranche(functions.stringNormalizeSpaces(e.target.value));
-
 	}
 	return <div className="step">
 		<h1 className='step__title'>Sélectionner le secteur dont votre produit appartient</h1>

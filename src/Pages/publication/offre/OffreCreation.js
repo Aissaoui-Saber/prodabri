@@ -13,8 +13,6 @@ import Localisations from './Localisations';
 
 import { useState, useRef, useEffect } from 'react';
 
-import etranger from '../../../Assets/images/icons/filterBar/etranger.png';
-import countries from '../../../Utils/Countries';
 import Media from './media.js';
 import Recapitulatif from './Recap';
 
@@ -23,51 +21,17 @@ let offre = {
 		id: undefined,
 		new: undefined
 	},
-	type: undefined,
+	type: undefined,//C,P
 	origine: {
-		origine: undefined,
-		pays: {
-			icon: etranger,
-			title: "Pays",
-			options: [
-				{ id: -1, text: "Selectionner un pays", icon: etranger },
-				...countries
-			],
-			defaultOption: -1,
-			selectedItem: -1,
-			getOption: function (optionID) {
-				let o = offre.origine.pays.options.filter(opt => {
-					if (opt.id === optionID) {
-						return opt;
-					}
-				});
-				return o.length === 1 ? o[0] : null;
-			},
-			handleChanges: function (item) {
-				console.log(item);
-				offre.origine.pays.selectedItem = item;
-			}
-		}
+		origine: undefined,//DZ, ETR
+		pays: undefined
 	},
-	durabilite: undefined,
+	durabilite: undefined,//D, N
 	details: {
-		nom: undefined,
+		title: undefined,
 		brand: undefined,
 		description: undefined,
-		links: [
-			{
-				id: 0,
-				name: "facebook",
-				url: "https://www.facebook.com/pageName",
-				icon: undefined
-			},
-			{
-				id: 1,
-				name: "Youtube",
-				url: "https://www.youtube.com/pageNameezfnozefioafneznfinezoifnuoizanfiezunfoiezhojepfoijezapjfiezjfoezajfpezapofezjafivjpoiezjfjezfopjezapoifjezijfpijezfoizjeijfpezajfezajoinfiezifnezinfu",
-				icon: undefined
-			}
-		],
+		links: undefined,
 		email: undefined,
 		phone: undefined
 	},
@@ -253,7 +217,18 @@ let offre = {
 
 function OffreCreation() {
 	const [currentStep, setCurrentStep] = useState(0);
+	useEffect(e=>{
+		window.scrollTo(0, 0);
+	},[currentStep]);
 	document.title = "Publication d'offre";
+	const [secteur, setSecteur] = useState({...offre.secteur});
+	const [type, setType] = useState(offre.type);
+	const [origine, setOrigine] = useState({...offre.origine});
+	const [durabilite, setDurabilite] = useState(offre.durabilite);
+	const [details, setDetails] = useState(offre.details);
+
+	
+
 	let steps = [
 		"Secteur",
 		"Type",
@@ -268,32 +243,36 @@ function OffreCreation() {
 
 
 	function nextStep() {
-		setCurrentStep(currentStep + 1);
-		window.scrollTo(0, 0);
-		/*switch (currentStep) {
+		switch (currentStep) {
 			case 0:
-				if (offre.secteur.new != undefined) {
-					if (offre.secteur.new !== "") {
+				if (secteur.new != undefined) {
+					if (secteur.new !== "") {
 						setCurrentStep(1);
 					}
 				} else {
-					if (offre.secteur.id != undefined) {
+					if (secteur.id != undefined) {
 						setCurrentStep(1);
 					}
 				}
 				break;
 			case 1:
-				if (offre.type !== undefined) {
+				if (type !== undefined) {
 					setCurrentStep(2);
 				}
 				break;
 			case 2:
-				if (offre.origine.origine !== undefined) {
-					setCurrentStep(3);
+				if (origine.origine !== undefined) {
+					if (origine.origine === 'DZ'){
+						setCurrentStep(3);
+					}else{
+						if (origine.pays !== undefined){
+							setCurrentStep(3);
+						}
+					}
 				}
 				break;
 			case 3:
-				if (offre.durabilite !== undefined) {
+				if (durabilite !== undefined) {
 					setCurrentStep(4);
 				}
 				break;
@@ -303,24 +282,45 @@ function OffreCreation() {
 				}
 				break;
 			case 5:
-				console.log(offre);
 				break;
 			case 6:
 				break;
 			case 7:
 				break;
-	}*/
-
+		}
 	}
-
-	function handleSecteurStepChanges(data) {
-		offre.secteur = data;
-	}
-	function handleTypeStepChanges(data) {
-		offre.type = data;
-	}
-	function handleOrigineStepChanges(data) {
-		offre.origine = data;
+	console.log(details);
+	function handleStepChanges(data) {
+		switch (currentStep) {
+			case 0:
+				setSecteur({...data});
+				break;
+			case 1:
+				setType(data);
+				break;
+			case 2:
+				setOrigine({...data});
+				break;
+			case 3:
+				setDurabilite(data);
+				break;
+			case 4:
+				setDetails({
+					title: data?.title,
+					brand: data?.brand,
+					description: data?.description,
+					links: data?.links ? [...data.links] : undefined,
+					email: data?.email,
+					phone: data?.phone
+				});
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
+			case 7:
+				break;
+		}
 	}
 
 	return <>
@@ -330,15 +330,15 @@ function OffreCreation() {
 			{(() => {
 				switch (currentStep) {
 					case 0:
-						return <Secteurs handleChanges={handleSecteurStepChanges} data={offre.secteur} />
+						return <Secteurs handleChanges={handleStepChanges} data={secteur} />
 					case 1:
-						return <Type handleChanges={handleTypeStepChanges} data={offre.type} />
+						return <Type handleChanges={handleStepChanges} data={type} />
 					case 2:
-						return <Origine handleChanges={handleOrigineStepChanges} data={offre.origine} />
+						return <Origine handleChanges={handleStepChanges} data={origine} />
 					case 3:
-						return <Durabilite data={offre.durabilite} />
+						return <Durabilite handleChanges={handleStepChanges} data={durabilite}/>
 					case 4:
-						return <Details data={offre.details} />
+						return <Details handleChanges={handleStepChanges} data={details}/>
 					case 5:
 						return <Localisations data={offre.localisations} />
 					case 6:
@@ -348,7 +348,7 @@ function OffreCreation() {
 				}
 			})()}
 			<div className='buttons'>
-				{currentStep > 0 ? <label className='buttons__previous' onClick={function (){setCurrentStep(currentStep - 1); window.scrollTo(0, 0);}}>RETOUR</label> : ""}
+				{currentStep > 0 ? <label className='buttons__previous' onClick={function () { setCurrentStep(currentStep - 1); }}>RETOUR</label> : ""}
 				<input type="button" className="button button--green buttons__next" value={currentStep === steps.length - 1 ? "PUBLIER" : "POURSUIVRE"} onClick={() => nextStep()}></input>
 			</div>
 
@@ -356,6 +356,4 @@ function OffreCreation() {
 	</>
 
 };
-
-
 export default OffreCreation;

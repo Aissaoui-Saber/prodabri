@@ -2,17 +2,12 @@ import durable from '../../../Assets/images/icons/filterBar/durable.png';
 import nonDurable from '../../../Assets/images/icons/filterBar/non-durable.png';
 import {useState} from 'react';
 
-function Durabilite({ data }) {
+function Durabilite({ data, handleChanges }) {
 	const [selectedDurabilite, setSelectedDurabilite] = useState(data);
 
 	function selectDurabilite(durabilite) {
-		if (durabilite === selectedDurabilite) {
-			data = undefined;
-			setSelectedDurabilite(undefined);
-		} else {
-			data = durabilite;
-			setSelectedDurabilite(durabilite);
-		}
+		setSelectedDurabilite(durabilite);
+		handleChanges(durabilite);
 	}
 
 	return <div className="step step__durabilite">

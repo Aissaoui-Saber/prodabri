@@ -44,12 +44,7 @@ const domaines_fr = [
 
 
 function getDomaine(id) {
-    let i = domaines_fr.filter(elemnt => {
-        if (elemnt.id === id) {
-            return elemnt;
-        }
-    })
-    return i.length === 1 ? i[0] : null;
+    return domaines_fr.find(element => element.id === id);
 }
 
 let o = { domaines_fr, getDomaine };
