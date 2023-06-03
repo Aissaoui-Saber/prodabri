@@ -58,11 +58,11 @@
 
 .stepBar__names {
 	width: 100%;
-	margin: auto;
+	margin:auto;
 }
 
 .stepBar__names__name {
-	width: 12.5%;
+	width: 11.11%;
 	text-align: center;
 	font-family: Figtree;
 	font-size: 14px;

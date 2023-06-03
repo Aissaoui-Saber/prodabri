@@ -36,177 +36,26 @@ let offre = {
 		phone: undefined
 	},
 	localisations: {
-		lieux_de_production: {
-			select: {
-				wilayas: [
-					{
-						wilayaNumber: 1,
-						name: "Adrar",
-						checked: false,
-						communes: [
-							{ id: 120, name: "Commune 1", checked: false },
-							{ id: 220, name: "Commune 2", checked: false },
-							{ id: 320, name: "Commune 3", checked: false },
-						]
-					},
-					{
-						wilayaNumber: 2,
-						name: "Chlef",
-						checked: false,
-						communes: [
-							{ id: 420, name: "Commune 4", checked: false },
-							{ id: 5020, name: "Commune 5", checked: false },
-							{ id: 602, name: "Commune 6", checked: false },
-							{ id: 1020, name: "Commune 10", checked: false },
-							{ id: 11020, name: "Commune 11", checked: false },
-							{ id: 1202, name: "Commune 12", checked: false },
-						]
-					},
-					{
-						wilayaNumber: 3,
-						name: "Laghouat",
-						checked: false,
-						communes: [
-							{ id: 702, name: "Commune 7", checked: false },
-							{ id: 820, name: "Commune 8", checked: false },
-							{ id: 920, name: "Commune 9", checked: false },
-						]
-					},
-				],
-				defaultOption: false,
-				handleChanges: function (selectedCities) {
-					offre.localisations.lieux_de_production.lieux.push(selectedCities);
-				},
-				getOption: function (optionID) {
-					let o = [];
-					offre.localisations.lieux_de_production.select.wilayas.forEach(wilaya => {
-						wilaya.filter(commune => {
-							if (commune.id === optionID) {
-								o.push({ ...commune, wilaya: wilaya.name, wilayaNumber: wilaya.wilayaNumber });
-							}
-						});
-					});
-					return o.length === 1 ? o[0] : null;
-				},
-			},
-			lieux: [
-				{
-					commune: { id: 220, name: "Commune 2", wilaya: "Adrar", wilayaNumber: 1 },
-					points: [
-						[
-							27.864565,
-							-0.286229
-						],
-						[
-							27.868245,
-							-0.295027
-						],
-					]
-				},
-				{
-					commune: { id: 320, name: "Commune 3", wilaya: "Adrar", wilayaNumber: 1 },
-					points: [
-						[
-							27.894565,
-							-0.386229
-						],
-						[
-							27.168245,
-							-0.095027
-						],
-					]
-				}
-			]
-		},
+		lieux_de_production: [
+			{
+				commune: { id: 220, name: "Commune 2", wilaya: "Adrar", wilayaNumber: 1 },
+				points: [
+					[
+						27.864565,
+						-0.286229
+					],
+					[
+						27.868245,
+						-0.295027
+					],
+				]
+			}
+		],
 		lieux_de_vente: {
-			select: {
-				wilayas: [
-					{
-						wilayaNumber: 1,
-						name: "Adrar",
-						checked: false,
-						communes: [
-							{ id: 120, name: "Commune 1", checked: false },
-							{ id: 220, name: "Commune 2", checked: false },
-							{ id: 320, name: "Commune 3", checked: false },
-						]
-					},
-					{
-						wilayaNumber: 2,
-						name: "Chlef",
-						checked: false,
-						communes: [
-							{ id: 420, name: "Commune 4", checked: false },
-							{ id: 5020, name: "Commune 5", checked: false },
-							{ id: 602, name: "Commune 6", checked: false },
-							{ id: 1020, name: "Commune 10", checked: false },
-							{ id: 11020, name: "Commune 11", checked: false },
-							{ id: 1202, name: "Commune 12", checked: false },
-						]
-					},
-					{
-						wilayaNumber: 3,
-						name: "Laghouat",
-						checked: false,
-						communes: [
-							{ id: 702, name: "Commune 7", checked: false },
-							{ id: 820, name: "Commune 8", checked: false },
-							{ id: 920, name: "Commune 9", checked: false },
-						]
-					},
-				],
-				defaultOption: false,
-				handleChanges: function (selectedCities) {
-					offre.localisations.lieux_de_vente.lieux.push(selectedCities);
-				}
-			},
 			lieux: [],
-			online: undefined
+			online: undefined,
 		},
-		lieux_de_livraison: {
-			select: {
-				wilayas: [
-					{
-						wilayaNumber: 1,
-						name: "Adrar",
-						checked: false,
-						communes: [
-							{ id: 120, name: "Commune 1", checked: false },
-							{ id: 220, name: "Commune 2", checked: false },
-							{ id: 320, name: "Commune 3", checked: false },
-						]
-					},
-					{
-						wilayaNumber: 2,
-						name: "Chlef",
-						checked: false,
-						communes: [
-							{ id: 420, name: "Commune 4", checked: false },
-							{ id: 5020, name: "Commune 5", checked: false },
-							{ id: 602, name: "Commune 6", checked: false },
-							{ id: 1020, name: "Commune 10", checked: false },
-							{ id: 11020, name: "Commune 11", checked: false },
-							{ id: 1202, name: "Commune 12", checked: false },
-						]
-					},
-					{
-						wilayaNumber: 3,
-						name: "Laghouat",
-						checked: false,
-						communes: [
-							{ id: 702, name: "Commune 7", checked: false },
-							{ id: 820, name: "Commune 8", checked: false },
-							{ id: 920, name: "Commune 9", checked: false },
-						]
-					},
-				],
-				defaultOption: false,
-				handleChanges: function (selectedCities) {
-					offre.localisations.lieux_de_livraison.lieux.push(selectedCities);
-				}
-			},
-			lieux: []
-		},
+		lieux_de_livraison: [],
 	},
 	media: {
 		images: [],
@@ -216,18 +65,17 @@ let offre = {
 };
 
 function OffreCreation() {
-	const [currentStep, setCurrentStep] = useState(0);
-	useEffect(e=>{
+	const [currentStep, setCurrentStep] = useState(5);
+	useEffect(e => {
 		window.scrollTo(0, 0);
-	},[currentStep]);
+	}, [currentStep]);
 	document.title = "Publication d'offre";
-	const [secteur, setSecteur] = useState({...offre.secteur});
+	const [secteur, setSecteur] = useState({ ...offre.secteur });
 	const [type, setType] = useState(offre.type);
-	const [origine, setOrigine] = useState({...offre.origine});
+	const [origine, setOrigine] = useState({ ...offre.origine });
 	const [durabilite, setDurabilite] = useState(offre.durabilite);
 	const [details, setDetails] = useState(offre.details);
-
-	
+	const [localisations, setLocalisations] = useState(offre.localisations);
 
 	let steps = [
 		"Secteur",
@@ -236,6 +84,7 @@ function OffreCreation() {
 		"Durabilité",
 		"Détaills",
 		"Emplacements",
+		"Services",
 		"Média",
 		"Récapitulatif"
 	];
@@ -262,10 +111,10 @@ function OffreCreation() {
 				break;
 			case 2:
 				if (origine.origine !== undefined) {
-					if (origine.origine === 'DZ'){
+					if (origine.origine === 'DZ') {
 						setCurrentStep(3);
-					}else{
-						if (origine.pays !== undefined){
+					} else {
+						if (origine.pays !== undefined) {
 							setCurrentStep(3);
 						}
 					}
@@ -277,8 +126,10 @@ function OffreCreation() {
 				}
 				break;
 			case 4:
-				if (offre.details.nom !== undefined && offre.details.description !== undefined) {
+				if (details.title !== undefined && details.description !== undefined) {
 					setCurrentStep(5);
+				} else {
+					alert("Vous devez au moins saisir le titre et la description");
 				}
 				break;
 			case 5:
@@ -289,26 +140,25 @@ function OffreCreation() {
 				break;
 		}
 	}
-	console.log(details);
 	function handleStepChanges(data) {
 		switch (currentStep) {
 			case 0:
-				setSecteur({...data});
+				setSecteur({ ...data });
 				break;
 			case 1:
 				setType(data);
 				break;
 			case 2:
-				setOrigine({...data});
+				setOrigine({ ...data });
 				break;
 			case 3:
 				setDurabilite(data);
 				break;
 			case 4:
 				setDetails({
-					title: data?.title,
+					title: data?.title ? data.title.length == 0 ? undefined : data.title : undefined,
 					brand: data?.brand,
-					description: data?.description,
+					description: data?.description ? data.description.length == 0 ? undefined : data.description : undefined,
 					links: data?.links ? [...data.links] : undefined,
 					email: data?.email,
 					phone: data?.phone
@@ -336,11 +186,11 @@ function OffreCreation() {
 					case 2:
 						return <Origine handleChanges={handleStepChanges} data={origine} />
 					case 3:
-						return <Durabilite handleChanges={handleStepChanges} data={durabilite}/>
+						return <Durabilite handleChanges={handleStepChanges} data={durabilite} />
 					case 4:
-						return <Details handleChanges={handleStepChanges} data={details}/>
+						return <Details handleChanges={handleStepChanges} data={details} />
 					case 5:
-						return <Localisations data={offre.localisations} />
+						return <Localisations handleChanges={handleStepChanges} data={localisations} />
 					case 6:
 						return <Media data={offre.media}></Media>
 					case 7:

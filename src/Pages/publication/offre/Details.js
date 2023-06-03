@@ -18,8 +18,16 @@ function Details({ data, handleChanges }) {
 	const [links, setLinks] = useState(!data?.links ? [] : data.links);
 	const linkUrlRef = useRef();
 	const linkTitleRef = useRef();
-
-
+	useEffect(function(){
+		handleChanges({
+			title:title,
+			brand:brand,
+			description:description,
+			links:[...links],
+			email:email,
+			phone:phone
+		});
+	},[title,brand,description,email,phone,links]);
 	function handleInputTextChange(e) {
 		switch (e.target.attributes.data.value) {
 			case "input-title":

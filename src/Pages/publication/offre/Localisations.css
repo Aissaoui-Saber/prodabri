@@ -11,6 +11,9 @@
 	grid-template-rows: 1fr auto;
 	margin-bottom: 15px;
 	align-items: center;
+    background-color: var(--dark-background);
+    padding: 15px;
+    border-radius: 10px;
 }
 
 .lieu-creation__triangle {
@@ -56,21 +59,10 @@
     display: block;
 }
 
-.lieu-creation__delete {
-    width: 30px;
-	height: 30px;
-	cursor: pointer;
-	align-self: center;
-	transition: scale 0.2s;
-    justify-self: right;
-}
-.lieu-creation__delete:hover{
-    scale:1.3;
-}
-
 .lieu-creation__map {
 	grid-column-start: 3;
 	grid-column-end: 5;
+    z-index: 0;
 }
 
 .step__localisation__store__link{

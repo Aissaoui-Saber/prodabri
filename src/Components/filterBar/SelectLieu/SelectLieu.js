@@ -8,7 +8,11 @@ function getTotalSelectedCities(cities) {
     let checkedCities = 0;
     cities.forEach(wilaya => {
         wilaya.communes.forEach(commune => {
-            if (commune.checked) {
+            if ("checked" in commune) {
+                if (commune.checked){
+                    checkedCities++;
+                }
+            }else{
                 checkedCities++;
             }
         });
@@ -16,19 +20,19 @@ function getTotalSelectedCities(cities) {
     return checkedCities;
 }
 function copyData(data) {
-    let copyWilayas = [...data];
+    //let copyWilayas = [...data];
     let copy = [];
-    copyWilayas.forEach(wilaya => {
+    data.forEach(wilaya => {
         copy.push({ wilayaNumber: wilaya.wilayaNumber, name: wilaya.name, checked: wilaya.checked, communes: [...wilaya.communes] });
-    })
+    });
     return copy;
 }
 
 
 function SelectLieu({ data, handleCitiesChecks, title, readOnly , value}) {
-    const [wilayas, setWilayas] = useState(readOnly ? data.wilaya : copyData(data.wilayas));
+    const [wilayas, setWilayas] = useState(readOnly ? data : copyData(data.wilayas));
     const [isOpen, setIsOpen] = useState(false);
-    const [totalCities, setTotalCities] = useState(readOnly ? value : getTotalSelectedCities(wilayas));
+    const [totalCities, setTotalCities] = useState(readOnly ? getTotalSelectedCities(wilayas) : value );
     
     const refOne = useRef(null);
     const refTwo = useRef(null);
@@ -64,7 +68,7 @@ function SelectLieu({ data, handleCitiesChecks, title, readOnly , value}) {
             <img className="select__icon" src={pin} alt="placeholder"></img>
             <div className="select__data">
                 <label className='select__data__title'>{title}</label>
-                <label className='select__data__value'>{totalCities === 0 ? "Tout les Villes" : (totalCities < 2 ? totalCities + " Ville" : totalCities + " Villes")}</label>
+                <label className='select__data__value'>{totalCities === -1 ? "Tout les Villes" : (totalCities < 2 ? totalCities + " Ville" : totalCities + " Villes")}</label>
             </div>
             <div className={isOpen ? "select__triangle select__triangle--active" : "select__triangle"}></div>
         </div>

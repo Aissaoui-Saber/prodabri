@@ -371,9 +371,9 @@ function FilterBar({filterType}){
         <Select data={offresFilterData.tri} optionsType="tri" />
         <Switch data={offresFilterData.affichage} isBinary={true}></Switch>
         <hr className="filterBar__line"></hr>
-        <SelectLieu data={offresFilterData.lieux_De_Production} handleCitiesChecks={offresFilterData.lieux_De_Production.handleChanges} title="Lieux de production" readOnly={false}></SelectLieu>
-        <SelectLieu data={offresFilterData.lieux_De_Vente} handleCitiesChecks={offresFilterData.lieux_De_Vente.handleChanges} title="Lieux de vente" readOnly={false}></SelectLieu>
-        <SelectLieu data={offresFilterData.lieux_De_Livraison} handleCitiesChecks={offresFilterData.lieux_De_Livraison.handleChanges} title="Lieux de livraison" readOnly={false}></SelectLieu>
+        <SelectLieu data={offresFilterData.lieux_De_Production} handleCitiesChecks={offresFilterData.lieux_De_Production.handleChanges} title="Lieux de production" readOnly={false} value={-1}></SelectLieu>
+        <SelectLieu data={offresFilterData.lieux_De_Vente} handleCitiesChecks={offresFilterData.lieux_De_Vente.handleChanges} title="Lieux de vente" readOnly={false} value={-1}></SelectLieu>
+        <SelectLieu data={offresFilterData.lieux_De_Livraison} handleCitiesChecks={offresFilterData.lieux_De_Livraison.handleChanges} title="Lieux de livraison" readOnly={false} value={-1}></SelectLieu>
         <Select data={offresFilterData.secteurs} optionsType="secteurs"></Select>
         <Switch data={offresFilterData.type} isBinary={false}></Switch>
         <hr className="filterBar__line"></hr>
@@ -387,7 +387,7 @@ function FilterBar({filterType}){
         <Select data={demandesFilterData.tri} optionsType="tri"></Select>
         <Switch data={demandesFilterData.affichage} isBinary={true}></Switch>
         <hr className="filterBar__line"></hr>
-        <SelectLieu data={demandesFilterData.lieux_De_demande} handleCitiesChecks={demandesFilterData.lieux_De_demande.handleChanges} title="Lieux de la demande"></SelectLieu>
+        <SelectLieu data={demandesFilterData.lieux_De_demande} handleCitiesChecks={demandesFilterData.lieux_De_demande.handleChanges} title="Lieux de la demande" readOnly={false} value={-1}></SelectLieu>
         <Select data={demandesFilterData.type} optionsType="type"></Select>
         <input type="button" value="Rechercher (18)" className="button filterBar__rechercher"></input>
     </div>;
