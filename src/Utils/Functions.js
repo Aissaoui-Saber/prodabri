@@ -1,9 +1,9 @@
 
 
 function stringRemoveMultipleSpaces(inputString) {
-	if (inputString.length === 1 && inputString[0] === " "){
+	if (inputString.length === 1 && inputString[0] === " ") {
 		return "";
-	}else{
+	} else {
 		return inputString.replace(/  +/gm, " ");
 	}
 }
@@ -46,6 +46,96 @@ function stringIsNumber(inputString) {
 	return false;
 }
 
+function isValidTime(inputString) {
+	switch (inputString.length) {
+		case 0:
+			return true;
+		case 1:
+			if (/^(0|1|2)/.test(inputString)) {
+				return true;
+			} else {
+				return false;
+			}
+		case 2:
+			if (/^(00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23)/.test(inputString)) {
+				return true;
+			} else {
+				return false;
+			}
+		case 4:
+			if (/^(00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23):(0|1|2|3|4|5)/.test(inputString)) {
+				return true;
+			} else {
+				return false;
+			}
+		case 5:
+			if (/^(00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23):(00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52|53|54|55|56|57|58|59)$/.test(inputString)) {
+				return true;
+			} else {
+				return false;
+			}
+	}
+}
+
+
+function timeIsInOrder(begin, end) {
+	if (parseInt(begin.substring(0, 2)) < parseInt(end.substring(0, 2))) {
+		return true;
+	} else if (parseInt(begin.substring(0, 2)) === parseInt(end.substring(0, 2))) {
+		if (parseInt(begin.substring(3, 5)) < parseInt(end.substring(3, 5))) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function biggerTime(time1, time2) {
+	if (parseInt(time1.substring(0, 2)) < parseInt(time2.substring(0, 2))) {//HH < HH
+		return time2;
+	} else if (parseInt(time1.substring(0, 2)) > parseInt(time2.substring(0, 2))) { //HH > HH
+		return time1;
+	} else { // HH == HH
+		if (parseInt(time1.substring(3, 5)) < parseInt(time2.substring(3, 5))) { //MM < MM
+			return time2;
+		} else {//MM >= MM
+			return time1;
+		}
+	}
+}
+
+function periodIncludeTime(period, time) {
+	if (biggerTime(period.start, time) === time && biggerTime(period.end, time) === period.end) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function periodsAreIntersected(period1, period2) {
+	if (periodIncludeTime(period1, period2.start) || (periodIncludeTime(period1, period2.end))) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function sortPeriods(periods) {
+	let newPeriods = [...periods];
+	if (periods.length > 1) {
+		let temp = null;
+		for (let i = 0; i < periods.length; i++) {
+			for (let j = 0; j < periods.length-1; j++) {
+				if (biggerTime(newPeriods[j].start, newPeriods[j + 1].start) === newPeriods[j].start) {
+					temp = { ...newPeriods[j] };
+					newPeriods[j] = { ...newPeriods[j + 1] };
+					newPeriods[j + 1] = { ...temp };
+				}
+			}
+		}
+	}
+	return newPeriods;
+}
+
 let o = {
 	stringRemoveMultipleSpaces,
 	stringRemoveBeginingSpaces,
@@ -54,6 +144,10 @@ let o = {
 	isValidEmail,
 	isValidPhoneNumber,
 	stringIsNumber,
-	stringRemoveAllSpaces
+	stringRemoveAllSpaces,
+	isValidTime,
+	timeIsInOrder,
+	periodsAreIntersected,
+	sortPeriods
 };
 export default o;

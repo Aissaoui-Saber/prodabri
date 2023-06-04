@@ -1,16 +1,16 @@
 .step__localisation__header {
-	display: grid;
-	grid-template-columns: 2fr 1fr;
-	align-items: center;
-	margin-bottom: 15px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
 .lieu-creation {
-	display: grid;
-	grid-template-columns: 16px 30px 1fr 1fr;
-	grid-template-rows: 1fr auto;
-	margin-bottom: 15px;
-	align-items: center;
+    display: grid;
+    grid-template-columns: 16px 30px 1fr 1fr;
+    grid-template-rows: 1fr auto;
+    margin-bottom: 15px;
+    align-items: center;
     background-color: var(--dark-background);
     padding: 15px;
     border-radius: 10px;
@@ -34,6 +34,7 @@
     border-left-color: var(--accent-blue);
 
 }
+
 .lieu-creation__triangle--open {
     transform: rotate(90deg);
     translate: -5px 4px;
@@ -42,30 +43,30 @@
 }
 
 .lieu-creation__icon {
-	width: 30px;
-	height: 30px;
+    width: 30px;
+    height: 30px;
 }
 
 .lieu-creation__data__commune {
-	font-weight: 800;
-	color: var(--dark-text);
+    font-weight: 800;
+    color: var(--dark-text);
     font-family: figTree;
     display: block;
 }
 
 .lieu-creation__data__wilaya {
-	color: var(--accent-blue);
+    color: var(--accent-blue);
     font-family: figTree;
     display: block;
 }
 
 .lieu-creation__map {
-	grid-column-start: 3;
-	grid-column-end: 5;
+    grid-column-start: 3;
+    grid-column-end: 5;
     z-index: 0;
 }
 
-.step__localisation__store__link{
+.step__localisation__store__link {
     margin-left: 20px;
     width: 60%;
 }

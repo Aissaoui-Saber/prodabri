@@ -7,6 +7,7 @@ import { MapContainer, TileLayer, useMapEvents, Marker, Popup } from 'react-leaf
 import 'leaflet/dist/leaflet.css';
 import functions from '../../../Utils/Functions';
 import './Localisations.css';
+import LieuVenteDialog from './LieuVenteDialog';
 
 function LocationMarker({ data, handleChanges }) {
 	//console.log(data);
@@ -79,7 +80,7 @@ function LieuCreation({ data, handleChanges }) {
 			<label className="lieu-creation__data__commune">{data.name + " (" + totalLieux + " Lieux)"}</label>
 			<label className="lieu-creation__data__wilaya">{data.wilaya}</label>
 		</div>
-
+		<LieuVenteDialog></LieuVenteDialog>
 		{
 			lieuItemOpen ? <div className='lieu-creation__map'><p className={lieuItemOpen ? "step__paragraph" : "step__paragraph hidden"}>Préciser la position exacte sur la carte des lieux de production dans cette ville</p>
 				<MapContainer center={[36.151988, 4.795080]} zoom={13} scrollWheelZoom={true}>

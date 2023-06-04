@@ -1,0 +1,103 @@
+dialog::backdrop {
+    /* native */
+    background-color: rgba(14, 28, 34, 0.726);
+    backdrop-filter: blur(5px);
+    margin: auto;
+}
+
+.dialog {
+    background-color: var(--dark-foreground);
+    border: none;
+    outline: none;
+    width: 40%;
+    margin: auto;
+    border-radius: 15px;
+    padding: 40px;
+}
+
+.dialog__day{
+    display: grid;
+    grid-template-columns: 25% 75%;
+    font-family: figTree;
+    margin: 10px;
+}
+
+.dialog__day__name{
+    color:var(--dark-text);
+    font-weight: 600;
+    font-size: 20px;
+}
+.dialog__day__periods{
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 3px;
+}
+.dialog__day__period{
+    display: flex;
+    align-items: center;
+}
+
+.dialog__day__period:hover > .dialog__day__period__remove{
+    visibility: visible;
+}
+.dialog__day__period__remove{
+    visibility: hidden;
+}
+
+.dialog__day__periods__value{
+    color:var(--dark-text);
+}
+
+
+
+.period__form__add{
+    color: gray;
+    cursor: pointer;
+    transition: color 0.3s;
+    user-select: none;
+    width: fit-content;
+}
+.period__form__add:hover{
+    color: var(--accent-blue);
+}
+
+.period__form{
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr;
+    column-gap: 5px;
+    align-items: center;
+    transition: 0.5s;
+}
+
+
+.period__form__label{
+    color: var(--dark-text);
+}
+
+.period__time__input{
+    background-color: var(--dark-background);
+    padding: 5px 10px;
+    color: var(--dark-text);
+    width: 50%;
+    text-align: center;
+    border-style: solid;
+    border-width: 1px;
+    border-color: transparent;
+    transition: border-color 0.3s, color 0.3s;
+}
+
+.period__time__input:focus{
+    border-color: var(--accent-blue);
+}
+
+.dialog__valider{
+    display: block;
+    margin: auto;
+    width: 30%;
+    font-family: montserrat;
+    padding: 5px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
