@@ -3,6 +3,7 @@ dialog::backdrop {
     background-color: rgba(14, 28, 34, 0.726);
     backdrop-filter: blur(5px);
     margin: auto;
+    overflow-y: hidden;
 }
 
 .dialog {
@@ -13,6 +14,7 @@ dialog::backdrop {
     margin: auto;
     border-radius: 15px;
     padding: 40px;
+    overscroll-behavior: contain;
 }
 
 .dialog__day{

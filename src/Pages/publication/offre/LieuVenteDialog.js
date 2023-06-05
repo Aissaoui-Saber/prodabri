@@ -56,12 +56,12 @@ function PeriodCreation({ handleChanges, data }) {
         }
     }
 
-    useEffect(e=>{
-        if (inputsVisible){
+    useEffect(e => {
+        if (inputsVisible) {
             startRef.current.focus();
         }
-        
-    },[inputsVisible])
+
+    }, [inputsVisible])
 
     function handleInputChanges(e) {
         if (e.target === startRef.current) {
@@ -112,8 +112,8 @@ function PeriodCreation({ handleChanges, data }) {
         }
     }
 
-    function handleInputBlur(e){
-        if (startRef.current.value.length == 0 && endRef.current.value.length == 0){
+    function handleInputBlur(e) {
+        if (startRef.current.value.length == 0 && endRef.current.value.length == 0) {
             setInputVisible(false);
         }
     }
@@ -124,8 +124,8 @@ function PeriodCreation({ handleChanges, data }) {
     </div>
 }
 
-function LieuVenteDialog({handleChanges}) {
-    const [times, setTimes] = useState([[],[],[],[],[],[],[]]);
+function LieuVenteDialog({ handleChanges }) {
+    const [times, setTimes] = useState([[], [], [], [], [], [], []]);
     const daysNames_fr = ["Samedi", "Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"];
     let [id, setID] = useState(0);
     const nomRef = useRef();
@@ -135,6 +135,8 @@ function LieuVenteDialog({handleChanges}) {
         if (!dialog.current.open) {
             dialogPolyfill.registerDialog(dialog.current);
             dialog.current.showModal();
+        } else {
+            dialog.current.close();
         }
     }, [dialog]);
 
@@ -147,21 +149,21 @@ function LieuVenteDialog({handleChanges}) {
     }
 
     function addPeriod(data) {
-        data.periods[data.periods.length-1].id = id;
-        setID(id+1);
+        data.periods[data.periods.length - 1].id = id;
+        setID(id + 1);
         let temp = [];
-        times.forEach((day,index)=> {
-            if (index == data.day){
+        times.forEach((day, index) => {
+            if (index == data.day) {
                 temp.push([...functions.sortPeriods(data.periods)]);
-            }else{
+            } else {
                 temp.push([...day]);
             }
         });
         setTimes(temp);
     }
 
-    function closeDialog(){
-        //handleChanges({nom:nomRef.current.value, horaires: times});
+    function closeDialog() {
+        handleChanges({nom:nomRef.current.value, horaires: times});
         dialog.current.close();
     }
 

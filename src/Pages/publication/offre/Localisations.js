@@ -9,14 +9,23 @@ import functions from '../../../Utils/Functions';
 import './Localisations.css';
 import LieuVenteDialog from './LieuVenteDialog';
 
-function LocationMarker({ data, handleChanges }) {
-	//console.log(data);
+function LocationMarker({ data, handleChanges, timesDialog }) {
 	const [positions, setPositions] = useState(data);
+	//const [dialogOpen, setDialogOpen] = useState(false);
 	const map = useMapEvents({
 		click(e) {
 			//console.log(e.target);
-			setPositions([...positions, e.latlng]);
-			handleChanges([...positions, e.latlng]);
+			if (timesDialog) {
+				//setDialogOpen(true);
+				setPositions([...positions, e.latlng]);
+				handleChanges([...positions, e.latlng]);
+			} else {
+				//handleChanges({point: e.latlng});
+				setPositions([...positions, e.latlng]);
+				handleChanges([...positions, e.latlng]);
+			}
+
+			//handleChanges([...positions, e.latlng]);
 			//map.locate()
 		},
 		/*locationfound(e) {
@@ -25,27 +34,51 @@ function LocationMarker({ data, handleChanges }) {
 		},*/
 
 	})
-	return positions.length == 0 ? null : (
-		positions.map(pos => {
-			return <Marker key={pos.lng + "" + pos.lat} position={[pos.lat, pos.lng]} eventHandlers={{
-				mouseover: (e) => {
-					//alert('marker clicked');
-				},
-				click: (e) => {
-					//console.log(e.target);
-					//map.removeLayer(e.target);
-					let f = positions.filter(p => (p.lat !== pos.lat && p.lng !== pos.lng));
-					setPositions(f);
-					handleChanges(f);
-				}
-			}} >
-			</Marker>
-		})
-	)
+	if (!timesDialog) {
+		return positions.length == 0 ? null : (
+			positions.map(pos => {
+				return <Marker key={pos.lng + "" + pos.lat} position={[pos.lat, pos.lng]} eventHandlers={{
+					mouseover: (e) => {
+						//alert('marker clicked');
+					},
+					click: (e) => {
+						//console.log(e.target);
+						//map.removeLayer(e.target);
+						let f = positions.filter(p => (p.lat !== pos.lat && p.lng !== pos.lng));
+						setPositions(f);
+						handleChanges(f);
+					}
+				}} >
+				</Marker>
+			})
+		)
+	} else {
+		return positions.length == 0 ? null : (
+			positions.map(pos => {
+				return <Marker key={pos.lng + "" + pos.lat} position={[pos.lat, pos.lng]} eventHandlers={{
+					mouseover: (e) => {
+
+					},
+					click: (e) => {
+						//console.log(e.target);
+						//map.removeLayer(e.target);
+						//let f = positions.filter(p => (p.lat !== pos.lat && p.lng !== pos.lng));
+						//setPositions(f);
+						//handleChanges(f);
+					}
+				}} >
+					<Popup>
+						<h1>horaires</h1>
+					</Popup>
+				</Marker>
+			})
+		)
+	}
+
 }
 
 
-function LieuCreation({ data, handleChanges }) {
+function LieuProductionCreation({ data, handleChanges }) {
 	const mapRef = useRef();
 	const [lieuItemOpen, setLieuItemOpen] = useState(false);
 	const [totalLieux, setTotalLieux] = useState(data.points.length);
@@ -80,7 +113,7 @@ function LieuCreation({ data, handleChanges }) {
 			<label className="lieu-creation__data__commune">{data.name + " (" + totalLieux + " Lieux)"}</label>
 			<label className="lieu-creation__data__wilaya">{data.wilaya}</label>
 		</div>
-		<LieuVenteDialog></LieuVenteDialog>
+
 		{
 			lieuItemOpen ? <div className='lieu-creation__map'><p className={lieuItemOpen ? "step__paragraph" : "step__paragraph hidden"}>Préciser la position exacte sur la carte des lieux de production dans cette ville</p>
 				<MapContainer center={[36.151988, 4.795080]} zoom={13} scrollWheelZoom={true}>
@@ -89,9 +122,81 @@ function LieuCreation({ data, handleChanges }) {
 						url="https://mt.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
 					//url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
 					/>
-					<LocationMarker data={data.points} handleChanges={handlePositionsChanges} ></LocationMarker>
+					<LocationMarker data={data.points} handleChanges={handlePositionsChanges} timesDialog={false}></LocationMarker>
 				</MapContainer></div> : ""
 		}
+	</div>
+}
+
+function LieuVenteCreation({ data, handleChanges }) {
+	const mapRef = useRef();
+	const [lieuItemOpen, setLieuItemOpen] = useState(false);
+	const [totalLieux, setTotalLieux] = useState(data.points.length);
+	const [dialogIsOpen, setDialogIsOpen] = useState(false);
+	const [tempPosition, setTempPosition] = useState(null);
+	useEffect(() => {
+		const L = require("leaflet");
+
+		delete L.Icon.Default.prototype._getIconUrl;
+
+		L.Icon.Default.mergeOptions({
+			iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+			iconUrl: require("leaflet/dist/images/marker-icon.png"),
+			shadowUrl: require("leaflet/dist/images/marker-shadow.png")
+		});
+	}, []);
+
+	useEffect(() => {
+		if (dialogIsOpen) {
+			document.body.style.overflowY = "hidden";
+		} else {
+			document.body.style.overflowY = "scroll";
+		}
+	}, [dialogIsOpen])
+	function openCloseLieuItem() {
+		if (lieuItemOpen) {
+			setLieuItemOpen(false);
+		} else {
+			setLieuItemOpen(true);
+		}
+	}
+
+	function handlePositionsChanges(position) {
+		setTempPosition(position);
+		setDialogIsOpen(true);
+		//setTotalLieux(positions.length);
+		//handleChanges({ commune: data.id, points: positions });
+	}
+
+	function handleDialogDataChanges(info) {
+		setDialogIsOpen(false);
+		//console.log({tempPosition, info: data});
+		setTotalLieux(data.points.length + 1);
+		handleChanges({ commune: data.id, point: { point: tempPosition[tempPosition.length - 1], info: info } });
+	}
+
+	return <div className="lieu-creation">
+		<div className={lieuItemOpen ? "lieu-creation__triangle lieu-creation__triangle--open" : "lieu-creation__triangle"} onClick={openCloseLieuItem}></div>
+		<img className='lieu-creation__icon' src={pin} alt="lieu" />
+		<div className='lieu-creation__data'>
+			<label className="lieu-creation__data__commune">{data.name + " (" + totalLieux + " Lieux)"}</label>
+			<label className="lieu-creation__data__wilaya">{data.wilaya}</label>
+		</div>
+
+		{
+			lieuItemOpen ? <div className='lieu-creation__map'><p className={lieuItemOpen ? "step__paragraph" : "step__paragraph hidden"}>Préciser la position exacte sur la carte des lieux de production dans cette ville</p>
+				<MapContainer center={[36.151988, 4.795080]} zoom={13} scrollWheelZoom={true}>
+					<TileLayer
+						attribution='&copy; <a href="https://www.google.com/intl/en-GB_ALL/permissions/geoguidelines/">Google Maps</a>'
+						url="https://mt.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
+					//url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+					/>
+					<LocationMarker data={data.points} handleChanges={handlePositionsChanges} timesDialog={true}></LocationMarker>
+				</MapContainer>
+				{dialogIsOpen ? <LieuVenteDialog handleChanges={handleDialogDataChanges}></LieuVenteDialog> : ""}
+			</div> : ""
+		}
+
 	</div>
 }
 
@@ -227,7 +332,8 @@ function Localisations({ data, handleChanges }) {
 		}
 
 	}
-	function handlePositionsChanges(data) {
+	function handleProductionPositionsChanges(data) {
+		//console.log(lieuxProduction);
 		let temp = lieuxProduction.map(function (element) {
 			if (element.id == data.commune) {
 				element.points = data.points;
@@ -235,6 +341,17 @@ function Localisations({ data, handleChanges }) {
 			return element;
 		});
 		setLieuxProduction([...temp]);
+	}
+	function handleVentePositionsChanges(data) {
+		//console.log(data);
+		let temp = lieuxVente.map(function (element) {
+			if (element.id == data.commune) {
+				element.points.push(data.point);
+			}
+			return element;
+		});
+		console.log(temp);
+		setLieuxVente([...temp]);
 	}
 
 	useEffect(() => {
@@ -252,7 +369,7 @@ function Localisations({ data, handleChanges }) {
 		</div>
 		{
 			lieuxProduction.map(lieu => {
-				return <LieuCreation data={lieu} handleChanges={handlePositionsChanges} />
+				return <LieuProductionCreation data={lieu} handleChanges={handleProductionPositionsChanges} />
 			})
 		}
 		<hr className='step__line' />
@@ -262,7 +379,7 @@ function Localisations({ data, handleChanges }) {
 		</div>
 		{
 			lieuxVente.map(lieu => {
-				return <LieuCreation data={lieu} />
+				return <LieuVenteCreation data={{ ...lieu, info: lieu.info }} handleChanges={handleVentePositionsChanges} />
 			})
 		}
 		<div className={storeSelected ? "step__option step__option--selected" : "step__option"} onClick={selectStore}>
