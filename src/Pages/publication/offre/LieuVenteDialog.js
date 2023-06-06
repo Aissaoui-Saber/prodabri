@@ -162,8 +162,13 @@ function LieuVenteDialog({ handleChanges }) {
         setTimes(temp);
     }
 
-    function closeDialog() {
+    function validateDialog() {
         handleChanges({nom:nomRef.current.value, horaires: times});
+        dialog.current.close();
+    }
+
+    function closeDialog(){
+        handleChanges(null);
         dialog.current.close();
     }
 
@@ -199,7 +204,8 @@ function LieuVenteDialog({ handleChanges }) {
             })
         }
         <br></br>
-        <input type="button" className="button--green dialog__valider" value={"Valider"} onClick={closeDialog} ></input>
+        <input type="button" className="button--green dialog__valider" value={"Valider"} onClick={validateDialog} ></input>
+        <div style={{display: 'flex', alignItems:'center', justifyItems: 'center', justifyContent:'center'}}><label className="dialog__cancel" onClick={closeDialog}>Annuler</label></div>
     </dialog>
 }
 

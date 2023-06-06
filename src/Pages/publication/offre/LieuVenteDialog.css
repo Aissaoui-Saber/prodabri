@@ -103,3 +103,16 @@ dialog::backdrop {
     border-radius: 10px;
     cursor: pointer;
 }
+
+.dialog__cancel{
+    color: white;
+    font-family: figTree;
+    font-size: 18px;
+    padding: 5px;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.3s;
+}
+.dialog__cancel:hover{
+    color: tomato;
+}
