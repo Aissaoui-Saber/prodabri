@@ -53,9 +53,8 @@ let offre = {
 		],
 		lieux_de_vente: {
 			lieux: [],
-			online: undefined,
+			onlineStore: undefined,
 		},
-		lieux_de_livraison: [],
 	},
 	media: {
 		images: [],
@@ -165,6 +164,7 @@ function OffreCreation() {
 				});
 				break;
 			case 5:
+				console.log(data);
 				break;
 			case 6:
 				break;

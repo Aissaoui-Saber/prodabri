@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useImperativeHandle, forwardRef } from 'react';
 import remove from '../../../Assets/images/delete.png';
 import SelectLieu from '../../../Components/filterBar/SelectLieu/SelectLieu';
 import pin from '../../../Assets/images/icons/filterBar/placeholder.png';
@@ -9,15 +9,24 @@ import functions from '../../../Utils/Functions';
 import './Localisations.css';
 import LieuVenteDialog from './LieuVenteDialog';
 
-function LocationMarker({ data, handleChanges, timesDialog, handleDelete }) {
+const LocationMarker = forwardRef(({ data, handleChanges, timesDialog, handleDelete }, ref) => {
 	const [positions, setPositions] = useState(data);
-	//const [dialogOpen, setDialogOpen] = useState(false);
+	const markerRef = useRef();
+
+	useImperativeHandle(ref, () => ({
+		deleteMarker() {
+			positions.pop();
+		}
+	}));
+
+
 	const map = useMapEvents({
 		click(e) {
 			if (timesDialog) {
 				//setDialogOpen(true);
 				setPositions([...positions, e.latlng]);
-				handleChanges([...positions, e.latlng]);
+				handleChanges({data: [...positions, e.latlng], marker: markerRef});
+
 			} else {
 				//handleChanges({point: e.latlng});
 				setPositions([...positions, e.latlng]);
@@ -33,7 +42,7 @@ function LocationMarker({ data, handleChanges, timesDialog, handleDelete }) {
 
 	})
 
-	function deleteVente(pos,e){
+	function deleteVente(pos, e) {
 		e.stopPropagation();
 		let f = positions.filter(p => (p.lat !== pos.point.lat && p.lng !== pos.point.lng));
 		handleDelete(pos);
@@ -44,7 +53,7 @@ function LocationMarker({ data, handleChanges, timesDialog, handleDelete }) {
 			positions.map(pos => {
 				return <Marker key={pos.lng + "" + pos.lat} position={[pos.lat, pos.lng]} eventHandlers={{
 					mouseover: (e) => {
-						//alert('marker clicked');
+
 					},
 					click: (e) => {
 						//map.removeLayer(e.target);
@@ -58,16 +67,13 @@ function LocationMarker({ data, handleChanges, timesDialog, handleDelete }) {
 		)
 	} else {
 		return positions.length == 0 ? null : (
-			positions.map((pos,index) => {
-				return <Marker key={pos.lng + "" + pos.lat} position={[pos.lat, pos.lng]} eventHandlers={{
+			positions.map((pos, index) => {
+				return <Marker ref={markerRef} key={pos.lng + "" + pos.lat} position={[pos.lat, pos.lng]} eventHandlers={{
 					mouseover: (e) => {
 
 					},
 					click: (e) => {
-						//map.removeLayer(e.target);
-						//let f = positions.filter(p => (p.lat !== pos.lat && p.lng !== pos.lng));
-						//setPositions(f);
-						//handleChanges(f);
+
 					}
 				}} >
 					<Popup>
@@ -77,83 +83,83 @@ function LocationMarker({ data, handleChanges, timesDialog, handleDelete }) {
 							<label className='lieuxVente__popUp__info__times__dayName'>Samedi</label>
 							<div className='lieuxVente__popUp__info__times__periods'>
 								{
-									data[index]?.info.horaires[0].length !== 0 ? 
-									data[index]?.info.horaires[0].map(period=>{
-										return <label>{period.start + " - " + period.end}</label>
-									}) : <label>Indisponible</label>
+									data[index]?.info.horaires[0].length !== 0 ?
+										data[index]?.info.horaires[0].map(period => {
+											return <label>{period.start + " - " + period.end}</label>
+										}) : <label>Indisponible</label>
 								}
 							</div>
 							<hr className='lieuxVente__popUp__info__times__line'></hr>
 							<label className='lieuxVente__popUp__info__times__dayName'>Dimanche</label>
 							<div className='lieuxVente__popUp__info__times__periods'>
 								{
-									data[index]?.info.horaires[1].length !== 0 ? 
-									data[index]?.info.horaires[1].map(period=>{
-										return <label>{period.start + " - " + period.end}</label>
-									}) : <label>Indisponible</label>
+									data[index]?.info.horaires[1].length !== 0 ?
+										data[index]?.info.horaires[1].map(period => {
+											return <label>{period.start + " - " + period.end}</label>
+										}) : <label>Indisponible</label>
 								}
 							</div>
 							<hr className='lieuxVente__popUp__info__times__line'></hr>
 							<label className='lieuxVente__popUp__info__times__dayName'>Lundi</label>
 							<div className='lieuxVente__popUp__info__times__periods'>
 								{
-									data[index]?.info.horaires[2].length !== 0 ? 
-									data[index]?.info.horaires[2].map(period=>{
-										return <label>{period.start + " - " + period.end}</label>
-									}) : <label>Indisponible</label>
+									data[index]?.info.horaires[2].length !== 0 ?
+										data[index]?.info.horaires[2].map(period => {
+											return <label>{period.start + " - " + period.end}</label>
+										}) : <label>Indisponible</label>
 								}
 							</div>
 							<hr className='lieuxVente__popUp__info__times__line'></hr>
 							<label className='lieuxVente__popUp__info__times__dayName'>Mardi</label>
 							<div className='lieuxVente__popUp__info__times__periods'>
 								{
-									data[index]?.info.horaires[3].length !== 0 ? 
-									data[index]?.info.horaires[3].map(period=>{
-										return <label>{period.start + " - " + period.end}</label>
-									}) : <label>Indisponible</label>
+									data[index]?.info.horaires[3].length !== 0 ?
+										data[index]?.info.horaires[3].map(period => {
+											return <label>{period.start + " - " + period.end}</label>
+										}) : <label>Indisponible</label>
 								}
 							</div>
 							<hr className='lieuxVente__popUp__info__times__line'></hr>
 							<label className='lieuxVente__popUp__info__times__dayName'>Mercredi</label>
 							<div className='lieuxVente__popUp__info__times__periods'>
 								{
-									data[index]?.info.horaires[4].length !== 0 ? 
-									data[index]?.info.horaires[4].map(period=>{
-										return <label>{period.start + " - " + period.end}</label>
-									}) : <label>Indisponible</label>
+									data[index]?.info.horaires[4].length !== 0 ?
+										data[index]?.info.horaires[4].map(period => {
+											return <label>{period.start + " - " + period.end}</label>
+										}) : <label>Indisponible</label>
 								}
 							</div>
 							<hr className='lieuxVente__popUp__info__times__line'></hr>
 							<label className='lieuxVente__popUp__info__times__dayName'>Jeudi</label>
 							<div className='lieuxVente__popUp__info__times__periods'>
 								{
-									data[index]?.info.horaires[5].length !== 0 ? 
-									data[index]?.info.horaires[5].map(period=>{
-										return <label>{period.start + " - " + period.end}</label>
-									}) : <label>Indisponible</label>
+									data[index]?.info.horaires[5].length !== 0 ?
+										data[index]?.info.horaires[5].map(period => {
+											return <label>{period.start + " - " + period.end}</label>
+										}) : <label>Indisponible</label>
 								}
 							</div>
 							<hr className='lieuxVente__popUp__info__times__line'></hr>
 							<label className='lieuxVente__popUp__info__times__dayName'>Vendredi</label>
 							<div className='lieuxVente__popUp__info__times__periods'>
 								{
-									data[index]?.info.horaires[6].length !== 0 ? 
-									data[index]?.info.horaires[6].map(period=>{
-										return <label>{period.start + " - " + period.end}</label>
-									}) : <label>Indisponible</label>
+									data[index]?.info.horaires[6].length !== 0 ?
+										data[index]?.info.horaires[6].map(period => {
+											return <label>{period.start + " - " + period.end}</label>
+										}) : <label>Indisponible</label>
 								}
 							</div>
 							<hr className='lieuxVente__popUp__info__times__line'></hr>
-							<label className='lieuxVente__popUp__info__delete' onClick={(e)=>deleteVente(data[index],e)}>Supprimer</label>
+							<label className='lieuxVente__popUp__info__delete' onClick={(e) => deleteVente(data[index], e)}>Supprimer</label>
 						</div>
-						
+
 					</Popup>
 				</Marker>
 			})
 		)
 	}
 
-}
+});
 
 
 function LieuProductionCreation({ data, handleChanges }) {
@@ -208,6 +214,7 @@ function LieuProductionCreation({ data, handleChanges }) {
 
 function LieuVenteCreation({ data, handleChanges, handleDelete }) {
 	const mapRef = useRef();
+	const markerRef = useRef();
 	const [lieuItemOpen, setLieuItemOpen] = useState(false);
 	const [totalLieux, setTotalLieux] = useState(data.points.length);
 	const [dialogIsOpen, setDialogIsOpen] = useState(false);
@@ -240,8 +247,8 @@ function LieuVenteCreation({ data, handleChanges, handleDelete }) {
 	}
 
 
-	function handleDeleteChanges(data){
-		setTotalLieux(totalLieux -1);
+	function handleDeleteChanges(data) {
+		setTotalLieux(totalLieux - 1);
 		handleDelete(data);
 	}
 
@@ -254,9 +261,13 @@ function LieuVenteCreation({ data, handleChanges, handleDelete }) {
 
 	function handleDialogDataChanges(info) {
 		setDialogIsOpen(false);
-		if (info !== null){
-			handleChanges({ commune: data.id, point: { point: tempPosition[tempPosition.length - 1], info: info } });
-			setTotalLieux(data.points.length + 1);
+		if (info !== null) {
+			handleChanges({ commune: data.id, point: { point: tempPosition.data[tempPosition.data.length - 1], info: info } });
+			setTotalLieux(data.points.length);
+		} else {
+			setTotalLieux(data.points.length -1);
+			markerRef.current.deleteMarker();
+			mapRef.current.removeLayer(tempPosition.marker.current);
 		}
 	}
 
@@ -269,14 +280,14 @@ function LieuVenteCreation({ data, handleChanges, handleDelete }) {
 		</div>
 
 		{
-			lieuItemOpen ? <div className='lieu-creation__map'><p className={lieuItemOpen ? "step__paragraph" : "step__paragraph hidden"}>Préciser la position exacte sur la carte des lieux de production dans cette ville</p>
-				<MapContainer center={[36.151988, 4.795080]} zoom={13} scrollWheelZoom={true}>
+			lieuItemOpen ? <div className='lieu-creation__map'><p className={lieuItemOpen ? "step__paragraph" : "step__paragraph hidden"}>Préciser la position exacte sur la carte des lieux de vente dans cette ville</p>
+				<MapContainer ref={mapRef} center={[36.151988, 4.795080]} zoom={13} scrollWheelZoom={true}>
 					<TileLayer
 						attribution='&copy; <a href="https://www.google.com/intl/en-GB_ALL/permissions/geoguidelines/">Google Maps</a>'
 						url="https://mt.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
 					//url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
 					/>
-					<LocationMarker data={data.points} handleChanges={handlePositionsChanges} timesDialog={true} handleDelete={handleDeleteChanges}></LocationMarker>
+					<LocationMarker ref={markerRef} data={data.points} handleChanges={handlePositionsChanges} timesDialog={true} handleDelete={handleDeleteChanges}></LocationMarker>
 				</MapContainer>
 				{dialogIsOpen ? <LieuVenteDialog handleChanges={handleDialogDataChanges}></LieuVenteDialog> : ""}
 			</div> : ""
@@ -436,21 +447,25 @@ function Localisations({ data, handleChanges }) {
 		setLieuxVente([...temp]);
 	}
 
-	function handleVenteDeletePosition(data){
+	function handleVenteDeletePosition(data) {
 		let temp = [];
-		lieuxVente.forEach(commune=>{
+		lieuxVente.forEach(commune => {
 			let points = [];
-			commune.points.forEach((point,index)=>{
-				if (point === data){
+			commune.points.forEach((point, index) => {
+				if (point === data) {
 					//commune.points.splice(index,1);
-				}else{
-					points.push({...point});					
+				} else {
+					points.push({ ...point });
 				}
 			});
-			temp.push({...commune, points: [...points]})
+			temp.push({ ...commune, points: [...points] })
 		});
 		setLieuxVente([...temp]);
 	}
+
+	useEffect(()=>{
+		handleChanges({lieuxVente: lieuxVente, lieuxProduction: lieuxProduction});
+	},[lieuxVente,lieuxProduction]);
 
 	useEffect(() => {
 		if (storeSelected) {
@@ -477,7 +492,7 @@ function Localisations({ data, handleChanges }) {
 		</div>
 		{
 			lieuxVente.map(lieu => {
-				return <LieuVenteCreation data={{ ...lieu, info: lieu.info }} handleChanges={handleVentePositionsChanges} handleDelete={handleVenteDeletePosition}/>
+				return <LieuVenteCreation data={{ ...lieu, info: lieu.info }} handleChanges={handleVentePositionsChanges} handleDelete={handleVenteDeletePosition} />
 			})
 		}
 		<div className={storeSelected ? "step__option step__option--selected" : "step__option"} onClick={selectStore}>
