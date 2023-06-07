@@ -464,8 +464,8 @@ function Localisations({ data, handleChanges }) {
 	}
 
 	useEffect(()=>{
-		handleChanges({lieuxVente: lieuxVente, lieuxProduction: lieuxProduction});
-	},[lieuxVente,lieuxProduction]);
+		handleChanges({lieuxVente: {lieux: lieuxVente, storeLink: storeLink}, lieuxProduction: lieuxProduction});
+	},[lieuxVente,lieuxProduction, storeLink]);
 
 	useEffect(() => {
 		if (storeSelected) {

@@ -1,0 +1,60 @@
+.step__services__commande{
+    background-color: var(--dark-background);
+    border-radius: 10px;
+    margin: 10px 0px;
+    padding: 20px;
+}
+
+.step__services__ajouter{
+    padding: 5px 10px;
+}
+
+.step__services__tarif{
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
+    align-items: center;
+    border: 2px solid var(--gray);
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px 0px;
+}
+.step__services__tarif__inputs{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 10px;
+    
+}
+.step__services__tarif__inputs label{
+    color: var(--dark-text);
+    font-size: 14px;
+    font-family: figTree;
+    margin-left: 10px;
+}
+
+.tarif__input__text{
+    background-color: var(--dark-foreground);
+    color: var(--dark-text);
+    padding: 5px 10px;
+    font-size: 16px;
+}
+
+.tarif__input__text:focus{
+    outline-style: solid;
+    outline-color: var(--accent-blue);
+}
+.step__service__tarif__selcet{
+    background-color: var(--dark-foreground);
+    color: var(--dark-text);
+    padding: 5px 10px;
+    outline-style: solid;
+    outline-width: 2px;
+    outline-color: transparent;
+    border-radius: 10px;
+    border: none;
+    transition: outline-color 0.3s;
+    font-size: 16px;
+}
+
+.step__service__tarif__selcet:focus{
+    outline-color: var(--accent-blue);
+}

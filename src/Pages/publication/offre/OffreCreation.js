@@ -10,6 +10,7 @@ import Origine from './Origine';
 import Durabilite from './Durabilite';
 import Details from './Details';
 import Localisations from './Localisations';
+import Services from './Services';
 
 import { useState, useRef, useEffect } from 'react';
 
@@ -56,6 +57,10 @@ let offre = {
 			onlineStore: undefined,
 		},
 	},
+	services: {
+		commande:{},
+		rdv:{},
+	},
 	media: {
 		images: [],
 		mainImage: undefined,
@@ -64,7 +69,7 @@ let offre = {
 };
 
 function OffreCreation() {
-	const [currentStep, setCurrentStep] = useState(5);
+	const [currentStep, setCurrentStep] = useState(6);
 	useEffect(e => {
 		window.scrollTo(0, 0);
 	}, [currentStep]);
@@ -75,6 +80,7 @@ function OffreCreation() {
 	const [durabilite, setDurabilite] = useState(offre.durabilite);
 	const [details, setDetails] = useState(offre.details);
 	const [localisations, setLocalisations] = useState(offre.localisations);
+	const [services, setServices] = useState(offre.services);
 
 	let steps = [
 		"Secteur",
@@ -132,6 +138,7 @@ function OffreCreation() {
 				}
 				break;
 			case 5:
+				setCurrentStep(6);
 				break;
 			case 6:
 				break;
@@ -164,7 +171,7 @@ function OffreCreation() {
 				});
 				break;
 			case 5:
-				console.log(data);
+				setLocalisations(data);
 				break;
 			case 6:
 				break;
@@ -192,8 +199,10 @@ function OffreCreation() {
 					case 5:
 						return <Localisations handleChanges={handleStepChanges} data={localisations} />
 					case 6:
-						return <Media data={offre.media}></Media>
+						return <Services handleChanges={handleStepChanges} data={services}></Services>
 					case 7:
+						return <Media data={offre.media}></Media>
+					case 8:
 						return <Recapitulatif data={offre}></Recapitulatif>
 				}
 			})()}
