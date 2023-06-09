@@ -476,23 +476,23 @@ function Localisations({ data, handleChanges }) {
 		setStoreLink(functions.stringRemoveAllSpaces(e.target.value));
 	}
 	return <div className="step step__localisations">
-		<div class="step__localisation__header">
+		<div className="step__localisation__header">
 			<div><h1 className='step__title'>Lieux de production</h1></div>
 			<SelectLieu data={localisations.lieux_de_production} handleCitiesChecks={localisations.lieux_de_production.handleChanges} title="Lieux de production" readOnly={false} value={0} />
 		</div>
 		{
-			lieuxProduction.map(lieu => {
-				return <LieuProductionCreation data={lieu} handleChanges={handleProductionPositionsChanges} />
+			lieuxProduction.map((lieu,index) => {
+				return <LieuProductionCreation key={index} data={lieu} handleChanges={handleProductionPositionsChanges} />
 			})
 		}
 		<hr className='step__line' />
-		<div class="step__localisation__header">
+		<div className="step__localisation__header">
 			<div><h1 className='step__title'>Lieux de vente</h1></div>
 			<SelectLieu data={localisations.lieux_de_vente} handleCitiesChecks={localisations.lieux_de_vente.handleChanges} title="Lieux de vente" readOnly={false} value={0} />
 		</div>
 		{
-			lieuxVente.map(lieu => {
-				return <LieuVenteCreation data={{ ...lieu, info: lieu.info }} handleChanges={handleVentePositionsChanges} handleDelete={handleVenteDeletePosition} />
+			lieuxVente.map((lieu,index) => {
+				return <LieuVenteCreation key={index} data={{ ...lieu, info: lieu.info }} handleChanges={handleVentePositionsChanges} handleDelete={handleVenteDeletePosition} />
 			})
 		}
 		<div className={storeSelected ? "step__option step__option--selected" : "step__option"} onClick={selectStore}>

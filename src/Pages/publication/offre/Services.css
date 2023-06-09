@@ -11,7 +11,7 @@
 
 .step__services__tarif{
     display: grid;
-    grid-template-columns: auto 1fr 1fr;
+    grid-template-columns: auto 40% auto;
     align-items: center;
     border: 2px solid var(--gray);
     border-radius: 10px;
@@ -20,7 +20,8 @@
 }
 .step__services__tarif__inputs{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    width: 40%;
+    grid-template-columns: 50% 90% 50%;
     column-gap: 10px;
     
 }
@@ -57,4 +58,19 @@
 
 .step__service__tarif__selcet:focus{
     outline-color: var(--accent-blue);
+}
+
+
+.step__services__tarif:hover > .step__services__tarif__delete{
+    visibility: visible;
+}
+
+.step__services__commande__condition{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    margin: 5px 0px;
+}
+
+.step__services__commande__condition__input{
+    width: 100%;
 }

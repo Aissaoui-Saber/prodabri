@@ -3,9 +3,6 @@ import '../Pages/publication/Publication.css';
 import { useState, useEffect, useRef } from 'react';
 
 
-
-
-
 function StepBar({ data, currStep }) {
 	const ref = useRef(null);
 	const [svgWidth, setSvgWidth] = useState(0);
@@ -21,7 +18,7 @@ function StepBar({ data, currStep }) {
 	function setEmptySteps() {
 		let s = [];
 		for (let i = 0; i < data.length; i++) {
-			s.push(<circle cx={((svgWidth - (stepBarMarginLR * 2)) / (data.length - 1)) * i + stepBarMarginLR} cy="20" r="20" fill={darkBlue} />);
+			s.push(<circle key={i} cx={((svgWidth - (stepBarMarginLR * 2)) / (data.length - 1)) * i + stepBarMarginLR} cy="20" r="20" fill={darkBlue} />);
 		}
 		return s;
 	}
@@ -30,7 +27,7 @@ function StepBar({ data, currStep }) {
 		if (n < data.length && n >= 0) {
 			s.push(<rect x={stepBarMarginLR} y="17" width={((svgWidth - (stepBarMarginLR * 2)) / (data.length - 1)) * n} height="6" fill={lightBlue} />)
 			for (let i = 0; i <= n; i++) {
-				s.push(<circle cx={((svgWidth - (stepBarMarginLR * 2)) / (data.length - 1)) * i + stepBarMarginLR} cy="20" r="14" fill={lightBlue} />);
+				s.push(<circle key={i} cx={((svgWidth - (stepBarMarginLR * 2)) / (data.length - 1)) * i + stepBarMarginLR} cy="20" r="14" fill={lightBlue} />);
 			}
 		}
 		return s;
@@ -39,10 +36,9 @@ function StepBar({ data, currStep }) {
 		let s = [];
 		for (let i = 0; i < data.length; i++) {
 			if (i <= n && n < data.length && n >= 0) {
-
-				s.push(<td className='stepBar__names__name' style={{ color: 'var(--accent-blue)' }}>{data[i]}</td>);
+				s.push(<td key={i} className='stepBar__names__name' style={{ color: 'var(--accent-blue)' }}>{data[i]}</td>);
 			} else {
-				s.push(<td className='stepBar__names__name' style={{ color: 'var(--dark-text)' }}>{data[i]}</td>);
+				s.push(<td key={i} className='stepBar__names__name' style={{ color: 'var(--dark-text)' }}>{data[i]}</td>);
 			}
 		}
 		return s;
@@ -55,7 +51,7 @@ function StepBar({ data, currStep }) {
 		setCurrentStep(currStep);
 	}, [currStep]);
 
-	return <div className="stepBar" ref={ref}>
+	return <div key={13} className="stepBar" ref={ref}>
 		<svg width={svgWidth} height="40">
 			<rect x={stepBarStartPostitionX} y="13" width={svgWidth - stepBarMarginLR * 2} height="14" fill={darkBlue} />
 			{

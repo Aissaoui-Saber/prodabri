@@ -63,71 +63,123 @@ const unitsFR = [
         name: "Volumes",
         units: [
             {
-                id: 5,
+                id: 10,
                 name: "Mètre cube",
                 label: "m³"
             },
             {
-                id: 6,
+                id: 11,
                 name: "Kilomètre cube",
                 label: "km³"
             },
             {
-                id: 7,
+                id: 12,
                 name: "Décimètre cube",
                 label: "dm³"
             },
             {
-                id: 8,
+                id: 13,
                 name: "Centimètre cube",
                 label: "cm³"
             },
             {
-                id: 9,
+                id: 14,
                 name: "Millimètre cube",
                 label: "mm³"
             }
         ]
-    }
+    },
+    {
+        name: "Contenances",
+        units: [
+            {
+                id: 15,
+                name: "Litre",
+                label: "L"
+            },
+            {
+                id: 16,
+                name: "Décilitre",
+                label: "dL"
+            },
+            {
+                id: 17,
+                name: "Centilitre",
+                label: "cL"
+            },
+            {
+                id: 18,
+                name: "Millilitre",
+                label: "mL"
+            }
+        ]
+    },
+    {
+        name: "Masses",
+        units: [
+            {
+                id: 19,
+                name: "Gramme",
+                label: "g"
+            },
+            {
+                id: 20,
+                name: "Kilogramme",
+                label: "kg"
+            },
+            {
+                id: 21,
+                name: "Milligramme",
+                label: "mg"
+            },
+            {
+                id: 22,
+                name: "Tonne (1000kg)",
+                label: "tonne"
+            },
+            {
+                id: 23,
+                name: "Quintal (100kg)",
+                label: "quintal"
+            }
+        ]
+    },
+    {
+        name: "Unité",
+        units: [
+            {
+                id: 24,
+                name: "Unité",
+                label: "unité"
+            },
+        ]
+    },
+    {
+        name: "Autres",
+        units: [
+            {
+                id: -1,
+                name: "Ajouter une unité",
+            },
+        ]
+    },
 ];
 
-/*
-let a = <optgroup label="Aires">
-<option value="volvo">Mètre carré (m&sup2;)</option>
-<option value="volvo">Kilomètre carré (km&sup2;)</option>
-<option value="saab">Décimètre carré (dm&sup2;)</option>
-<option value="saab">Centimètre carré (cm&sup2;)</option>
-<option value="saab">Millimètre carré (mm&sup2;)</option>
-</optgroup>
-<optgroup label="Volumes">
-<option value="volvo">Mètre cube (m&sup3;)</option>
-<option value="volvo">Kilomètre cube (km&sup3;)</option>
-<option value="saab">Décimètre cube (dm&sup3;)</option>
-<option value="saab">Centimètre cube (cm&sup3;)</option>
-<option value="saab">Millimètre cube (mm&sup3;)</option>
-</optgroup>
-<optgroup label="Contenances">
-<option value="volvo">Litre (L)</option>
-<option value="saab">Décilitre (dL)</option>
-<option value="saab">Centilitre (cL)</option>
-<option value="saab">Millilitre (mL)</option>
-</optgroup>
-<optgroup label="Masses">
-<option value="volvo">Gramme (g)</option>
-<option value="saab">Kilogramme (kg)</option>
-<option value="saab">Milligramme (mg)</option>
-<option value="saab">Tonne (1000kg) (tonne)</option>
-<option value="saab">Quintal (100kg) (quintal)</option>
-</optgroup>
-<optgroup label="Unité">
-<option value="sasa">Unité (unité)</option>
-</optgroup>
-<optgroup label="Autres">
-<option value="sasa">Ajouter une unité</option>
-</optgroup>;*/
+function getUnit(id){
+    let found = null;
+    for (let i=0; i<unitsFR.length; i++){
+        found = unitsFR[i].units.filter(unit => {return unit.id === id});
+        if (found.length !== 0 ){
+            break;
+        }
+    }
+    return found.length === 0 ? null : found[0];
+}
 
-let o = [
-    ...unitsFR,
-]
+
+let o = {
+    unitsFR,
+    getUnit
+}
 
 export default o;

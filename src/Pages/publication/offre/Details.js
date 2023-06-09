@@ -125,17 +125,17 @@ function Details({ data, handleChanges }) {
 	return <div className="step step__details">
 		<h1 className='step__title'>Détails sur le bien</h1>
 		<div className="step__details__info">
-			<input type="text" maxlength="64" placeholder="Titre de l'annonce" className="step__details__info__name input__text step__input__text" onChange={handleInputTextChange} value={title} onBlur={handleInputBlur} data="input-title" />
-			<input type="text" maxlength="64" placeholder="Marque (Optionnel)" className="step__details__info__brand input__text step__input__text" onChange={handleInputTextChange} value={brand} onBlur={handleInputBlur} data="input-brand" />
+			<input type="text" maxLength="64" placeholder="Titre de l'annonce" className="step__details__info__name input__text step__input__text" onChange={handleInputTextChange} value={title} onBlur={handleInputBlur} data="input-title" />
+			<input type="text" maxLength="64" placeholder="Marque (Optionnel)" className="step__details__info__brand input__text step__input__text" onChange={handleInputTextChange} value={brand} onBlur={handleInputBlur} data="input-brand" />
 		</div>
 		<br />
-		<textarea maxlength="4096" rows="8" className="step__details__description" placeholder="Description" data="input-description" onChange={handleInputTextChange} value={description} onBlur={handleInputBlur} />
+		<textarea maxLength="4096" rows="8" className="step__details__description" placeholder="Description" data="input-description" onChange={handleInputTextChange} value={description} onBlur={handleInputBlur} />
 		<hr className='step__line' />
 		<h1 className='step__title'>Liens externes</h1>
 		<div className="step__details__links">
 			{
-				links?.map(link => {
-					return <div className="step__details__links__link">
+				links?.map((link,index) => {
+					return <div key={index} className="step__details__links__link">
 						<img className='step__details__links__link__delete' src={remove} alt="delete" onClick={() => deleteLink(link.id)} />
 						<img className="step__details__links__link__icon" src={!link?.icon ? etranger : link.icon} alt="link" />
 						<a className="step__details__links__link__title" href={link.url} target="_blank">{link.name}</a>
