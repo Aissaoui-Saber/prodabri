@@ -74,3 +74,80 @@
 .step__services__commande__condition__input{
     width: 100%;
 }
+
+
+
+
+.step__services__lieuxRDV__switch{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    place-items: center;
+    width: 50%;
+    margin: auto;
+    column-gap: 20px;
+}
+
+.step__services__lieuxRDV__switch__item{
+    font-family: figTree;
+    color: var(--dark-foreground);
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: var(--dark-foreground);
+    padding: 5px 10px;
+    cursor: pointer;
+    user-select: none;
+    width: 100%;
+    text-align: center;
+    transition: color 0.3s, border-color 0.3s;
+}
+
+.step__services__lieuxRDV__switch__item:hover{
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
+.step__services__lieuxRDV__switch__item--selected{
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+    background-color: rgba(41, 92, 134, 0.329);
+}
+
+
+.step__services__horairesRDV__params{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    align-items: center;
+    place-items: center;
+}
+
+.step__services__horairesRDV__params label{
+    color: var(--dark-text);
+    font-family: figTree;
+    font-size: 14px;
+    font-weight: 400;
+}
+.services__horairesRDV__input__text{
+    background-color: var(--dark-foreground);
+    padding: 5px 10px;
+    color: var(--dark-text);
+    width: 30%;
+    outline-style: solid;
+    outline-width: 2px;
+    outline-color: transparent;
+    transition: outline-color 0.3s;
+    font-size: 16px;
+}
+
+.services__horairesRDV__input__text:focus{
+    outline-color: var(--accent-blue);
+}
+
+.step__services__horairesRDV__plages{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    place-items: center;
+}

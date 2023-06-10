@@ -137,6 +137,7 @@
     height: 500px;
 }
 
+
 .recap__lieux__ville{
     display: grid;
     grid-template-columns: 30px auto;

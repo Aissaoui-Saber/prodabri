@@ -345,9 +345,14 @@ function Localisations({ data, handleChanges }) {
 				localisations.lieux_de_production.wilayas = selectedCities;
 				let arr = [];
 				selectedCities.forEach(wilaya => {
-					wilaya.communes.forEach(commune => {
+					wilaya.communes.forEach((commune, index) => {
 						if (commune.checked) {
-							arr.push({ id: commune.id, name: commune.name, wilaya: wilaya.name, wilayaNumber: wilaya.wilayaNumber, points: [] });
+							let i = lieuxProduction.find(lieu =>{return lieu.id === commune.id});
+							if (i){
+								arr.push(i);
+							}else{
+								arr.push({ id: commune.id, name: commune.name, wilaya: wilaya.name, wilayaNumber: wilaya.wilayaNumber, points: [] });
+							}
 						}
 					});
 				});
@@ -408,7 +413,12 @@ function Localisations({ data, handleChanges }) {
 				selectedCities.forEach(wilaya => {
 					wilaya.communes.forEach(commune => {
 						if (commune.checked) {
-							arr.push({ id: commune.id, name: commune.name, wilaya: wilaya.name, wilayaNumber: wilaya.wilayaNumber, points: [] });
+							let i = lieuxVente.find(lieu =>{return lieu.id === commune.id});
+							if (i){
+								arr.push(i);
+							}else{
+								arr.push({ id: commune.id, name: commune.name, wilaya: wilaya.name, wilayaNumber: wilaya.wilayaNumber, points: [] });
+							}
 						}
 					});
 				});

@@ -17,6 +17,7 @@ import { useState, useRef, useEffect } from 'react';
 import Media from './media.js';
 import Recapitulatif from './Recap';
 
+
 let offre = {
 	secteur: {
 		id: undefined,
@@ -171,6 +172,7 @@ function OffreCreation() {
 				});
 				break;
 			case 5:
+				console.log(data);
 				setLocalisations(data);
 				break;
 			case 6:

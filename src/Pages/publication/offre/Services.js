@@ -7,6 +7,155 @@ import remove from '../../../Assets/images/delete.png';
 import './Services.css';
 import units from '../../../Utils/Units';
 import functions from '../../../Utils/Functions';
+import { MapContainer, TileLayer, useMapEvents, Marker, Popup } from 'react-leaflet';
+
+import pin from './../../../Assets/images/icons/filterBar/placeholder.png'
+
+
+let lll = {
+    "lieuxVente": {
+        "lieux": [
+            {
+                "id": 120,
+                "name": "Commune 1",
+                "wilaya": "Adrar",
+                "wilayaNumber": 1,
+                "points": [
+                    {
+                        "point": {
+                            "lat": 36.163656361530464,
+                            "lng": 4.788665771484375
+                        },
+                        "info": {
+                            "nom": "",
+                            "horaires": [
+                                [],
+                                [],
+                                [],
+                                [],
+                                [],
+                                [],
+                                []
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "id": 220,
+                "name": "Commune 2",
+                "wilaya": "Adrar",
+                "wilayaNumber": 1,
+                "points": []
+            },
+            {
+                "id": 320,
+                "name": "Commune 3",
+                "wilaya": "Adrar",
+                "wilayaNumber": 1,
+                "points": []
+            },
+            {
+                "id": 5020,
+                "name": "Commune 5",
+                "wilaya": "Chlef",
+                "wilayaNumber": 2,
+                "points": [
+                    {
+                        "point": {
+                            "lat": 36.139122412388105,
+                            "lng": 4.79330062866211
+                        },
+                        "info": {
+                            "nom": "",
+                            "horaires": [
+                                [],
+                                [],
+                                [],
+                                [],
+                                [],
+                                [],
+                                []
+                            ]
+                        }
+                    },
+                    {
+                        "point": {
+                            "lat": 36.12900165569652,
+                            "lng": 4.818706512451173
+                        },
+                        "info": {
+                            "nom": "",
+                            "horaires": [
+                                [],
+                                [],
+                                [],
+                                [],
+                                [],
+                                [],
+                                []
+                            ]
+                        }
+                    }
+                ]
+            }
+        ],
+        "storeLink": ""
+    },
+    "lieuxProduction": [
+        {
+            "id": 120,
+            "name": "Commune 1",
+            "wilaya": "Adrar",
+            "wilayaNumber": 1,
+            "points": [
+                {
+                    "lat": 36.16684382532443,
+                    "lng": 4.802913665771485
+                },
+                {
+                    "lat": 36.15755824355528,
+                    "lng": 4.815101623535156
+                },
+                {
+                    "lat": 36.15672664526235,
+                    "lng": 4.833297729492188
+                }
+            ]
+        },
+        {
+            "id": 220,
+            "name": "Commune 2",
+            "wilaya": "Adrar",
+            "wilayaNumber": 1,
+            "points": [
+                {
+                    "lat": 36.16989258244813,
+                    "lng": 4.786262512207032
+                }
+            ]
+        },
+        {
+            "id": 320,
+            "name": "Commune 3",
+            "wilaya": "Adrar",
+            "wilayaNumber": 1,
+            "points": []
+        },
+        {
+            "id": 5020,
+            "name": "Commune 5",
+            "wilaya": "Chlef",
+            "wilayaNumber": 2,
+            "points": [
+                {
+                    "lat": 36.15173687028867,
+                    "lng": 4.82625961303711
+                }
+            ]
+        }
+    ]
+};
 
 function Tartif({ data, handleChanges, handleRemove }) {
     const unitsRef = useRef();
@@ -87,15 +236,15 @@ function Condition({ data, handleChanges, handleRemove }) {
     function handleInputChanges(e) {
         let temp = functions.stringRemoveBeginingSpaces(e.target.value);
         temp = functions.stringRemoveMultipleSpaces(e.target.value);
-        setValue({id: value.id, value: temp});
+        setValue({ id: value.id, value: temp });
         handleChanges({ id: value.id, value: functions.stringNormalizeSpaces(temp) });
     }
-    function handleInputBlur(e){
+    function handleInputBlur(e) {
         let temp = functions.stringRemoveBeginingSpaces(e.target.value);
         temp = functions.stringRemoveMultipleSpaces(temp);
         temp = functions.stringRemoveEndingSpaces(temp);
-        setValue({id: value.id, value: temp});
-        handleChanges({ id: value.id, value: temp});
+        setValue({ id: value.id, value: temp });
+        handleChanges({ id: value.id, value: temp });
     }
     return <div className="step__services__commande__condition">
         <img className="step__details__links__link__delete" src={remove} onClick={() => handleRemove(value.id)}></img>
@@ -134,11 +283,11 @@ function Commande({ data, handleChanges }) {
 
 
     function addCondition() {
-        setConditions([...conditions, {id: id, value:""}]);
+        setConditions([...conditions, { id: id, value: "" }]);
     }
     function removeCondition(cond) {
         let newArray = [];
-        conditions.forEach((value)=>{
+        conditions.forEach((value) => {
             if (value.id !== cond) {
                 newArray.push(value);
             }
@@ -147,7 +296,7 @@ function Commande({ data, handleChanges }) {
     }
     function handleConditionsChanges(cond) {
         let temp = [...conditions];
-        temp.filter(e => {return e.id == cond.id}).value = cond.value;
+        temp.filter(e => { return e.id == cond.id }).value = cond.value;
 
         //temp[cond.id] = cond.value;
         setConditions([...temp]);
@@ -192,6 +341,117 @@ function Commande({ data, handleChanges }) {
     </div>
 }
 
+
+function mapLieuxRDVpositions(data) {
+    let prodPoints = [];
+    data.lieuxProduction.forEach(city => {
+        city.points.forEach(point => {
+            prodPoints.push(point);
+        })
+    });
+    let ventePoints = [];
+    data.lieuxVente.lieux.forEach(city => {
+        city.points.forEach(point => {
+            ventePoints.push(point.point);
+        })
+    });
+    return ({ prod: prodPoints, vente: ventePoints });
+}
+
+function LieuxRDV({ data, handleChanges }) {
+    const [prodSelected, setProdSelected] = useState(false);
+    useEffect(() => {
+        const L = require("leaflet");
+
+        delete L.Icon.Default.prototype._getIconUrl;
+
+        L.Icon.Default.mergeOptions({
+            iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+            iconUrl: require("leaflet/dist/images/marker-icon.png"),
+            shadowUrl: require("leaflet/dist/images/marker-shadow.png")
+        });
+    }, []);
+    //console.log(mapLieuxRDVpositions(data));
+    return <div className="step__services__lieuxRDV">
+        <div className="step__services__lieuxRDV__switch">
+            <label className={!prodSelected ? "step__services__lieuxRDV__switch__item step__services__lieuxRDV__switch__item--selected" : "step__services__lieuxRDV__switch__item"} onClick={() => { setProdSelected(false) }}>Lieux de vente</label>
+            <label className={prodSelected ? "step__services__lieuxRDV__switch__item step__services__lieuxRDV__switch__item--selected" : "step__services__lieuxRDV__switch__item"} onClick={() => { setProdSelected(true) }}>Lieux de production</label>
+        </div>
+        <br></br>
+        <MapContainer center={[36.151988, 4.795080]} zoom={13} scrollWheelZoom={true}>
+            <TileLayer
+                attribution='&copy; <a href="https://www.google.com/intl/en-GB_ALL/permissions/geoguidelines/">Google Maps</a>'
+                url="https://mt.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
+            //url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            {
+                prodSelected ? data.prod.map((point, index) => {
+                    return <Marker key={index} position={[point.lat, point.lng]} eventHandlers={{
+                        click: (e) => {
+                            handleChanges(e.latlng);
+                        }
+                    }}>
+                    </Marker>
+                }) :
+                    data.vente.map((point, index) => {
+                        return <Marker key={index} position={[point.lat, point.lng]} eventHandlers={{
+                            click: (e) => {
+                                handleChanges(e.latlng);
+                            }
+                        }}>
+                        </Marker>
+                    })
+            }
+        </MapContainer>
+    </div>
+}
+
+function RDVjour({ data, handleChanges }) {
+    return <div className="step__services__horairesRDV__plages__day">
+        <input type="checkbox" name="dayName" value="Bike"></input>
+            <label for="dayName">SAMEDI</label>
+    </div>
+}
+
+function HorairesRDV({ data, handleChanges }) {
+    return <div className="step__services__horairesRDV">
+        <div className="step__services__horairesRDV__params">
+            <label>Heure de début</label>
+            <label>Heure de fin</label>
+            <label>Durrée entre les rendez vous</label>
+            <input className="input__text services__horairesRDV__input__text" type="text" placeholder="00:00"></input>
+            <input className="input__text services__horairesRDV__input__text" type="text" placeholder="00:00"></input>
+            <input className="input__text services__horairesRDV__input__text" type="text" placeholder="00:00"></input>
+        </div>
+        <br></br>
+        <div className="step__services__horairesRDV__plages">
+            <RDVjour></RDVjour>
+            <RDVjour></RDVjour>
+            <RDVjour></RDVjour>
+            <RDVjour></RDVjour>
+            <RDVjour></RDVjour>
+            <RDVjour></RDVjour>
+            <RDVjour></RDVjour>
+        </div>
+    </div>
+}
+
+function RDV({ data, handleChanges }) {
+
+    function handlePositionClick(data) {
+        console.log(data);
+    }
+    return <div className="step__services__commande">
+        <div>
+            <h1 className="step__subTitle">1. Lieux</h1>
+            <LieuxRDV data={mapLieuxRDVpositions(lll)} handleChanges={handlePositionClick}></LieuxRDV>
+            <br></br>
+            <h1 className="step__subTitle">2. Horaires</h1>
+            <HorairesRDV></HorairesRDV>
+            <h1 className="step__subTitle">3. Motifs</h1>
+        </div>
+    </div>
+}
 function Services({ data, handleChanges }) {
     const [commandeSelected, setCommandeSelected] = useState(false);
     const [rdvSelected, setRdvSelected] = useState(false);
@@ -213,6 +473,7 @@ function Services({ data, handleChanges }) {
                 <p className='step__option__info__description'>Mettre en place un système de prise de rendez vous avec vos clients, cela vous permet d'organiser et gérer vos planings avec vos clients</p>
             </div>
         </div>
+        {rdvSelected ? <RDV /> : <br></br>}
     </div>
 }
 
