@@ -136,6 +136,47 @@ function sortPeriods(periods) {
 	return newPeriods;
 }
 
+function timeSomme(time1, time2){
+	let t1 = {
+		h: parseInt(time1.substring(0, 2)),
+		m: parseInt(time1.substring(3, 5))
+	};
+	let t2 = {
+		h: parseInt(time2.substring(0, 2)),
+		m: parseInt(time2.substring(3, 5))
+	};
+	let r = {
+		h: 0,
+		m: 0
+	}
+
+	if (t1.m + t2.m < 60){
+		r.m = t1.m + t2.m;
+		r.h = t1.h + t2.h;
+		if (r.h>=24){
+			r.h = r.h - 24;
+		}
+	}else{
+		r.m = ((t1.m + t2.m) - 60);
+		r.h = t1.h + t2.h + 1;
+		if (r.h>=24){
+			r.h = r.h - 24;
+		}
+	}
+	if (r.h>9 && r.m>9){
+		return r.h+":"+r.m;
+	}else if(r.h<10 && r.m>9){
+		return "0"+r.h+":"+r.m;
+	}else if(r.h>9 && r.m<10){
+		return r.h+":"+"0"+r.m;
+	}else{
+		return "0"+r.h+":"+"0"+r.m;
+	}
+	// 18:29
+	// 00:45
+	// 19:14
+}
+
 let o = {
 	stringRemoveMultipleSpaces,
 	stringRemoveBeginingSpaces,
@@ -148,6 +189,7 @@ let o = {
 	isValidTime,
 	timeIsInOrder,
 	periodsAreIntersected,
-	sortPeriods
+	sortPeriods,
+	timeSomme
 };
 export default o;

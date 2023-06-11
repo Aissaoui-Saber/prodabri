@@ -7,7 +7,7 @@ import remove from '../../../Assets/images/delete.png';
 import './Services.css';
 import units from '../../../Utils/Units';
 import functions from '../../../Utils/Functions';
-import { MapContainer, TileLayer, useMapEvents, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, useMapEvents, Marker, Popup, L } from 'react-leaflet';
 
 import pin from './../../../Assets/images/icons/filterBar/placeholder.png'
 
@@ -23,8 +23,9 @@ let lll = {
                 "points": [
                     {
                         "point": {
+                            "id": 6,
                             "lat": 36.163656361530464,
-                            "lng": 4.788665771484375
+                            "lng": 4.788665771484375,
                         },
                         "info": {
                             "nom": "",
@@ -63,6 +64,7 @@ let lll = {
                 "points": [
                     {
                         "point": {
+                            "id": 7,
                             "lat": 36.139122412388105,
                             "lng": 4.79330062866211
                         },
@@ -81,6 +83,7 @@ let lll = {
                     },
                     {
                         "point": {
+                            "id": 8,
                             "lat": 36.12900165569652,
                             "lng": 4.818706512451173
                         },
@@ -110,14 +113,17 @@ let lll = {
             "wilayaNumber": 1,
             "points": [
                 {
+                    "id": 1,
                     "lat": 36.16684382532443,
-                    "lng": 4.802913665771485
+                    "lng": 4.802913665771485,
                 },
                 {
+                    "id": 2,
                     "lat": 36.15755824355528,
                     "lng": 4.815101623535156
                 },
                 {
+                    "id": 3,
                     "lat": 36.15672664526235,
                     "lng": 4.833297729492188
                 }
@@ -130,6 +136,7 @@ let lll = {
             "wilayaNumber": 1,
             "points": [
                 {
+                    "id": 4,
                     "lat": 36.16989258244813,
                     "lng": 4.786262512207032
                 }
@@ -149,6 +156,7 @@ let lll = {
             "wilayaNumber": 2,
             "points": [
                 {
+                    "id": 5,
                     "lat": 36.15173687028867,
                     "lng": 4.82625961303711
                 }
@@ -259,6 +267,16 @@ function Commande({ data, handleChanges }) {
     const [conditions, setConditions] = useState([]);
     const [id, setId] = useState(0);
 
+
+    useEffect(e=>{
+        handleChanges({
+            retrait: retraitSelected,
+            livraison: livraisonSelected,
+            tarifs: tarifs,
+            conditions: conditions
+        })
+    },[retraitSelected,livraisonSelected,tarifs,conditions])
+
     useEffect(() => {
         setId(id + 1);
     }, [tarifs.length, conditions.length]);
@@ -283,7 +301,10 @@ function Commande({ data, handleChanges }) {
 
 
     function addCondition() {
-        setConditions([...conditions, { id: id, value: "" }]);
+        let temp = conditions.filter(t => { return t.value.length === 0 });
+        if (temp.length === 0){
+            setConditions([...conditions, { id: id, value: "" }]);
+        }
     }
     function removeCondition(cond) {
         let newArray = [];
@@ -295,10 +316,12 @@ function Commande({ data, handleChanges }) {
         setConditions(newArray);
     }
     function handleConditionsChanges(cond) {
-        let temp = [...conditions];
-        temp.filter(e => { return e.id == cond.id }).value = cond.value;
-
-        //temp[cond.id] = cond.value;
+        let temp = conditions.map(t => {
+            if (t.id == cond.id) {
+                return cond;
+            }
+            return t;
+        })
         setConditions([...temp]);
     }
 
@@ -360,17 +383,35 @@ function mapLieuxRDVpositions(data) {
 
 function LieuxRDV({ data, handleChanges }) {
     const [prodSelected, setProdSelected] = useState(false);
+    const [selectedPoint, setSelectedPoint] = useState(-1);
+    const L = require("leaflet");
+    const mapRef = useRef();
+    let selectedPointMarker = L.icon({
+        "iconUrl": pin,
+        "iconRetinaUrl": pin,
+        "shadowUrl": require("leaflet/dist/images/marker-shadow.png"),
+        "iconSize": [35, 41],
+        "iconAnchor": [17, 41],
+        "popupAnchor": [1, -34],
+        "tooltipAnchor": [16, -28],
+        "shadowSize": [47, 41]
+    });
+    let defaultMarkerIcon = L.icon({
+        "iconUrl": require("leaflet/dist/images/marker-icon.png"),
+        "iconRetinaUrl": require("leaflet/dist/images/marker-icon-2x.png"),
+        "shadowUrl": require("leaflet/dist/images/marker-shadow.png"),
+        "iconSize": [25, 41],
+        "iconAnchor": [12, 41],
+        "popupAnchor": [1, -34],
+        "tooltipAnchor": [16, -28],
+        "shadowSize": [41, 41]
+    });
+
     useEffect(() => {
-        const L = require("leaflet");
+        setSelectedPoint(-1);
+        handleChanges(null);
+    }, [prodSelected])
 
-        delete L.Icon.Default.prototype._getIconUrl;
-
-        L.Icon.Default.mergeOptions({
-            iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
-            iconUrl: require("leaflet/dist/images/marker-icon.png"),
-            shadowUrl: require("leaflet/dist/images/marker-shadow.png")
-        });
-    }, []);
     //console.log(mapLieuxRDVpositions(data));
     return <div className="step__services__lieuxRDV">
         <div className="step__services__lieuxRDV__switch">
@@ -378,7 +419,7 @@ function LieuxRDV({ data, handleChanges }) {
             <label className={prodSelected ? "step__services__lieuxRDV__switch__item step__services__lieuxRDV__switch__item--selected" : "step__services__lieuxRDV__switch__item"} onClick={() => { setProdSelected(true) }}>Lieux de production</label>
         </div>
         <br></br>
-        <MapContainer center={[36.151988, 4.795080]} zoom={13} scrollWheelZoom={true}>
+        <MapContainer ref={mapRef} center={[36.151988, 4.795080]} zoom={13} scrollWheelZoom={true}>
             <TileLayer
                 attribution='&copy; <a href="https://www.google.com/intl/en-GB_ALL/permissions/geoguidelines/">Google Maps</a>'
                 url="https://mt.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
@@ -386,17 +427,32 @@ function LieuxRDV({ data, handleChanges }) {
             />
             {
                 prodSelected ? data.prod.map((point, index) => {
-                    return <Marker key={index} position={[point.lat, point.lng]} eventHandlers={{
+                    return <Marker icon={point.id === selectedPoint ? selectedPointMarker : defaultMarkerIcon} key={index} position={[point.lat, point.lng]} eventHandlers={{
                         click: (e) => {
-                            handleChanges(e.latlng);
+                            if (point.id === selectedPoint) {
+                                setSelectedPoint(-1);
+                                handleChanges(null);
+                            } else {
+                                setSelectedPoint(point.id);
+                                //const {map} = this.state;
+                                mapRef.current.flyTo([point.lat, point.lng]);
+                                handleChanges(point)
+                            }
                         }
                     }}>
                     </Marker>
                 }) :
                     data.vente.map((point, index) => {
-                        return <Marker key={index} position={[point.lat, point.lng]} eventHandlers={{
+                        return <Marker icon={point.id === selectedPoint ? selectedPointMarker : defaultMarkerIcon} key={index} position={[point.lat, point.lng]} eventHandlers={{
                             click: (e) => {
-                                handleChanges(e.latlng);
+                                if (point.id === selectedPoint) {
+                                    setSelectedPoint(-1);
+                                    handleChanges(null);
+                                } else {
+                                    setSelectedPoint(point.id);
+                                    mapRef.current.flyTo([point.lat, point.lng]);
+                                    handleChanges(point)
+                                }
                             }
                         }}>
                         </Marker>
@@ -407,54 +463,389 @@ function LieuxRDV({ data, handleChanges }) {
 }
 
 function RDVjour({ data, handleChanges }) {
+    const [day, setDay] = useState(data);
+
+    function checkDay(e) {
+        let newDay = { ...day };
+        newDay.enabled = !newDay.enabled;
+        newDay.times.forEach((time, index) => {
+            time.enabled = newDay.enabled;
+        });
+        setDay({ ...newDay });
+        handleChanges({ ...newDay });
+    }
+
+    function checkTime(e) {
+        let newDay = { ...day };
+        newDay.times[parseInt(e.target.value)].enabled = !newDay.times[parseInt(e.target.value)].enabled;
+        setDay({ ...newDay });
+        handleChanges({ ...newDay });
+    }
     return <div className="step__services__horairesRDV__plages__day">
-        <input type="checkbox" name="dayName" value="Bike"></input>
-            <label for="dayName">SAMEDI</label>
+        <div className="step__services__horairesRDV__plages__day__time">
+            <input type="checkbox" name="dayName" value={data.index} checked={day.enabled} onChange={checkDay}></input>
+            <label htmlFor="dayName">{day.name}</label>
+        </div>
+        <br></br>
+        {
+            data.times.map((time, index) => {
+                return <div key={index} className="step__services__horairesRDV__plages__day__time">
+                    <input type="checkbox" name="time" value={index} checked={time.enabled} onChange={checkTime}></input>
+                    <label htmlFor="time">{time.time}</label>
+                </div>
+            })
+        }
     </div>
 }
+//{enabled: true, name: "SAMEDI", times: [{enabled: true, time: "00:00"}]}, 
 
-function HorairesRDV({ data, handleChanges }) {
-    return <div className="step__services__horairesRDV">
+
+function HorairesRDV({ data, point, handleChanges }) {
+    const [startTime, setStartTime] = useState("");
+    const [endTime, setEndTime] = useState("");
+    const [duration, setDuration] = useState("");
+    const [timesTable, setTimesTable] = useState(data);
+
+    const rdvStartTimeRef = useRef();
+    const rdvEndTimeRef = useRef();
+    const rdvDurationRef = useRef();
+
+    function handleInputsChanges(e) {
+        if (e.target === rdvStartTimeRef.current) {
+            if (e.target.value.length === 3) {
+                if (functions.isValidTime(e.target.value)) {
+                    setStartTime(e.target.value);
+                } else {
+                    if (e.target.value[2] === ':') {//<- 12:
+                        e.target.value = e.target.value.substring(0, 2);
+                        setStartTime(e.target.value);
+                    } else {//-> 125
+                        let t = e.target.value.substring(2, 3);
+                        e.target.value = e.target.value.substring(0, 2) + ":" + t;
+                        if (functions.isValidTime(e.target.value)) {
+                            setStartTime(e.target.value);
+                        }
+
+                    }
+                }
+            } else {
+                if (functions.isValidTime(e.target.value)) {
+                    setStartTime(e.target.value);
+                }
+            }
+        }
+        if (e.target === rdvEndTimeRef.current) {
+            if (e.target.value.length === 3) {
+                if (functions.isValidTime(e.target.value)) {
+                    setEndTime(e.target.value);
+                } else {
+                    if (e.target.value[2] === ':') {//<- 12:
+                        e.target.value = e.target.value.substring(0, 2);
+                        setEndTime(e.target.value);
+                    } else {//-> 125
+                        let t = e.target.value.substring(2, 3);
+                        e.target.value = e.target.value.substring(0, 2) + ":" + t;
+                        if (functions.isValidTime(e.target.value)) {
+                            setEndTime(e.target.value);
+                        }
+
+                    }
+                }
+            } else {
+                if (functions.isValidTime(e.target.value)) {
+                    setEndTime(e.target.value);
+                }
+            }
+        }
+        if (e.target === rdvDurationRef.current) {
+            if (e.target.value.length === 3) {
+                if (functions.isValidTime(e.target.value)) {
+                    setDuration(e.target.value);
+                } else {
+                    if (e.target.value[2] === ':') {//<- 12:
+                        e.target.value = e.target.value.substring(0, 2);
+                        setDuration(e.target.value);
+                    } else {//-> 125
+                        let t = e.target.value.substring(2, 3);
+                        e.target.value = e.target.value.substring(0, 2) + ":" + t;
+                        if (functions.isValidTime(e.target.value)) {
+                            setDuration(e.target.value);
+                        }
+
+                    }
+                }
+            } else {
+                if (functions.isValidTime(e.target.value)) {
+                    setDuration(e.target.value);
+                }
+            }
+        }
+    }
+    function handleInputsBlur(e) {
+        if (e.target === rdvStartTimeRef.current) {
+            if (e.target.value.length !== 5) {
+                setStartTime("");
+            } else {
+                if (startTime.length === 5 && endTime.length === 5) {
+                    if (functions.timeIsInOrder(startTime, endTime)) {
+                        if (duration.length === 5) {
+                            //generateTimes();
+                        }
+                    } else {
+                        alert("La période que vous avez saisie n'est pas en ordre, merci de saisire la periode correctement")
+                        if (e.target === rdvEndTimeRef.current) {
+                            setEndTime("");
+                            rdvEndTimeRef.current.focus();
+                        } else if (e.target === rdvStartTimeRef.current) {
+                            setStartTime("");
+                            rdvStartTimeRef.current.focus();
+                        } else {
+
+                        }
+                    }
+                }
+            }
+
+        } else if (e.target === rdvEndTimeRef.current) {
+            if (e.target.value.length !== 5) {
+                setEndTime("");
+            } else {
+                if (startTime.length === 5 && endTime.length === 5) {
+                    if (functions.timeIsInOrder(startTime, endTime)) {
+                        if (duration.length === 5) {
+                            //generateTimes();
+                        }
+                    } else {
+                        alert("La période que vous avez saisie n'est pas en ordre, merci de saisire la periode correctement")
+                        if (e.target === rdvEndTimeRef.current) {
+                            setEndTime("");
+                            rdvEndTimeRef.current.focus();
+                        } else if (e.target === rdvStartTimeRef.current) {
+                            setStartTime("");
+                            rdvStartTimeRef.current.focus();
+                        } else {
+
+                        }
+                    }
+                }
+            }
+        } else if (e.target === rdvDurationRef.current) {
+            if (e.target.value.length !== 5) {
+                setDuration("");
+            }
+        }
+    }
+
+    useEffect(() => {
+        if (startTime.length === 5 && endTime.length === 5 && duration.length === 5) {
+            if (functions.timeIsInOrder(startTime, endTime)) {
+                generateTimes();
+            }
+        } else {
+            setTimesTable(null);
+            handleChanges({ point: point, horaires: null });
+        }
+    }, [startTime, endTime, duration]);
+
+
+    function handleDayTimesChanges(data) {
+        let newTable = [...timesTable];
+        newTable[data.index] = data;
+        setTimesTable([...newTable]);
+        handleChanges({ point: point, horaires: [...newTable] });
+    }
+
+    function generateTimes() {
+        let times = [
+            { enabled: true, name: "SAMEDI", times: [] },
+            { enabled: true, name: "DIMANCHE", times: [] },
+            { enabled: true, name: "LUNDI", times: [] },
+            { enabled: true, name: "MARDI", times: [] },
+            { enabled: true, name: "MERCREDI", times: [] },
+            { enabled: true, name: "JEUDI", times: [] },
+            { enabled: true, name: "VENDREDI", times: [] },
+        ];
+        times.forEach((day, index) => {
+            day.times = [];
+            day.times.push({ enabled: true, time: startTime });
+            while (functions.timeIsInOrder(day.times[day.times.length - 1].time, endTime)) {
+                let somme = functions.timeSomme(day.times[day.times.length - 1].time, duration);
+                if (somme === endTime || somme === startTime || functions.timeIsInOrder(endTime, somme)) {
+                    break;
+                }
+                day.times.push({ enabled: true, time: somme });
+            }
+        });
+        setTimesTable([...times]);
+        handleChanges({ point: point, horaires: [...times] });
+    }
+
+    return point === null ? <p className="step__paragraph" >Sélectionner un lieu d'abord</p> : <div className="step__services__horairesRDV">
         <div className="step__services__horairesRDV__params">
             <label>Heure de début</label>
             <label>Heure de fin</label>
             <label>Durrée entre les rendez vous</label>
-            <input className="input__text services__horairesRDV__input__text" type="text" placeholder="00:00"></input>
-            <input className="input__text services__horairesRDV__input__text" type="text" placeholder="00:00"></input>
-            <input className="input__text services__horairesRDV__input__text" type="text" placeholder="00:00"></input>
+            <input ref={rdvStartTimeRef} className="input__text services__horairesRDV__input__text" type="text" placeholder="00:00" value={startTime} onChange={handleInputsChanges} onBlur={handleInputsBlur}></input>
+            <input ref={rdvEndTimeRef} className="input__text services__horairesRDV__input__text" type="text" placeholder="00:00" value={endTime} onChange={handleInputsChanges} onBlur={handleInputsBlur}></input>
+            <input ref={rdvDurationRef} className="input__text services__horairesRDV__input__text" type="text" placeholder="00:00" value={duration} onChange={handleInputsChanges} onBlur={handleInputsBlur}></input>
         </div>
         <br></br>
+        <hr style={{ width: "80%", margin: "auto" }}></hr>
+        <br></br>
         <div className="step__services__horairesRDV__plages">
-            <RDVjour></RDVjour>
-            <RDVjour></RDVjour>
-            <RDVjour></RDVjour>
-            <RDVjour></RDVjour>
-            <RDVjour></RDVjour>
-            <RDVjour></RDVjour>
-            <RDVjour></RDVjour>
+            {
+                timesTable?.map((element, index) => {
+                    return <RDVjour key={index} data={{ ...element, index: index }} handleChanges={handleDayTimesChanges}></RDVjour>
+                })
+            }
+
         </div>
     </div>
 }
 
+function Motif({ data, handleChanges, handleRemove }) {
+    const [value, setValue] = useState(data);
+    const inputRef = useRef();
+    function handleInputChanges(e) {
+        let temp = functions.stringRemoveBeginingSpaces(e.target.value);
+        temp = functions.stringRemoveMultipleSpaces(e.target.value);
+        setValue({ id: value.id, value: temp });
+        handleChanges({ id: value.id, value: functions.stringNormalizeSpaces(temp) });
+    }
+    function handleInputBlur(e) {
+        let temp = functions.stringRemoveBeginingSpaces(e.target.value);
+        temp = functions.stringRemoveMultipleSpaces(temp);
+        temp = functions.stringRemoveEndingSpaces(temp);
+        setValue({ id: value.id, value: temp });
+        handleChanges({ id: value.id, value: temp });
+    }
+    return <div className="step__services__commande__condition">
+        <img className="step__details__links__link__delete" src={remove} onClick={() => handleRemove(value.id)}></img>
+        <input ref={inputRef} className="input__text step__input__text step__services__commande__condition__input" type="text" placeholder="Motif du rendez vous" onChange={handleInputChanges} onBlur={handleInputBlur} value={value.value}></input>
+    </div>
+}
+
 function RDV({ data, handleChanges }) {
+    const [selectedPoint, setSelectedPoint] = useState(null);
+    const [horaires, setHoraires] = useState(null);
+    const [motifs, setMotifs] = useState([]);
+    const [conditions, setConditions] = useState([]);
+
+    //console.log(motifs);
+
+    const [id, setId] = useState(0);
+
+    useEffect(() => {
+        setId(id + 1);
+    }, [motifs.length, conditions.length]);
+
+    useEffect(e=>{
+        handleChanges({
+            point: selectedPoint,
+            horaires: horaires,
+            motifs: motifs,
+            conditions: conditions
+        })
+    },[selectedPoint, horaires, motifs, conditions]);
 
     function handlePositionClick(data) {
-        console.log(data);
+        setSelectedPoint(data);
+        setHoraires(null);
+        setMotifs([]);
+        setConditions([]);
     }
+    function handleTimesChanges(data) {
+        setHoraires(data.horaires);
+    }
+    
+    function addMotif() {
+        let temp = motifs.filter(t => { return t.value.length === 0 });
+        if (temp.length === 0){
+            setMotifs([...motifs, { id: id, value: "" }]);
+        }
+    }
+    function handleMotifChanges(data) {
+        let temp = motifs.map(t => {
+            if (t.id == data.id) {
+                return data;
+            }
+            return t;
+        })
+        setMotifs([...temp]);
+    }
+    function handleMotifRemove(data) {
+        let temp = [...motifs];
+        let newMotifs = temp.filter(t => { return t.id !== data });
+        setMotifs(newMotifs);
+    }
+
+
+    function addCondition() {
+        let temp = conditions.filter(t => { return t.value.length === 0 });
+        if (temp.length === 0){
+            setConditions([...conditions, { id: id, value: "" }]);
+        }
+    }
+    function handleConditionChanges(data) {
+        let temp = conditions.map(t => {
+            if (t.id == data.id) {
+                return data;
+            }
+            return t;
+        })
+        setConditions([...temp]);
+    }
+    function handleConditionRemove(data) {
+        let temp = [...conditions];
+        let newConditions = temp.filter(t => { return t.id !== data });
+        setConditions(newConditions);
+    }
+    
+    
     return <div className="step__services__commande">
         <div>
             <h1 className="step__subTitle">1. Lieux</h1>
             <LieuxRDV data={mapLieuxRDVpositions(lll)} handleChanges={handlePositionClick}></LieuxRDV>
             <br></br>
             <h1 className="step__subTitle">2. Horaires</h1>
-            <HorairesRDV></HorairesRDV>
+            {selectedPoint === null ? "" : <HorairesRDV data={horaires} point={selectedPoint} handleChanges={handleTimesChanges}></HorairesRDV>}
+            <br></br>
             <h1 className="step__subTitle">3. Motifs</h1>
+            {
+                motifs?.map((motif, index) => {
+                    return <Motif key={motif.id} data={motif} handleChanges={handleMotifChanges} handleRemove={handleMotifRemove}></Motif>
+                })
+            }
+            {
+                horaires === null ? "" : <input type="button" value={"Ajouter"} className="button button--green step__services__ajouter" onClick={addMotif}></input>
+            }
+            <br></br>
+            <h1 className="step__subTitle">3. Règles et conditions</h1>
+            {
+                conditions?.map((cond, index) => {
+                    return <Condition key={cond.id} data={cond} handleChanges={handleConditionChanges} handleRemove={handleConditionRemove}></Condition>
+                })
+            }
+            {
+                horaires === null ? "" : <input type="button" value={"Ajouter"} className="button button--green step__services__ajouter" onClick={addCondition}></input>
+            }
         </div>
     </div>
 }
 function Services({ data, handleChanges }) {
     const [commandeSelected, setCommandeSelected] = useState(false);
     const [rdvSelected, setRdvSelected] = useState(false);
+
+
+    function handleRDVchanges(data){
+        console.log(data);
+    }
+
+    function handleCommandeChanges(data){
+        console.log(data);
+    }
+
+
     return <div className="step step__services">
         <h1 className="step__title">Services</h1>
         <br></br>
@@ -465,7 +856,7 @@ function Services({ data, handleChanges }) {
                 <p className='step__option__info__description'>Vous permettez au visiteurs de commander votre bien ou service.</p>
             </div>
         </div>
-        {commandeSelected ? <Commande /> : <br></br>}
+        {commandeSelected ? <Commande handleChanges={handleCommandeChanges}/> : <br></br>}
         <div className={rdvSelected ? "step__option step__option--selected" : "step__option"} onClick={() => setRdvSelected(!rdvSelected)}>
             <img className='step__option__icon' src={rdv} alt="rendez vous" />
             <div className='step__option__data'>
@@ -473,7 +864,7 @@ function Services({ data, handleChanges }) {
                 <p className='step__option__info__description'>Mettre en place un système de prise de rendez vous avec vos clients, cela vous permet d'organiser et gérer vos planings avec vos clients</p>
             </div>
         </div>
-        {rdvSelected ? <RDV /> : <br></br>}
+        {rdvSelected ? <RDV handleChanges={handleRDVchanges}/> : <br></br>}
     </div>
 }
 
