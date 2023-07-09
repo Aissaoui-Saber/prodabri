@@ -37,7 +37,9 @@
     border-style: solid;
     border-color: var(--gray);
     border-radius: 10px;
-    background-size: cover;
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
     overflow: hidden;
     border-width: 1px;
     transition: border-color 0.3s, border-width 0.1s, scale 0.3s;

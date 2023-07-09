@@ -177,6 +177,16 @@ function timeSomme(time1, time2) {
 	// 19:14
 }
 
+function imageFileSize(number) {
+	if (number < 1024) {
+		return `${number} bytes`;
+	} else if (number >= 1024 && number < 1048576) {
+		return `${(number / 1024).toFixed(1)} KB`;
+	} else if (number >= 1048576) {
+		return `${(number / 1048576).toFixed(1)} MB`;
+	}
+}
+
 let o = {
 	stringRemoveMultipleSpaces,
 	stringRemoveBeginingSpaces,
@@ -190,6 +200,7 @@ let o = {
 	timeIsInOrder,
 	periodsAreIntersected,
 	sortPeriods,
-	timeSomme
+	timeSomme,
+	imageFileSize
 };
 export default o;
