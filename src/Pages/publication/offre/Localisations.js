@@ -9,6 +9,8 @@ import functions from '../../../Utils/Functions';
 import './Localisations.css';
 import LieuVenteDialog from './LieuVenteDialog';
 
+let pointID = 0;
+
 const LocationMarker = forwardRef(({ data, handleChanges, timesDialog, handleDelete }, ref) => {
 	const [positions, setPositions] = useState(data);
 	const markerRef = useRef();
@@ -22,15 +24,16 @@ const LocationMarker = forwardRef(({ data, handleChanges, timesDialog, handleDel
 
 	const map = useMapEvents({
 		click(e) {
+			pointID++;
 			if (timesDialog) {
 				//setDialogOpen(true);
-				setPositions([...positions, e.latlng]);
-				handleChanges({data: [...positions, e.latlng], marker: markerRef});
+				setPositions([...positions, {id:pointID,...e.latlng}]);
+				handleChanges({data: [...positions, {id:pointID,...e.latlng}], marker: markerRef});
 
 			} else {
 				//handleChanges({point: e.latlng});
-				setPositions([...positions, e.latlng]);
-				handleChanges([...positions, e.latlng]);
+				setPositions([...positions, {id:pointID,...e.latlng}]);
+				handleChanges([...positions, {id:pointID,...e.latlng}]);
 			}
 			//handleChanges([...positions, e.latlng]);
 			//map.locate()

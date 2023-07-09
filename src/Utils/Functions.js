@@ -124,7 +124,7 @@ function sortPeriods(periods) {
 	if (periods.length > 1) {
 		let temp = null;
 		for (let i = 0; i < periods.length; i++) {
-			for (let j = 0; j < periods.length-1; j++) {
+			for (let j = 0; j < periods.length - 1; j++) {
 				if (biggerTime(newPeriods[j].start, newPeriods[j + 1].start) === newPeriods[j].start) {
 					temp = { ...newPeriods[j] };
 					newPeriods[j] = { ...newPeriods[j + 1] };
@@ -136,7 +136,7 @@ function sortPeriods(periods) {
 	return newPeriods;
 }
 
-function timeSomme(time1, time2){
+function timeSomme(time1, time2) {
 	let t1 = {
 		h: parseInt(time1.substring(0, 2)),
 		m: parseInt(time1.substring(3, 5))
@@ -150,27 +150,27 @@ function timeSomme(time1, time2){
 		m: 0
 	}
 
-	if (t1.m + t2.m < 60){
+	if (t1.m + t2.m < 60) {
 		r.m = t1.m + t2.m;
 		r.h = t1.h + t2.h;
-		if (r.h>=24){
+		if (r.h >= 24) {
 			r.h = r.h - 24;
 		}
-	}else{
+	} else {
 		r.m = ((t1.m + t2.m) - 60);
 		r.h = t1.h + t2.h + 1;
-		if (r.h>=24){
+		if (r.h >= 24) {
 			r.h = r.h - 24;
 		}
 	}
-	if (r.h>9 && r.m>9){
-		return r.h+":"+r.m;
-	}else if(r.h<10 && r.m>9){
-		return "0"+r.h+":"+r.m;
-	}else if(r.h>9 && r.m<10){
-		return r.h+":"+"0"+r.m;
-	}else{
-		return "0"+r.h+":"+"0"+r.m;
+	if (r.h > 9 && r.m > 9) {
+		return r.h + ":" + r.m;
+	} else if (r.h < 10 && r.m > 9) {
+		return "0" + r.h + ":" + r.m;
+	} else if (r.h > 9 && r.m < 10) {
+		return r.h + ":" + "0" + r.m;
+	} else {
+		return "0" + r.h + ":" + "0" + r.m;
 	}
 	// 18:29
 	// 00:45
