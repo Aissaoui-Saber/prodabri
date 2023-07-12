@@ -6,20 +6,22 @@ import functions from '../../../Utils/Functions';
 
 function Media() {
     const [images, setImages] = useState([]);
+    const [videos, setVideos] = useState([]);
 
     let imagePickerRef = useRef();
+    let videoPickerRef = useRef();
 
     function openImagesPicker() {
-        if (images.length<10){
+        if (images.length < 10) {
             imagePickerRef.current.click();
-        }   
+        }
     }
     //console.log(functions.imageFileSize(5242880));
 
     function loadImages(e) {
         let inputs = [...e.target.files];
         let validImages = [];
-        if (inputs.length <= 10){
+        if (inputs.length <= 10) {
             inputs.forEach(img => {
                 if (img.type !== "image/jpeg" && img.type !== "image/png") {
                     alert(`Le fichier "${img.name}" n'est pas une image`);
@@ -32,18 +34,54 @@ function Media() {
                 }
             });
             setImages([...images, ...validImages]);
-        }else{
+        } else {
             alert(`Vous avez séléctionné ${inputs.length} fichiers, Merci de ne pas dépasser 10 images`)
         }
-        
+
     }
 
-    function deleteImage(e){
+    function openVideosPicker() {
+        if (videos.length < 3) {
+            videoPickerRef.current.click();
+        }
+    }
+    console.log(functions.imageFileSize(52428800));
+
+    function loadVideos(e) {
+        let inputs = [...e.target.files];
+        let validVideos = [];
+        if (inputs.length <= 3) {
+            inputs.forEach(video => {
+                if (!video.type.startsWith("video/")) {
+                    alert(`Le fichier "${video.name}" n'est pas une video`);
+                } else {
+                    if (video.size > 52428800) {
+                        alert(`Vous ne pouvez pas ajouter la video "${video.name}" car la taille de la video est ${functions.imageFileSize(video.size)}.\nAttention, La taille de la video ne doit pas dépasser 50 Mo`);
+                    } else {
+                        validVideos.push(video);
+                    }
+                }
+            });
+            setVideos([...videos, ...validVideos]);
+        } else {
+            alert(`Vous avez séléctionné ${inputs.length} fichiers, Merci de ne pas dépasser 3 videos`)
+        }
+
+    }
+
+
+    function deleteImage(e) {
         let imageIndex = parseInt(e.target.attributes.data.value);
-        let temp = images;
+        let temp = [...images];
         temp.splice(imageIndex, 1);
-        //console.log(temp);
         setImages([...temp]);
+    }
+
+    function deleteVideo(e) {
+        let videoIndex = parseInt(e.target.attributes.data.value);
+        let temp = [...videos];
+        temp.splice(videoIndex, 1);
+        setVideos([...temp]);
     }
 
     return <div className="step step__media">
@@ -55,33 +93,50 @@ function Media() {
         <div className="step__media__grid">
             {(() => {
                 let temp = [];
-                images.forEach((img,index)=>{
-                    if (index === 0){
-                        temp.push(<div className="step__media__grid__image step__media__grid__image--main" style={{ backgroundImage: `url(${URL.createObjectURL(img)})` }} onClick={deleteImage} data={index}></div>);
-                    }else{
-                        temp.push(<div className="step__media__grid__image" style={{ backgroundImage: `url(${URL.createObjectURL(img)})` }} onClick={deleteImage} data={index}></div>);
+                images.forEach((img, index) => {
+                    if (index === 0) {
+                        temp.push(<div key={index} className="step__media__grid__image--main" style={{ backgroundImage: `url(${URL.createObjectURL(img)})` }} onClick={deleteImage} data={index}></div>);
+                    } else {
+                        temp.push(<div key={index} className="step__media__grid__image" style={{ backgroundImage: `url(${URL.createObjectURL(img)})` }} onClick={deleteImage} data={index}></div>);
                     }
                 });
-                for (let i=images.length; i<10; i++){
-                    if (i === 0){
-                        temp.push(<div className="step__media__grid__image step__media__grid__image--main" style={{ backgroundImage: `url(${pictureIcon})` }}></div>);
-                    }else{
-                        temp.push(<div className="step__media__grid__image" style={{ backgroundImage: `url(${pictureIcon})` }}></div>);
+                for (let i = images.length; i < 10; i++) {
+                    if (i === 0) {
+                        temp.push(<div key={i} className="step__media__grid__image--main--empty" style={{ backgroundImage: `url(${pictureIcon})` }}></div>);
+                    } else {
+                        temp.push(<div key={i} className="step__media__grid__image--empty" style={{ backgroundImage: `url(${pictureIcon})` }}></div>);
                     }
                 }
-                return temp.map(img =>{
+                return temp.map(img => {
                     return img;
                 })
-                
+
             })()}
         </div>
 
         <div className='step__media__header'>
-            <h1 className='step__title'>Vidéo (0 / 1)</h1>
-            <input className='button button--green step__media__add' type='button' value="AJOUTER" ></input>
+            <h1 className='step__title'>Vidéo ({videos.length} / 3)</h1>
+            <input className='button button--green step__media__add' type='button' value="AJOUTER" onClick={openVideosPicker}></input>
+            <input ref={videoPickerRef} type="file" style={{ display: "none" }} accept='video/*' multiple onChange={loadVideos}></input>
         </div>
         <div className="step__media__grid">
-            <div className="step__media__grid__image"></div>
+            {(() => {
+                let temp = [];
+                videos.forEach((video, index) => {
+                    temp.push(<div key={index} className="step__media__grid__video" onClick={deleteVideo} data={index}>
+                        <video key={index} autoPlay muted loop data={index}>
+                            <source src={URL.createObjectURL(video)} />
+                        </video>
+                    </div>);
+                });
+                for (let i = videos.length; i < 3; i++) {
+                    temp.push(<div key={i} className="step__media__grid__image--empty" style={{ backgroundImage: `url(${pictureIcon})` }}></div>);
+                }
+                return temp.map(video => {
+                    return video;
+                })
+
+            })()}
         </div>
     </div>
 }
