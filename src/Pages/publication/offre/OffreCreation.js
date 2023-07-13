@@ -251,8 +251,7 @@ let offre = {
 	},
 	media: {
 		images: [],
-		mainImage: undefined,
-		video: undefined
+		videos: []
 	}
 };
 
@@ -269,6 +268,7 @@ function OffreCreation() {
 	const [details, setDetails] = useState(offre.details);
 	const [localisations, setLocalisations] = useState(offre.localisations);
 	const [services, setServices] = useState(offre.services);
+	const [media, setMedia] = useState(offre.media);
 
 	let steps = [
 		"Secteur",
@@ -332,6 +332,7 @@ function OffreCreation() {
 				setCurrentStep(7);
 				break;
 			case 7:
+				setCurrentStep(8);
 				break;
 		}
 	}
@@ -366,6 +367,7 @@ function OffreCreation() {
 				setServices({commande: {...data.commande}, rdv: [...data.rdv]});
 				break;
 			case 7:
+				setMedia(data);
 				break;
 		}
 	}
@@ -391,7 +393,7 @@ function OffreCreation() {
 					case 6:
 						return <Services handleChanges={handleStepChanges} data={{...services, rdvPoints: localisations}}></Services>
 					case 7:
-						return <Media data={offre.media}></Media>
+						return <Media handleChanges={handleStepChanges} data={media}></Media>
 					case 8:
 						return <Recapitulatif data={offre}></Recapitulatif>
 				}

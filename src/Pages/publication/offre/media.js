@@ -1,10 +1,11 @@
 import './Media.css';
 import '../../../Assets/Styles/global_Style.css';
 import pictureIcon from './../../../Assets/images/icons/picture.png';
+import vidoeIcon from './../../../Assets/images/icons/video.png';
 import { useState, useRef, useEffect } from 'react';
 import functions from '../../../Utils/Functions';
 
-function Media() {
+function Media({data, handleChanges}) {
     const [images, setImages] = useState([]);
     const [videos, setVideos] = useState([]);
 
@@ -34,6 +35,8 @@ function Media() {
                 }
             });
             setImages([...images, ...validImages]);
+            handleChanges({ images: [...images, ...validImages], videos: videos });
+            e.target.value = "";
         } else {
             alert(`Vous avez séléctionné ${inputs.length} fichiers, Merci de ne pas dépasser 10 images`)
         }
@@ -45,7 +48,7 @@ function Media() {
             videoPickerRef.current.click();
         }
     }
-    console.log(functions.imageFileSize(52428800));
+    //console.log(functions.imageFileSize(52428800));
 
     function loadVideos(e) {
         let inputs = [...e.target.files];
@@ -63,6 +66,8 @@ function Media() {
                 }
             });
             setVideos([...videos, ...validVideos]);
+            handleChanges({ images: images, videos: [...videos, ...validVideos] });
+            e.target.value = "";
         } else {
             alert(`Vous avez séléctionné ${inputs.length} fichiers, Merci de ne pas dépasser 3 videos`)
         }
@@ -75,13 +80,16 @@ function Media() {
         let temp = [...images];
         temp.splice(imageIndex, 1);
         setImages([...temp]);
-    }
+        handleChanges({ images: [...temp], videos: videos });
 
+    }
     function deleteVideo(e) {
         let videoIndex = parseInt(e.target.attributes.data.value);
         let temp = [...videos];
         temp.splice(videoIndex, 1);
         setVideos([...temp]);
+        handleChanges({ images: images, videos: [...temp] });
+
     }
 
     return <div className="step step__media">
@@ -124,13 +132,11 @@ function Media() {
                 let temp = [];
                 videos.forEach((video, index) => {
                     temp.push(<div key={index} className="step__media__grid__video" onClick={deleteVideo} data={index}>
-                        <video key={index} autoPlay muted loop data={index}>
-                            <source src={URL.createObjectURL(video)} />
-                        </video>
+                        <video autoPlay muted loop data={index} src={URL.createObjectURL(video)} />
                     </div>);
                 });
                 for (let i = videos.length; i < 3; i++) {
-                    temp.push(<div key={i} className="step__media__grid__image--empty" style={{ backgroundImage: `url(${pictureIcon})` }}></div>);
+                    temp.push(<div key={i} className="step__media__grid__image--empty" style={{ backgroundImage: `url(${vidoeIcon})` }}></div>);
                 }
                 return temp.map(video => {
                     return video;
