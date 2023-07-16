@@ -37,208 +37,11 @@ let offre = {
 		phone: undefined
 	},
 	localisations: {
-		"lieuxVente": {
-			"lieux": [
-				{
-					"id": 420,
-					"name": "Commune 4",
-					"wilaya": "Chlef",
-					"wilayaNumber": 2,
-					"points": []
-				},
-				{
-					"id": 5020,
-					"name": "Commune 5",
-					"wilaya": "Chlef",
-					"wilayaNumber": 2,
-					"points": []
-				},
-				{
-					"id": 602,
-					"name": "Commune 6",
-					"wilaya": "Chlef",
-					"wilayaNumber": 2,
-					"points": []
-				},
-				{
-					"id": 1020,
-					"name": "Commune 10",
-					"wilaya": "Chlef",
-					"wilayaNumber": 2,
-					"points": [
-						{
-							"point": {
-								"id": 8,
-								"lat": 36.14425161252003,
-								"lng": 4.793987274169922
-							},
-							"info": {
-								"nom": "",
-								"horaires": [
-									[],
-									[],
-									[],
-									[],
-									[],
-									[],
-									[]
-								]
-							}
-						},
-						{
-							"point": {
-								"id": 9,
-								"lat": 36.136349732153214,
-								"lng": 4.79879379272461
-							},
-							"info": {
-								"nom": "",
-								"horaires": [
-									[],
-									[],
-									[],
-									[],
-									[],
-									[],
-									[]
-								]
-							}
-						},
-						{
-							"point": {
-								"id": 10,
-								"lat": 36.13981556713755,
-								"lng": 4.780769348144531
-							},
-							"info": {
-								"nom": "",
-								"horaires": [
-									[],
-									[],
-									[],
-									[],
-									[],
-									[],
-									[]
-								]
-							}
-						},
-						{
-							"point": {
-								"id": 11,
-								"lat": 36.15450900669502,
-								"lng": 4.7900390625
-							},
-							"info": {
-								"nom": "",
-								"horaires": [
-									[],
-									[],
-									[],
-									[],
-									[],
-									[],
-									[]
-								]
-							}
-						},
-						{
-							"point": {
-								"id": 12,
-								"lat": 36.14951909060777,
-								"lng": 4.802227020263673
-							},
-							"info": {
-								"nom": "",
-								"horaires": [
-									[],
-									[],
-									[],
-									[],
-									[],
-									[],
-									[]
-								]
-							}
-						}
-					]
-				},
-				{
-					"id": 11020,
-					"name": "Commune 11",
-					"wilaya": "Chlef",
-					"wilayaNumber": 2,
-					"points": []
-				},
-				{
-					"id": 1202,
-					"name": "Commune 12",
-					"wilaya": "Chlef",
-					"wilayaNumber": 2,
-					"points": []
-				}
-			],
-			"storeLink": ""
+		lieuxVente: {
+			lieux: undefined,
+			storeLink: undefined
 		},
-		"lieuxProduction": [
-			{
-				"id": 120,
-				"name": "Commune 1",
-				"wilaya": "Adrar",
-				"wilayaNumber": 1,
-				"points": []
-			},
-			{
-				"id": 220,
-				"name": "Commune 2",
-				"wilaya": "Adrar",
-				"wilayaNumber": 1,
-				"points": [
-					{
-						"id": 1,
-						"lat": 36.15838983302817,
-						"lng": 4.792098999023438
-					},
-					{
-						"id": 2,
-						"lat": 36.14743986519926,
-						"lng": 4.790725708007813
-					},
-					{
-						"id": 3,
-						"lat": 36.14439023489638,
-						"lng": 4.778022766113281
-					},
-					{
-						"id": 4,
-						"lat": 36.14439023489638,
-						"lng": 4.795360565185547
-					},
-					{
-						"id": 5,
-						"lat": 36.138567884179444,
-						"lng": 4.791927337646485
-					},
-					{
-						"id": 6,
-						"lat": 36.15367737606265,
-						"lng": 4.783859252929688
-					},
-					{
-						"id": 7,
-						"lat": 36.152429913577315,
-						"lng": 4.808063507080079
-					}
-				]
-			},
-			{
-				"id": 320,
-				"name": "Commune 3",
-				"wilaya": "Adrar",
-				"wilayaNumber": 1,
-				"points": []
-			}
-		]
+		lieuxProduction: undefined
 	},
 	services: {
 		commande:{
@@ -247,7 +50,8 @@ let offre = {
 			tarifs: [],
 			conditions: []
 		},
-		rdv: []
+		rdv: [],
+		livraison: null
 	},
 	media: {
 		images: [],
@@ -256,7 +60,7 @@ let offre = {
 };
 
 function OffreCreation() {
-	const [currentStep, setCurrentStep] = useState(7);
+	const [currentStep, setCurrentStep] = useState(0);
 	useEffect(e => {
 		window.scrollTo(0, 0);
 	}, [currentStep]);
@@ -364,7 +168,7 @@ function OffreCreation() {
 				setLocalisations(data);
 				break;
 			case 6:
-				setServices({commande: {...data.commande}, rdv: [...data.rdv]});
+				setServices({commande: {...data.commande}, rdv: [...data.rdv], livraison: data.livraison !== null ? [...data.livraison] : null});
 				break;
 			case 7:
 				setMedia(data);
@@ -408,3 +212,63 @@ function OffreCreation() {
 
 };
 export default OffreCreation;
+
+/*[
+	{
+		"id": 120,
+		"name": "Commune 1",
+		"wilaya": "Adrar",
+		"wilayaNumber": 1,
+		"points": []
+	},
+	{
+		"id": 220,
+		"name": "Commune 2",
+		"wilaya": "Adrar",
+		"wilayaNumber": 1,
+		"points": [
+			{
+				"id": 1,
+				"lat": 36.15838983302817,
+				"lng": 4.792098999023438
+			},
+			{
+				"id": 2,
+				"lat": 36.14743986519926,
+				"lng": 4.790725708007813
+			},
+			{
+				"id": 3,
+				"lat": 36.14439023489638,
+				"lng": 4.778022766113281
+			},
+			{
+				"id": 4,
+				"lat": 36.14439023489638,
+				"lng": 4.795360565185547
+			},
+			{
+				"id": 5,
+				"lat": 36.138567884179444,
+				"lng": 4.791927337646485
+			},
+			{
+				"id": 6,
+				"lat": 36.15367737606265,
+				"lng": 4.783859252929688
+			},
+			{
+				"id": 7,
+				"lat": 36.152429913577315,
+				"lng": 4.808063507080079
+			}
+		]
+	},
+	{
+		"id": 320,
+		"name": "Commune 3",
+		"wilaya": "Adrar",
+		"wilayaNumber": 1,
+		"points": []
+	}
+]*/

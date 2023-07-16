@@ -8,6 +8,7 @@ import 'leaflet/dist/leaflet.css';
 import functions from '../../../Utils/Functions';
 import './Localisations.css';
 import LieuVenteDialog from './LieuVenteDialog';
+import villes from "../../../Utils/Villes";
 
 let pointID = 0;
 
@@ -27,13 +28,13 @@ const LocationMarker = forwardRef(({ data, handleChanges, timesDialog, handleDel
 			pointID++;
 			if (timesDialog) {
 				//setDialogOpen(true);
-				setPositions([...positions, {id:pointID,...e.latlng}]);
-				handleChanges({data: [...positions, {id:pointID,...e.latlng}], marker: markerRef});
+				setPositions([...positions, { id: pointID, ...e.latlng }]);
+				handleChanges({ data: [...positions, { id: pointID, ...e.latlng }], marker: markerRef });
 
 			} else {
 				//handleChanges({point: e.latlng});
-				setPositions([...positions, {id:pointID,...e.latlng}]);
-				handleChanges([...positions, {id:pointID,...e.latlng}]);
+				setPositions([...positions, { id: pointID, ...e.latlng }]);
+				handleChanges([...positions, { id: pointID, ...e.latlng }]);
 			}
 			//handleChanges([...positions, e.latlng]);
 			//map.locate()
@@ -203,7 +204,7 @@ function LieuProductionCreation({ data, handleChanges }) {
 
 		{
 			lieuItemOpen ? <div className='lieu-creation__map'><p className={lieuItemOpen ? "step__paragraph" : "step__paragraph hidden"}>Préciser la position exacte sur la carte des lieux de production dans cette ville</p>
-				<MapContainer center={[36.151988, 4.795080]} zoom={13} scrollWheelZoom={true}>
+				<MapContainer center={data.latLng} zoom={13} scrollWheelZoom={true}>
 					<TileLayer
 						attribution='&copy; <a href="https://www.google.com/intl/en-GB_ALL/permissions/geoguidelines/">Google Maps</a>'
 						url="https://mt.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
@@ -268,7 +269,7 @@ function LieuVenteCreation({ data, handleChanges, handleDelete }) {
 			handleChanges({ commune: data.id, point: { point: tempPosition.data[tempPosition.data.length - 1], info: info } });
 			setTotalLieux(data.points.length);
 		} else {
-			setTotalLieux(data.points.length -1);
+			setTotalLieux(data.points.length - 1);
 			markerRef.current.deleteMarker();
 			mapRef.current.removeLayer(tempPosition.marker.current);
 		}
@@ -284,7 +285,7 @@ function LieuVenteCreation({ data, handleChanges, handleDelete }) {
 
 		{
 			lieuItemOpen ? <div className='lieu-creation__map'><p className={lieuItemOpen ? "step__paragraph" : "step__paragraph hidden"}>Préciser la position exacte sur la carte des lieux de vente dans cette ville</p>
-				<MapContainer ref={mapRef} center={[36.151988, 4.795080]} zoom={13} scrollWheelZoom={true}>
+				<MapContainer ref={mapRef} center={data.latLng} zoom={13} scrollWheelZoom={true}>
 					<TileLayer
 						attribution='&copy; <a href="https://www.google.com/intl/en-GB_ALL/permissions/geoguidelines/">Google Maps</a>'
 						url="https://mt.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
@@ -300,136 +301,50 @@ function LieuVenteCreation({ data, handleChanges, handleDelete }) {
 }
 
 function Localisations({ data, handleChanges }) {
-	const [storeSelected, setStoreSelected] = useState(false);
-	const [storeLink, setStoreLink] = useState("");
-	const [lieuxProduction, setLieuxProduction] = useState([]);
-	const [lieuxVente, setLieuxVente] = useState([]);
+	const [storeSelected, setStoreSelected] = useState(data.lieuxVente.storeLink === undefined ? false : true);
+	const [storeLink, setStoreLink] = useState(data.lieuxVente.storeLink === undefined ? "" : data.lieuxVente.storeLink);
+	const [lieuxProduction, setLieuxProduction] = useState(data.lieuxProduction === undefined ? [] : data.lieuxProduction);
+	const [lieuxVente, setLieuxVente] = useState(data.lieuxVente.lieux === undefined ? [] : data.lieuxVente.lieux);
+	const [villesProduction, setVillesProduction] = useState([...villes.FR]);
+	const [villesVente, setVillesVente] = useState([...villes.FR]);
 
 	const storeLinkRef = useRef();
-	let localisations = {
-		lieux_de_production: {
-			wilayas: [
-				{
-					wilayaNumber: 1,
-					name: "Adrar",
-					checked: false,
-					communes: [
-						{ id: 120, name: "Commune 1", checked: false },
-						{ id: 220, name: "Commune 2", checked: false },
-						{ id: 320, name: "Commune 3", checked: false },
-					]
-				},
-				{
-					wilayaNumber: 2,
-					name: "Chlef",
-					checked: false,
-					communes: [
-						{ id: 420, name: "Commune 4", checked: false },
-						{ id: 5020, name: "Commune 5", checked: false },
-						{ id: 602, name: "Commune 6", checked: false },
-						{ id: 1020, name: "Commune 10", checked: false },
-						{ id: 11020, name: "Commune 11", checked: false },
-						{ id: 1202, name: "Commune 12", checked: false },
-					]
-				},
-				{
-					wilayaNumber: 3,
-					name: "Laghouat",
-					checked: false,
-					communes: [
-						{ id: 702, name: "Commune 7", checked: false },
-						{ id: 820, name: "Commune 8", checked: false },
-						{ id: 920, name: "Commune 9", checked: false },
-					]
-				},
-			],
-			defaultOption: false,
-			handleChanges: function (selectedCities) {
-				localisations.lieux_de_production.wilayas = selectedCities;
-				let arr = [];
-				selectedCities.forEach(wilaya => {
-					wilaya.communes.forEach((commune, index) => {
-						if (commune.checked) {
-							let i = lieuxProduction.find(lieu =>{return lieu.id === commune.id});
-							if (i){
-								arr.push(i);
-							}else{
-								arr.push({ id: commune.id, name: commune.name, wilaya: wilaya.name, wilayaNumber: wilaya.wilayaNumber, points: [] });
-							}
-						}
-					});
-				});
-				setLieuxProduction([...arr]);
-			},
-			getOption: function (optionID) {
-				let o = [];
-				localisations.lieux_de_production.wilayas.forEach(wilaya => {
-					wilaya.filter(commune => {
-						if (commune.id === optionID) {
-							o.push({ ...commune, wilaya: wilaya.name, wilayaNumber: wilaya.wilayaNumber });
-						}
-					});
-				});
-				return o.length === 1 ? o[0] : null;
-			},
-		},
-		lieux_de_vente: {
-			wilayas: [
-				{
-					wilayaNumber: 1,
-					name: "Adrar",
-					checked: false,
-					communes: [
-						{ id: 120, name: "Commune 1", checked: false },
-						{ id: 220, name: "Commune 2", checked: false },
-						{ id: 320, name: "Commune 3", checked: false },
-					]
-				},
-				{
-					wilayaNumber: 2,
-					name: "Chlef",
-					checked: false,
-					communes: [
-						{ id: 420, name: "Commune 4", checked: false },
-						{ id: 5020, name: "Commune 5", checked: false },
-						{ id: 602, name: "Commune 6", checked: false },
-						{ id: 1020, name: "Commune 10", checked: false },
-						{ id: 11020, name: "Commune 11", checked: false },
-						{ id: 1202, name: "Commune 12", checked: false },
-					]
-				},
-				{
-					wilayaNumber: 3,
-					name: "Laghouat",
-					checked: false,
-					communes: [
-						{ id: 702, name: "Commune 7", checked: false },
-						{ id: 820, name: "Commune 8", checked: false },
-						{ id: 920, name: "Commune 9", checked: false },
-					]
-				},
-			],
-			defaultOption: false,
-			handleChanges: function (selectedCities) {
-				localisations.lieux_de_vente.wilayas = selectedCities;
-				let arr = [];
-				selectedCities.forEach(wilaya => {
-					wilaya.communes.forEach(commune => {
-						if (commune.checked) {
-							let i = lieuxVente.find(lieu =>{return lieu.id === commune.id});
-							if (i){
-								arr.push(i);
-							}else{
-								arr.push({ id: commune.id, name: commune.name, wilaya: wilaya.name, wilayaNumber: wilaya.wilayaNumber, points: [] });
-							}
-						}
-					});
-				});
-				setLieuxVente([...arr]);
-				//offre.localisations.lieux_de_vente.lieux.push(selectedCities);
-			}
-		}
+
+	function handleLieuxProductionChanges(selectedCities) {
+		setVillesProduction([...selectedCities]);
+		let arr = [];
+		selectedCities.forEach(wilaya => {
+			wilaya.communes.forEach((commune, index) => {
+				if (commune.checked) {
+					let i = lieuxProduction.find(lieu => { return lieu.id === commune.id });
+					if (i) {
+						arr.push(i);
+					} else {
+						arr.push({ id: commune.id, name: commune.name, wilaya: wilaya.name, wilayaNumber: wilaya.wilayaNumber, latLng: commune.latLng, points: [] });
+					}
+				}
+			});
+		});
+		setLieuxProduction([...arr]);
 	}
+	function handleLieuxVenteChanges(selectedCities) {
+		setVillesVente([...selectedCities]);
+		let arr = [];
+		selectedCities.forEach(wilaya => {
+			wilaya.communes.forEach(commune => {
+				if (commune.checked) {
+					let i = lieuxVente.find(lieu => { return lieu.id === commune.id });
+					if (i) {
+						arr.push(i);
+					} else {
+						arr.push({ id: commune.id, name: commune.name, wilaya: wilaya.name, wilayaNumber: wilaya.wilayaNumber,latLng: commune.latLng, points: [] });
+					}
+				}
+			});
+		});
+		setLieuxVente([...arr]);
+	}
+
 	function selectStore(e) {
 		if (storeLinkRef.current !== e.target) {
 			if (storeSelected) {
@@ -476,9 +391,9 @@ function Localisations({ data, handleChanges }) {
 		setLieuxVente([...temp]);
 	}
 
-	useEffect(()=>{
-		handleChanges({lieuxVente: {lieux: lieuxVente, storeLink: storeLink}, lieuxProduction: lieuxProduction});
-	},[lieuxVente,lieuxProduction, storeLink]);
+	useEffect(() => {
+		handleChanges({ lieuxVente: { lieux: lieuxVente, storeLink: storeLink }, lieuxProduction: lieuxProduction });
+	}, [lieuxVente, lieuxProduction, storeLink]);
 
 	useEffect(() => {
 		if (storeSelected) {
@@ -491,20 +406,20 @@ function Localisations({ data, handleChanges }) {
 	return <div className="step step__localisations">
 		<div className="step__localisation__header">
 			<div><h1 className='step__title'>Lieux de production</h1></div>
-			<SelectLieu data={localisations.lieux_de_production} handleCitiesChecks={localisations.lieux_de_production.handleChanges} title="Lieux de production" readOnly={false} value={0} />
+			<SelectLieu data={villesProduction} onChange={handleLieuxProductionChanges} title="Lieux de production" readOnly={false} />
 		</div>
 		{
-			lieuxProduction.map((lieu,index) => {
+			lieuxProduction.map((lieu, index) => {
 				return <LieuProductionCreation key={index} data={lieu} handleChanges={handleProductionPositionsChanges} />
 			})
 		}
 		<hr className='step__line' />
 		<div className="step__localisation__header">
 			<div><h1 className='step__title'>Lieux de vente</h1></div>
-			<SelectLieu data={localisations.lieux_de_vente} handleCitiesChecks={localisations.lieux_de_vente.handleChanges} title="Lieux de vente" readOnly={false} value={0} />
+			<SelectLieu data={villesVente} onChange={handleLieuxVenteChanges} title="Lieux de vente" readOnly={false} />
 		</div>
 		{
-			lieuxVente.map((lieu,index) => {
+			lieuxVente.map((lieu, index) => {
 				return <LieuVenteCreation key={index} data={{ ...lieu, info: lieu.info }} handleChanges={handleVentePositionsChanges} handleDelete={handleVenteDeletePosition} />
 			})
 		}

@@ -9,6 +9,7 @@ import SelectLieu from '../../../Components/filterBar/SelectLieu/SelectLieu';
 import productImage from './../../../Assets/images/icons/annonce/product.jpg';
 
 function Recapitulatif({ data }) {
+    console.log(data);
 
     useEffect(() => {
         const L = require("leaflet");
@@ -21,6 +22,7 @@ function Recapitulatif({ data }) {
             shadowUrl: require("leaflet/dist/images/marker-shadow.png")
         });
     }, []);
+    
     return <div className="step step__recap">
         <div className="step__recap__header">
             <h1 className="step__title">Sécteur</h1>
@@ -164,7 +166,7 @@ function Recapitulatif({ data }) {
         </div>
         <h2 className='step__recap__details__title'>Lieux de livraison (4 Villes)</h2>
         <div style={{width: "40%", margin: "10px 0px"}}>
-            <SelectLieu readOnly={true} title={"Lieux de livraison"} value={"350 Villes"} data={data.localisations.lieux_de_livraison.select.wilayas}></SelectLieu>
+            {data.services.livraison === null ? <></> : <SelectLieu readOnly={true} title={"Lieux de livraison"} data={data.services.livraison}></SelectLieu>}
         </div>
         <div className="step__recap__header">
             <h1 className="step__title">Média</h1>

@@ -28,11 +28,11 @@ function copyData(data) {
     return copy;
 }
 
-
-function SelectLieu({ data, handleCitiesChecks, title, readOnly , value}) {
-    const [wilayas, setWilayas] = useState(readOnly ? data : copyData(data.wilayas));
+function SelectLieu({ data, onChange, title, readOnly}) {
+    const [villes, setVilles] = useState(data);
     const [isOpen, setIsOpen] = useState(false);
-    const [totalCities, setTotalCities] = useState(readOnly ? getTotalSelectedCities(wilayas) : value );
+    let t = getTotalSelectedCities(data);
+    const [totalCities, setTotalCities] = useState(readOnly ? t : t == 0 ? -1 : t);
     
     const refOne = useRef(null);
     const refTwo = useRef(null);
@@ -50,16 +50,16 @@ function SelectLieu({ data, handleCitiesChecks, title, readOnly , value}) {
     }, []);
 
     function handleCitiesCheckedNumber(checkedCities) {
-        let dataTemp = wilayas;
+        let dataTemp = villes;
         for (let i = 0; i < dataTemp.length; i++) {
             if (dataTemp[i].wilayaNumber === checkedCities.wilayaNumber) {
                 dataTemp[i] = checkedCities;
                 break;
             }
         }
-        setWilayas(dataTemp);
+        setVilles(dataTemp);
         setTotalCities(getTotalSelectedCities(dataTemp));
-        handleCitiesChecks(wilayas);
+        onChange(villes);
     }
 
 
@@ -68,19 +68,19 @@ function SelectLieu({ data, handleCitiesChecks, title, readOnly , value}) {
             <img className="select__icon" src={pin} alt="placeholder"></img>
             <div className="select__data">
                 <label className='select__data__title'>{title}</label>
-                <label className='select__data__value'>{totalCities === -1 ? "Tout les Villes" : (totalCities < 2 ? totalCities + " Ville" : totalCities + " Villes")}</label>
+                <label className='select__data__value'>{totalCities < 1 ? "Tout les Villes" : (totalCities < 2 ? totalCities + " Ville" : totalCities + " Villes")}</label>
             </div>
             <div className={isOpen ? "select__triangle select__triangle--active" : "select__triangle"}></div>
         </div>
         <div className={isOpen ? "options" : "options options--closed"} ref={refOne}>
             <div className='options__trees'>
                 {
-                    readOnly ? data.map((wilaya) => {
+                    /*readOnly ? */villes.map((wilaya) => {
                         return <Tree className='options__trees__item' key={wilaya.wilayaNumber} data={wilaya} handleChanges={handleCitiesCheckedNumber} readOnly={readOnly ? true : false}></Tree>
                     })
-                    : data.wilayas.map((wilaya) => {
+                    /*: data.wilayas.map((wilaya) => {
                         return <Tree className='options__trees__item' key={wilaya.wilayaNumber} data={wilaya} handleChanges={handleCitiesCheckedNumber} readOnly={readOnly ? true : false}></Tree>
-                    })
+                    })*/
                     }
             </div>
         </div>

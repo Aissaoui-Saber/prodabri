@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Tartif from "./Tarif";
 import Condition from "../Condition";
 
@@ -73,7 +73,7 @@ function Commande({ data, handleChanges }) {
 
 
     return <div className="step__services__commande">
-        <h1 className="step__subTitle">Méthode de récuperation</h1>
+        <h1 className="step__subTitle">Méthode de réception</h1>
         <br></br>
         <div className={retraitSelected ? "step__option step__option--selected" : "step__option"} onClick={() => setRetraitSelected(!retraitSelected)}>
             <img className='step__option__icon' src={retrait} alt="retrait" />
