@@ -181,13 +181,6 @@ function LieuProductionCreation({ data, handleChanges }) {
 			shadowUrl: require("leaflet/dist/images/marker-shadow.png")
 		});
 	}, []);
-	function openCloseLieuItem() {
-		if (lieuItemOpen) {
-			setLieuItemOpen(false);
-		} else {
-			setLieuItemOpen(true);
-		}
-	}
 
 	function handlePositionsChanges(positions) {
 		setTotalLieux(positions.length);
@@ -195,7 +188,7 @@ function LieuProductionCreation({ data, handleChanges }) {
 	}
 
 	return <div className="lieu-creation">
-		<div className={lieuItemOpen ? "lieu-creation__triangle lieu-creation__triangle--open" : "lieu-creation__triangle"} onClick={openCloseLieuItem}></div>
+		<div className={lieuItemOpen ? "lieu-creation__triangle lieu-creation__triangle--open" : "lieu-creation__triangle"} onClick={()=>{setLieuItemOpen(!lieuItemOpen);}}></div>
 		<img className='lieu-creation__icon' src={pin} alt="lieu" />
 		<div className='lieu-creation__data'>
 			<label className="lieu-creation__data__commune">{data.name + " (" + totalLieux + " Lieux)"}</label>
@@ -223,6 +216,7 @@ function LieuVenteCreation({ data, handleChanges, handleDelete }) {
 	const [totalLieux, setTotalLieux] = useState(data.points.length);
 	const [dialogIsOpen, setDialogIsOpen] = useState(false);
 	const [tempPosition, setTempPosition] = useState(null);
+
 	useEffect(() => {
 		const L = require("leaflet");
 
@@ -241,14 +235,7 @@ function LieuVenteCreation({ data, handleChanges, handleDelete }) {
 		} else {
 			document.body.style.overflowY = "scroll";
 		}
-	}, [dialogIsOpen])
-	function openCloseLieuItem() {
-		if (lieuItemOpen) {
-			setLieuItemOpen(false);
-		} else {
-			setLieuItemOpen(true);
-		}
-	}
+	}, [dialogIsOpen]);
 
 
 	function handleDeleteChanges(data) {
@@ -273,30 +260,29 @@ function LieuVenteCreation({ data, handleChanges, handleDelete }) {
 			markerRef.current.deleteMarker();
 			mapRef.current.removeLayer(tempPosition.marker.current);
 		}
+		
 	}
 
 	return <div className="lieu-creation">
-		<div className={lieuItemOpen ? "lieu-creation__triangle lieu-creation__triangle--open" : "lieu-creation__triangle"} onClick={openCloseLieuItem}></div>
+		<div className={lieuItemOpen ? "lieu-creation__triangle lieu-creation__triangle--open" : "lieu-creation__triangle"} onClick={()=>{setLieuItemOpen(!lieuItemOpen)}}></div>
 		<img className='lieu-creation__icon' src={pin} alt="lieu" />
 		<div className='lieu-creation__data'>
 			<label className="lieu-creation__data__commune">{data.name + " (" + totalLieux + " Lieux)"}</label>
 			<label className="lieu-creation__data__wilaya">{data.wilaya}</label>
 		</div>
-
 		{
 			lieuItemOpen ? <div className='lieu-creation__map'><p className={lieuItemOpen ? "step__paragraph" : "step__paragraph hidden"}>Préciser la position exacte sur la carte des lieux de vente dans cette ville</p>
 				<MapContainer ref={mapRef} center={data.latLng} zoom={13} scrollWheelZoom={true}>
 					<TileLayer
 						attribution='&copy; <a href="https://www.google.com/intl/en-GB_ALL/permissions/geoguidelines/">Google Maps</a>'
 						url="https://mt.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
-					//url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+						//url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
 					/>
 					<LocationMarker ref={markerRef} data={data.points} handleChanges={handlePositionsChanges} timesDialog={true} handleDelete={handleDeleteChanges}></LocationMarker>
 				</MapContainer>
 				{dialogIsOpen ? <LieuVenteDialog handleChanges={handleDialogDataChanges}></LieuVenteDialog> : ""}
 			</div> : ""
 		}
-
 	</div>
 }
 

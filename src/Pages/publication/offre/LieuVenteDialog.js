@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import remove from '../../../Assets/images/delete.png';
 import functions from '../../../Utils/Functions';
 import '../offre/LieuVenteDialog.css';
+let id = 0;
 
 
 function PeriodCreation({ handleChanges, data }) {
@@ -127,7 +128,6 @@ function PeriodCreation({ handleChanges, data }) {
 function LieuVenteDialog({ handleChanges }) {
     const [times, setTimes] = useState([[], [], [], [], [], [], []]);
     const daysNames_fr = ["Samedi", "Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"];
-    let [id, setID] = useState(0);
     const nomRef = useRef();
     const dialog = useRef();
 
@@ -150,7 +150,7 @@ function LieuVenteDialog({ handleChanges }) {
 
     function addPeriod(data) {
         data.periods[data.periods.length - 1].id = id;
-        setID(id + 1);
+        id = id + 1;
         let temp = [];
         times.forEach((day, index) => {
             if (index == data.day) {
