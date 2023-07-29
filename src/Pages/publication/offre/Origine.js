@@ -11,7 +11,7 @@ function Origine({ data, handleChanges }) {
         title: "Pays",
         options: [
             { id: -1, text: "Selectionner un pays", icon: etranger },
-            ...countries
+            ...countries.fr
         ],
         defaultOption: -1,
         selectedItem: -1,

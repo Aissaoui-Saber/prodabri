@@ -60,7 +60,7 @@ let offre = {
 };
 
 function OffreCreation() {
-	const [currentStep, setCurrentStep] = useState(5);
+	const [currentStep, setCurrentStep] = useState(8);
 	useEffect(e => {
 		window.scrollTo(0, 0);
 	}, [currentStep]);
@@ -165,6 +165,7 @@ function OffreCreation() {
 				});
 				break;
 			case 5:
+				console.log(data);
 				setLocalisations(data);
 				break;
 			case 6:
