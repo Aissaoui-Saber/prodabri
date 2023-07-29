@@ -184,13 +184,13 @@ function LieuVenteDialog({ handleChanges }) {
         {
             times.map((day, index) => {
 
-                return <>
+                return <div key={index}>
                     <div className="dialog__day">
                         <label className="dialog__day__name">{daysNames_fr[index]}</label>
                         <div className="dialog__day__periods">
                             {
-                                day.map(period => {
-                                    return <div className="dialog__day__period">
+                                day.map((period,index) => {
+                                    return <div className="dialog__day__period" key={index}>
                                         <label className="dialog__day__periods__value">{period.start + " - " + period.end}</label>
                                         <img className="step__details__links__link__delete dialog__day__period__remove" src={remove} onClick={() => { deletePeriod(period.id) }}></img>
                                     </div>
@@ -200,7 +200,7 @@ function LieuVenteDialog({ handleChanges }) {
                         </div>
                     </div>
                     <hr />
-                </>
+                </div>
             })
         }
         <br></br>

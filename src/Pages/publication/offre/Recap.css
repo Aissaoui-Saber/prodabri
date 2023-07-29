@@ -151,6 +151,19 @@
     translate: 0px 0px;
     transition: background-color 0.3s, translate 0.3s;
 }
+.recap__lieux__ville--selected{
+    background-color: rgb(3, 40, 71);
+    display: grid;
+    grid-template-columns: 30px auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    column-gap: 5px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    margin: 5px 0px;
+    translate: 0px 0px;
+    transition: background-color 0.3s, translate 0.3s;
+}
 .recap__lieux__ville:hover{
     background-color: var(--active-blue);
     translate: 10px 0px;

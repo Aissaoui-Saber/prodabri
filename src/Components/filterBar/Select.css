@@ -86,7 +86,7 @@
     transform: scaleY(1);
     transition: opacity 0.2s, transform 0.2s;
     overflow: hidden;
-    z-index: 2;
+    z-index: 401;
     max-height: 300px;
     overflow-y: scroll;
 }

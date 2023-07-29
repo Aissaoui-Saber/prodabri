@@ -76,7 +76,7 @@ function LieuxRDV({ data, handleChanges }) {
             <label className={prodSelected ? "step__services__lieuxRDV__switch__item step__services__lieuxRDV__switch__item--selected" : "step__services__lieuxRDV__switch__item"} onClick={() => { setProdSelected(true) }}>Lieux de production ({data.prod.length})</label>
         </div>
         <br></br>
-        <MapContainer ref={mapRef} center={[36.151988, 4.795080]} zoom={14} scrollWheelZoom={true}>
+        <MapContainer ref={mapRef} center={[28.889515, 2.485352]} zoom={5} scrollWheelZoom={true}>
             <TileLayer
                 attribution='&copy; <a href="https://www.google.com/intl/en-GB_ALL/permissions/geoguidelines/">Google Maps</a>'
                 url="https://mt.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"

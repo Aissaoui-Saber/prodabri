@@ -4,7 +4,7 @@
     align-items: center;
     margin-bottom: 15px;
 }
-
+/*
 .lieu-creation {
     display: grid;
     grid-template-columns: 16px 30px 1fr 1fr;
@@ -65,7 +65,7 @@
     grid-column-end: 5;
     z-index: 0;
 }
-
+*/
 .step__localisation__store__link {
     margin-left: 20px;
     width: 60%;
