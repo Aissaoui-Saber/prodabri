@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 
 
-function RDVjour({ data, handleChanges }) {
+function RDVjour({ data, readOnly, handleChanges }) {
     const [day, setDay] = useState(data);
 
     function checkDay(e) {
@@ -24,14 +24,14 @@ function RDVjour({ data, handleChanges }) {
     }
     return <div className="step__services__horairesRDV__plages__day">
         <div className="step__services__horairesRDV__plages__day__time">
-            <input type="checkbox" name="dayName" value={data.index} checked={day.enabled} onChange={checkDay}></input>
+            <input type="checkbox" name="dayName" value={data.index} checked={day.enabled} onChange={readOnly ? null : checkDay}></input>
             <label htmlFor="dayName">{day.name}</label>
         </div>
         <br></br>
         {
             day.times.map((time, index) => {
                 return <div key={index} className="step__services__horairesRDV__plages__day__time">
-                    <input type="checkbox" name="time" value={index} checked={time.enabled} onChange={checkTime}></input>
+                    <input type="checkbox" name="time" value={index} checked={time.enabled} onChange={readOnly ? null : checkTime}></input>
                     <label htmlFor="time">{time.time}</label>
                 </div>
             })

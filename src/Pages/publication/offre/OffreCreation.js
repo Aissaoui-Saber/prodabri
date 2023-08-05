@@ -165,7 +165,6 @@ function OffreCreation() {
 				});
 				break;
 			case 5:
-				console.log(data);
 				setLocalisations(data);
 				break;
 			case 6:
@@ -200,7 +199,16 @@ function OffreCreation() {
 					case 7:
 						return <Media handleChanges={handleStepChanges} data={media}></Media>
 					case 8:
-						return <Recapitulatif data={offre}></Recapitulatif>
+						return <Recapitulatif data={{
+							secteur: secteur,
+							type: type,
+							origine: origine,
+							durabilite: durabilite,
+							details: details,
+							localisations: localisations,
+							services: services,
+							media: media
+						}}></Recapitulatif>
 				}
 			})()}
 			<div className='buttons'>

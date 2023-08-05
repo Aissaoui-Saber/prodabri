@@ -232,7 +232,7 @@ function HorairesRDV({ data, handleChanges }) {
         <div className="step__services__horairesRDV__plages">
             {
                 timesTable?.map((element, index) => {
-                    return <RDVjour key={index} data={{ ...element, index: index }} handleChanges={handleDayTimesChanges}></RDVjour>
+                    return <RDVjour key={index} data={{ ...element, index: index }} handleChanges={handleDayTimesChanges} readOnly={false}></RDVjour>
                 })
             }
 
