@@ -23,18 +23,6 @@ function getTotalSelectedCities(cities) {
     return checkedCities;
 }
 
-function filterSelectedCities(data){
-    let result = [];
-    data.forEach(wilaya => {
-        wilaya.communes.forEach((commune, index) => {
-            if (commune.checked) {
-                result.push(commune.id);
-            }
-        });
-    });
-    return result;
-}
-
 function SelectLieu({ selectedItems, onChange, title, readOnly, isFilter }) {
     const [villes, setVilles] = useState(JSON.parse(JSON.stringify([...cities.FR])));
     const [isOpen, setIsOpen] = useState(false);

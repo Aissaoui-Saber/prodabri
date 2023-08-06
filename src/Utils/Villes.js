@@ -28569,11 +28569,27 @@ function getVilleById(id) {
     return result;
 }
 
+function getTotalSelectedCities(cities) {
+    let checkedCities = 0;
+    cities.forEach(wilaya => {
+        wilaya.communes.forEach(commune => {
+            if ("checked" in commune) {
+                if (commune.checked) {
+                    checkedCities++;
+                }
+            } else {
+                checkedCities++;
+            }
+        });
+    });
+    return checkedCities;
+}
 
 let o = {
     FR: [...fr],
     AR: [...ar],
-    getVilleById
+    getVilleById,
+    getTotalSelectedCities
 };
 
 export default o;

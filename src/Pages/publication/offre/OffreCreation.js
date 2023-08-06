@@ -16,6 +16,9 @@ import { useState, useRef, useEffect } from 'react';
 
 import Media from './media.js';
 import Recapitulatif from './Recap';
+import { compile } from 'sass';
+
+import villes from '../../../Utils/Villes';
 
 let offre = {
 	secteur: {
@@ -44,7 +47,7 @@ let offre = {
 		lieuxProduction: undefined
 	},
 	services: {
-		commande:{
+		commande: {
 			retrait: false,
 			livraison: false,
 			tarifs: [],
@@ -133,7 +136,34 @@ function OffreCreation() {
 				setCurrentStep(6);
 				break;
 			case 6:
-				setCurrentStep(7);
+				let CommandeValid = undefined;
+				let rdvValid = undefined;
+				let livraisonValid = undefined;
+				if (services.selectedServices[0]) {
+					let reception = !(!services.commande.livraison && !services.commande.retrait);
+					let tarifs = !(services.commande.tarifs.length === 0);
+					CommandeValid = reception && tarifs;
+				}
+				if (services.selectedServices[1]) {
+					rdvValid = !(services.rdv.length === 0);
+				}
+				if (services.selectedServices[2]) {
+					if (services.livraison === undefined) {
+						livraisonValid = false;
+					} else {
+						livraisonValid = !(villes.getTotalSelectedCities(services.livraison) === 0);
+					}
+				}
+				let alertMessage = `Vous avez choisi le service de (${services.selectedServices[0] ? "Commande" : ""}${services.selectedServices[1] ? ", Rendez vous" : ""}${services.selectedServices[2] ? ", Livraison" : ""}), vous devrez:\n${!CommandeValid && CommandeValid !== undefined ? "- Selectionner la méthode de réception des commandes par vos clients et définir les tarifs de votre produit ou service." : ""}${!rdvValid && rdvValid !== undefined ? "\n- Définir vos points de rendez vous." : ""}${!livraisonValid && livraisonValid !== undefined ? "\n- Sélectionner les villes de livraison." : ""}`;
+				if (
+					(CommandeValid !== undefined && !CommandeValid)
+					|| (rdvValid !== undefined && !rdvValid)
+					|| (livraisonValid !== undefined && !livraisonValid)
+				) {
+					alert(alertMessage);
+				} else {
+					setCurrentStep(7);
+				}
 				break;
 			case 7:
 				setCurrentStep(8);
@@ -168,7 +198,7 @@ function OffreCreation() {
 				setLocalisations(data);
 				break;
 			case 6:
-				setServices({commande: {...data.commande}, rdv: [...data.rdv], livraison: data.livraison !== undefined ? [...data.livraison] : undefined});
+				setServices({ commande: { ...data.commande }, rdv: [...data.rdv], livraison: data.livraison !== undefined ? [...data.livraison] : undefined, selectedServices: [...data.selectedServices] });
 				break;
 			case 7:
 				setMedia(data);
@@ -195,7 +225,7 @@ function OffreCreation() {
 					case 5:
 						return <Localisations handleChanges={handleStepChanges} data={localisations} />
 					case 6:
-						return <Services handleChanges={handleStepChanges} data={{...services, rdvPoints: localisations}}></Services>
+						return <Services handleChanges={handleStepChanges} data={{ ...services, rdvPoints: localisations }}></Services>
 					case 7:
 						return <Media handleChanges={handleStepChanges} data={media}></Media>
 					case 8:

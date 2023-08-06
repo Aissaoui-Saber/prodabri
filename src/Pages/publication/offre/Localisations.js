@@ -242,8 +242,8 @@ function Localisations({ data, handleChanges }) {
 	const [storeLink, setStoreLink] = useState(data.lieuxVente.storeLink === undefined ? "" : data.lieuxVente.storeLink);
 	const [lieuxProduction, setLieuxProduction] = useState(data.lieuxProduction === undefined ? [] : data.lieuxProduction);
 	const [lieuxVente, setLieuxVente] = useState(data.lieuxVente.lieux === undefined ? [] : data.lieuxVente.lieux);
-	//const [villesProduction, setVillesProduction] = useState([...villes.FR]);
-	//const [villesVente, setVillesVente] = useState([...villes.FR]);
+	const [villesProduction, setVillesProduction] = useState(JSON.parse(JSON.stringify([...villes.FR])));
+	const [villesVente, setVillesVente] = useState(JSON.parse(JSON.stringify([...villes.FR])));
 	const [selectedProdVille, setselectedProdVille] = useState(null);
 	const [selectedVenteVille, setselectedVenteVille] = useState(null);
 
@@ -264,6 +264,7 @@ function Localisations({ data, handleChanges }) {
 	}, []);
 
 	function handleLieuxProductionSelect(selectedCities) {
+		setVillesProduction([...selectedCities]);
 		let arr = [];
 		selectedCities.forEach(wilaya => {
 			wilaya.communes.forEach((commune, index) => {
@@ -282,7 +283,7 @@ function Localisations({ data, handleChanges }) {
 		prodMapRef.current.flyTo([28.889515, 2.485352], 5);
 	}
 	function handleLieuxVenteSelect(selectedCities) {
-		//setVillesVente([...selectedCities]);
+		setVillesVente([...selectedCities]);
 		let arr = [];
 		selectedCities.forEach(wilaya => {
 			wilaya.communes.forEach(commune => {

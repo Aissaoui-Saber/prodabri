@@ -21,7 +21,7 @@ function Services({ data, handleChanges }) {
     const [lieuxLivraison, setLieuxLivraison] = useState(undefined);
 
     useEffect(() => {
-        handleChanges({ commande: commande, rdv: rdv, livraison: lieuxLivraison === undefined ? undefined : lieuxLivraison });
+        handleChanges({ commande: commande, rdv: rdv, livraison: lieuxLivraison === undefined ? undefined : lieuxLivraison, selectedServices: [commandeSelected,rdvSelected,livraisonSelected] });
     }, [commande, rdv, lieuxLivraison]);
 
     useEffect(() => {
@@ -41,9 +41,10 @@ function Services({ data, handleChanges }) {
                     livraison: false,
                     tarifs: [],
                     conditions: []
-                }, 
+                },
                 rdv: rdv,
-                livraison: lieuxLivraison === undefined ? undefined : lieuxLivraison
+                livraison: lieuxLivraison === undefined ? undefined : lieuxLivraison,
+                selectedServices: [commandeSelected,rdvSelected,livraisonSelected]
             });
         }
     }, [commandeSelected]);
@@ -51,19 +52,13 @@ function Services({ data, handleChanges }) {
     useEffect(() => {
         if (rdvSelected === false) {
             setRDV([]);
-            handleChanges({ commande: commande, rdv: [], livraison: lieuxLivraison === undefined ? undefined : lieuxLivraison });
+            handleChanges({ commande: commande, rdv: [], livraison: lieuxLivraison === undefined ? undefined : lieuxLivraison, selectedServices: [commandeSelected,rdvSelected,livraisonSelected] });
         }
     }, [rdvSelected]);
 
     useEffect(() => {
-        
-        if (livraisonSelected === false) {
-            setLieuxLivraison(undefined);
-            handleChanges({ commande: commande, rdv: rdv, livraison: undefined });
-        }else{
-            setLieuxLivraison(villes.FR);
-            handleChanges({ commande: commande, rdv: rdv, livraison: villes.FR });
-        }
+        setLieuxLivraison(undefined);
+        handleChanges({ commande: commande, rdv: rdv, livraison: undefined, selectedServices: [commandeSelected,rdvSelected,livraisonSelected] });
     }, [livraisonSelected]);
 
 
@@ -101,8 +96,7 @@ function Services({ data, handleChanges }) {
         setCommande({ ...data });
     }
 
-    function handleLieuxLivraisonChanges(data){
-        console.log(data);
+    function handleLieuxLivraisonChanges(data) {
         setLieuxLivraison([...data]);
     }
 
@@ -134,7 +128,7 @@ function Services({ data, handleChanges }) {
                 <p className='step__option__info__description'>Définir les villes de livraison</p>
             </div>
         </div>
-        {livraisonSelected ? <div className="step__services__commande" style={{backgroundColor: "var(--dark-foreground)", width:"40%"}}>
+        {livraisonSelected ? <div className="step__services__commande" style={{ backgroundColor: "var(--dark-foreground)", width: "40%" }}>
             <h1 className="step__subTitle">Villes de livraison</h1>
             <SelectLieu selectedItems={lieuxLivraison === undefined ? [] : lieuxLivraison} onChange={handleLieuxLivraisonChanges} title="Lieux de livraison" readOnly={false} isFilter={false}></SelectLieu>
         </div> : <br></br>}
