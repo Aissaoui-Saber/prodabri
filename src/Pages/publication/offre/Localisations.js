@@ -20,14 +20,14 @@ function VenteLocationMarker({ data, handleChanges, handleDelete }) {
 
 	const map = useMapEvents({
 		click(e) {
-			if (positions !== undefined){
+			if (positions !== undefined) {
 				pointID++;
 				handleChanges({ id: pointID, ...e.latlng });
 			}
-			
+
 		},
 	})
-	function deletePoint(e){
+	function deletePoint(e) {
 		handleDelete(parseInt(e.target.attributes["data"].value));
 	}
 
@@ -162,7 +162,7 @@ function ProdLocationMarker({ data, handleChanges }) {
 }
 
 function LieuVenteCreation({ data, handleChanges }) {
-	
+
 	const mapRef = useRef();
 	const [lieuPoints, setLieuPoints] = useState(data);
 	const [dialogIsOpen, setDialogIsOpen] = useState(false);
@@ -189,8 +189,8 @@ function LieuVenteCreation({ data, handleChanges }) {
 		}
 	}, [dialogIsOpen]);
 
-	useEffect(()=>{
-		if (mapRef.current !== null){
+	useEffect(() => {
+		if (mapRef.current !== null) {
 			if (data === null) {
 				mapRef.current.flyTo([28.889515, 2.485352], 5);
 				setLieuPoints(null);
@@ -199,15 +199,15 @@ function LieuVenteCreation({ data, handleChanges }) {
 				setLieuPoints(data);
 			}
 		}
-	},[data]);
+	}, [data]);
 
 
 	function handleDeleteChanges(pointID) {
-		let tempPoints = lieuPoints.points.filter(pos => {return pos.point.id !== pointID});
-		let t = {...lieuPoints};
+		let tempPoints = lieuPoints.points.filter(pos => { return pos.point.id !== pointID });
+		let t = { ...lieuPoints };
 		t.points = tempPoints;
-		setLieuPoints({...t});
-		handleChanges({...t});
+		setLieuPoints({ ...t });
+		handleChanges({ ...t });
 	}
 
 	function handlePositionsChanges(position) {
@@ -218,9 +218,9 @@ function LieuVenteCreation({ data, handleChanges }) {
 	function handleDialogDataChanges(info) {
 		setDialogIsOpen(false);
 		if (info !== null) {
-			setLieuPoints({ ...lieuPoints, points: [...lieuPoints.points, { point: tempPosition, info: info }]});
-			handleChanges({ ...lieuPoints, points: [...lieuPoints.points, { point: tempPosition, info: info }]});
-			
+			setLieuPoints({ ...lieuPoints, points: [...lieuPoints.points, { point: tempPosition, info: info }] });
+			handleChanges({ ...lieuPoints, points: [...lieuPoints.points, { point: tempPosition, info: info }] });
+
 		}
 	}
 
@@ -242,8 +242,8 @@ function Localisations({ data, handleChanges }) {
 	const [storeLink, setStoreLink] = useState(data.lieuxVente.storeLink === undefined ? "" : data.lieuxVente.storeLink);
 	const [lieuxProduction, setLieuxProduction] = useState(data.lieuxProduction === undefined ? [] : data.lieuxProduction);
 	const [lieuxVente, setLieuxVente] = useState(data.lieuxVente.lieux === undefined ? [] : data.lieuxVente.lieux);
-	const [villesProduction, setVillesProduction] = useState([...villes.FR]);
-	const [villesVente, setVillesVente] = useState([...villes.FR]);
+	//const [villesProduction, setVillesProduction] = useState([...villes.FR]);
+	//const [villesVente, setVillesVente] = useState([...villes.FR]);
 	const [selectedProdVille, setselectedProdVille] = useState(null);
 	const [selectedVenteVille, setselectedVenteVille] = useState(null);
 
@@ -264,7 +264,6 @@ function Localisations({ data, handleChanges }) {
 	}, []);
 
 	function handleLieuxProductionSelect(selectedCities) {
-		setVillesProduction([...selectedCities]);
 		let arr = [];
 		selectedCities.forEach(wilaya => {
 			wilaya.communes.forEach((commune, index) => {
@@ -277,13 +276,13 @@ function Localisations({ data, handleChanges }) {
 					}
 				}
 			});
-		});
+		});		
 		setLieuxProduction([...arr]);
 		setselectedProdVille(null);
 		prodMapRef.current.flyTo([28.889515, 2.485352], 5);
 	}
 	function handleLieuxVenteSelect(selectedCities) {
-		setVillesVente([...selectedCities]);
+		//setVillesVente([...selectedCities]);
 		let arr = [];
 		selectedCities.forEach(wilaya => {
 			wilaya.communes.forEach(commune => {
@@ -352,10 +351,10 @@ function Localisations({ data, handleChanges }) {
 
 	function handleVentePositionsChanges(pos) {
 		let t = [];
-		lieuxVente.forEach(lieu=>{
-			if (lieu.id === selectedVenteVille.id){
+		lieuxVente.forEach(lieu => {
+			if (lieu.id === selectedVenteVille.id) {
 				t.push(pos);
-			}else{
+			} else {
 				return t.push(lieu);
 			}
 		})
@@ -380,7 +379,8 @@ function Localisations({ data, handleChanges }) {
 	return <div className="step step__localisations">
 		<div className="step__localisation__header">
 			<div><h1 className='step__title'>Lieux de production</h1></div>
-			<SelectLieu data={villesProduction} onChange={handleLieuxProductionSelect} title="Lieux de production" readOnly={false} />
+			{/*<SelectLieu data={villesProduction} onChange={handleLieuxProductionSelect} title="Lieux de production" readOnly={false} />*/}
+			<SelectLieu selectedItems={lieuxProduction.map(city=>{return city.id})} onChange={handleLieuxProductionSelect} title="Lieux de production" readOnly={false} isFilter={false} />
 		</div>
 		<div className='recap__lieux'>
 			<div className='recap__lieux__villes'>
@@ -408,7 +408,7 @@ function Localisations({ data, handleChanges }) {
 		<hr className='step__line' />
 		<div className="step__localisation__header">
 			<div><h1 className='step__title'>Lieux de vente</h1></div>
-			<SelectLieu data={villesVente} onChange={handleLieuxVenteSelect} title="Lieux de vente" readOnly={false} />
+			<SelectLieu selectedItems={lieuxVente.map(city=>{return city.id})} onChange={handleLieuxVenteSelect} title="Lieux de vente" readOnly={false} />
 		</div>
 		<div className='recap__lieux'>
 			<div className='recap__lieux__villes'>

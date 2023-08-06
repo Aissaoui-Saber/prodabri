@@ -1,10 +1,11 @@
 import checkedBox from "../../../Assets/images/icons/filterBar/checked.png";
 import uncheckedBox from "../../../Assets/images/icons/filterBar/unchecked.png";
+import semiChecked from "../../../Assets/images/icons/filterBar/semiCheked.png";
 
-import './CheckBox.css';
+import './CheckBox.scss';
 import { useState, useEffect } from "react";
 
-function CheckBox({id, label, isChecked, handleChanges, labelOnClick}){
+function CheckBox({id, label, isChecked, handleChanges, labelOnClick, readOnly}){
     const  [checked,setChecked] = useState(isChecked);
     function check(){
         let x = checked ? false : true;
@@ -16,7 +17,7 @@ function CheckBox({id, label, isChecked, handleChanges, labelOnClick}){
         setChecked(isChecked);
       }, [isChecked]);
     return <div className="checkbox" data={id}>
-        <img data={id} src={checked ? checkedBox : uncheckedBox} alt="checkBox" className="checkbox__icon" onClick={check}></img>
+        <img data={id} src={checked !== null ?  checked ? checkedBox : uncheckedBox : semiChecked} alt="checkBox" className="checkbox__icon" onClick={readOnly ? null : check}></img>
         <label className='checkbox__label' data={id} onClick={labelOnClick}>{label}</label>
     </div>
 }

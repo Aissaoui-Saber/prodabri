@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import './Tree.css';
+import './Tree.scss';
 import CheckBox from "./CheckBox";
 
 
@@ -9,6 +9,13 @@ function Tree({ data, handleChanges, readOnly }) {
     const [expanded, setExpanded] = useState(false);
     const [wilaya, setWilaya] = useState({ wilayaNumber: data.wilayaNumber, name: data.name, checked: data.checked });
     const [communes, setCommunes] = useState([...data.communes]);
+
+
+    useEffect(()=>{
+        setWilaya({ wilayaNumber: data.wilayaNumber, name: data.name, checked: data.checked });
+        let temp = [...data.communes];
+        setCommunes([...temp]);
+    },[data.checked]);
 
     function handleCheckChanges(checkedItem) {
         let tempCommunes = communes.map(commune => {
@@ -58,13 +65,15 @@ function Tree({ data, handleChanges, readOnly }) {
     return <div className="tree">
         <div className={expanded ? "tree__triangle tree__triangle--open" : "tree__triangle"} onClick={() => setExpanded(!expanded)}></div>
         <div className="parent">
-            {readOnly ? <label className="checkbox__label" onClick={() => setExpanded(!expanded)}>{wilaya.wilayaNumber + "- " + wilaya.name}</label> : <CheckBox label={wilaya.wilayaNumber + "- " + wilaya.name} id={wilaya.wilayaNumber} isChecked={wilaya.checked} handleChanges={handleCheckChanges} labelOnClick={() => setExpanded(!expanded)}></CheckBox>}
+            <CheckBox label={wilaya.wilayaNumber + "- " + wilaya.name} id={wilaya.wilayaNumber} isChecked={wilaya.checked} handleChanges={handleCheckChanges} labelOnClick={() => setExpanded(!expanded)} readOnly={readOnly}></CheckBox>
         </div>
         <div className={expanded ? "line" : "line line--hidden"}></div>
         <div className={expanded ? "children" : "children children--closed"}>
-            {communes.map((commune) => {
-                return readOnly ? <label className="checkbox__label">{"- " + commune.name}</label> : <CheckBox key={commune.id} label={commune.name} id={commune.id} handleChanges={handleCheckChanges} isChecked={commune.checked}></CheckBox>
-            })}
+            {
+                communes.map((commune) => {
+                    return <CheckBox key={commune.id} label={commune.name} id={commune.id} handleChanges={handleCheckChanges} isChecked={commune.checked} readOnly={readOnly}></CheckBox>
+                })
+            }
         </div>
     </div>;
 }

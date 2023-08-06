@@ -3700,7 +3700,7 @@ function Recapitulatif({ data }) {
             <div></div>
         </div>
         <div style={{ width: "40%", margin: "10px 0px" }}>
-            {testData.services.livraison !== null ? <></> : <SelectLieu readOnly={true} title={"Lieux de livraison"} data={testData.services.livraison}></SelectLieu>}
+            {testData.services.livraison === null ? <></> : <SelectLieu readOnly={true} title={"Lieux de livraison"} selectedItems={testData.services.livraison.map((item)=>{return item.id})}></SelectLieu>}
         </div>
         <hr className='step__line'></hr>
 

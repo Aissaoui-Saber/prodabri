@@ -60,7 +60,7 @@ let offre = {
 };
 
 function OffreCreation() {
-	const [currentStep, setCurrentStep] = useState(8);
+	const [currentStep, setCurrentStep] = useState(6);
 	useEffect(e => {
 		window.scrollTo(0, 0);
 	}, [currentStep]);
@@ -168,7 +168,7 @@ function OffreCreation() {
 				setLocalisations(data);
 				break;
 			case 6:
-				setServices({commande: {...data.commande}, rdv: [...data.rdv], livraison: data.livraison !== null ? [...data.livraison] : null});
+				setServices({commande: {...data.commande}, rdv: [...data.rdv], livraison: data.livraison !== undefined ? [...data.livraison] : undefined});
 				break;
 			case 7:
 				setMedia(data);

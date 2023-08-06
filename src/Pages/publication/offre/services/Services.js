@@ -18,22 +18,10 @@ function Services({ data, handleChanges }) {
     const [livraisonSelected, setLivraisonSelected] = useState(false);
     const [commande, setCommande] = useState({ ...data.commande });
     const [rdv, setRDV] = useState([...data.rdv]);
-    const [lieuxLivraison, setLieuxLivraison] = useState(null);
-
-    function filterSelectedCities(cities){
-        let output = [];
-        cities.forEach(wilaya => {
-            wilaya.communes.forEach(commune => {
-                if(commune.checked){
-                    output.push({...commune, wilaya:{name: wilaya.name, number: wilaya.wilayaNumber}});
-                }
-            });
-        });
-        return output;
-    }
+    const [lieuxLivraison, setLieuxLivraison] = useState(undefined);
 
     useEffect(() => {
-        handleChanges({ commande: commande, rdv: rdv, livraison: lieuxLivraison === null ? null : filterSelectedCities(lieuxLivraison) });
+        handleChanges({ commande: commande, rdv: rdv, livraison: lieuxLivraison === undefined ? undefined : lieuxLivraison });
     }, [commande, rdv, lieuxLivraison]);
 
     useEffect(() => {
@@ -55,7 +43,7 @@ function Services({ data, handleChanges }) {
                     conditions: []
                 }, 
                 rdv: rdv,
-                livraison: lieuxLivraison === null ? null : filterSelectedCities(lieuxLivraison)
+                livraison: lieuxLivraison === undefined ? undefined : lieuxLivraison
             });
         }
     }, [commandeSelected]);
@@ -63,17 +51,18 @@ function Services({ data, handleChanges }) {
     useEffect(() => {
         if (rdvSelected === false) {
             setRDV([]);
-            handleChanges({ commande: commande, rdv: [], livraison: lieuxLivraison === null ? null : filterSelectedCities(lieuxLivraison) });
+            handleChanges({ commande: commande, rdv: [], livraison: lieuxLivraison === undefined ? undefined : lieuxLivraison });
         }
     }, [rdvSelected]);
 
     useEffect(() => {
+        
         if (livraisonSelected === false) {
-            setLieuxLivraison(null);
-            handleChanges({ commande: commande, rdv: rdv, livraison: null });
+            setLieuxLivraison(undefined);
+            handleChanges({ commande: commande, rdv: rdv, livraison: undefined });
         }else{
-            //setLieuxLivraison([...villes.FR]);
-            handleChanges({ commande: commande, rdv: rdv, livraison: [] });
+            setLieuxLivraison(villes.FR);
+            handleChanges({ commande: commande, rdv: rdv, livraison: villes.FR });
         }
     }, [livraisonSelected]);
 
@@ -113,6 +102,7 @@ function Services({ data, handleChanges }) {
     }
 
     function handleLieuxLivraisonChanges(data){
+        console.log(data);
         setLieuxLivraison([...data]);
     }
 
@@ -146,7 +136,7 @@ function Services({ data, handleChanges }) {
         </div>
         {livraisonSelected ? <div className="step__services__commande" style={{backgroundColor: "var(--dark-foreground)", width:"40%"}}>
             <h1 className="step__subTitle">Villes de livraison</h1>
-            <SelectLieu data={lieuxLivraison === null ? [...villes.FR] : lieuxLivraison} onChange={handleLieuxLivraisonChanges} title="Lieux de livraison" readOnly={false}></SelectLieu>
+            <SelectLieu selectedItems={lieuxLivraison === undefined ? [] : lieuxLivraison} onChange={handleLieuxLivraisonChanges} title="Lieux de livraison" readOnly={false} isFilter={false}></SelectLieu>
         </div> : <br></br>}
     </div>
 }
