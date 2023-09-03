@@ -11,6 +11,7 @@ import LieuVenteDialog from './LieuVenteDialog';
 import villes from "../../../Utils/Villes";
 
 let pointID = 0;
+let mmm = [[2,4,6,7,8,9],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
 
 function VenteLocationMarker({ data, handleChanges, handleDelete }) {
 	const [positions, setPositions] = useState(data?.points);
@@ -242,14 +243,15 @@ function Localisations({ data, handleChanges }) {
 	const [storeLink, setStoreLink] = useState(data.lieuxVente.storeLink === undefined ? "" : data.lieuxVente.storeLink);
 	const [lieuxProduction, setLieuxProduction] = useState(data.lieuxProduction === undefined ? [] : data.lieuxProduction);
 	const [lieuxVente, setLieuxVente] = useState(data.lieuxVente.lieux === undefined ? [] : data.lieuxVente.lieux);
-	const [villesProduction, setVillesProduction] = useState(JSON.parse(JSON.stringify([...villes.FR])));
-	const [villesVente, setVillesVente] = useState(JSON.parse(JSON.stringify([...villes.FR])));
+
+	const [lieuxProductionList, setLieuxProductionList] = useState(mmm);
+	const [lieuxVenteList, setLieuxVenteList] = useState(mmm);
+
 	const [selectedProdVille, setselectedProdVille] = useState(null);
 	const [selectedVenteVille, setselectedVenteVille] = useState(null);
 
 	const storeLinkRef = useRef();
 	const prodMapRef = useRef();
-	const venteMapRef = useRef();
 
 	useEffect(() => {
 		const L = require("leaflet");
@@ -264,40 +266,30 @@ function Localisations({ data, handleChanges }) {
 	}, []);
 
 	function handleLieuxProductionSelect(selectedCities) {
-		setVillesProduction([...selectedCities]);
+
 		let arr = [];
-		selectedCities.forEach(wilaya => {
-			wilaya.communes.forEach((commune, index) => {
-				if (commune.checked) {
-					let i = lieuxProduction.find(lieu => { return lieu.id === commune.id });
-					if (i) {
-						arr.push(i);
-					} else {
-						arr.push({ id: commune.id, name: commune.name, wilaya: wilaya.name, wilayaNumber: wilaya.wilayaNumber, latLng: commune.latLng, points: [] });
-					}
-				}
+		selectedCities.forEach((wilaya, index) => {
+			wilaya.forEach((commune, index2) => {
+				arr.push({ id: villes.FR[index].communes[commune].id, name: villes.FR[index].communes[commune].name, wilaya: villes.FR[index].name, wilayaNumber: villes.FR[index].wilayaNumber, latLng: villes.FR[index].communes[commune].latLng, points: [] });
 			});
-		});		
+		});
 		setLieuxProduction([...arr]);
+		setLieuxProductionList(selectedCities);
 		setselectedProdVille(null);
 		prodMapRef.current.flyTo([28.889515, 2.485352], 5);
 	}
 	function handleLieuxVenteSelect(selectedCities) {
-		setVillesVente([...selectedCities]);
 		let arr = [];
-		selectedCities.forEach(wilaya => {
-			wilaya.communes.forEach(commune => {
-				if (commune.checked) {
-					let i = lieuxVente.find(lieu => { return lieu.id === commune.id });
-					if (i) {
-						arr.push(i);
-					} else {
-						arr.push({ id: commune.id, name: commune.name, wilaya: wilaya.name, wilayaNumber: wilaya.wilayaNumber, latLng: commune.latLng, points: [] });
-					}
-				}
+		selectedCities.forEach((wilaya, index) => {
+			wilaya.forEach(commune => {
+				arr.push({ id: villes.FR[index].communes[commune].id, name: villes.FR[index].communes[commune].name, wilaya: villes.FR[index].name, wilayaNumber: villes.FR[index].wilayaNumber, latLng: villes.FR[index].communes[commune].latLng, points: [] });
 			});
-		});
+		})
 		setLieuxVente([...arr]);
+		setLieuxVenteList(selectedCities);
+		setselectedVenteVille(null);
+		prodMapRef.current.flyTo([28.889515, 2.485352], 5);
+
 	}
 	function selectStore(e) {
 		if (storeLinkRef.current !== e.target) {
@@ -380,8 +372,7 @@ function Localisations({ data, handleChanges }) {
 	return <div className="step step__localisations">
 		<div className="step__localisation__header">
 			<div><h1 className='step__title'>Lieux de production</h1></div>
-			{/*<SelectLieu data={villesProduction} onChange={handleLieuxProductionSelect} title="Lieux de production" readOnly={false} />*/}
-			<SelectLieu selectedItems={lieuxProduction.map(city=>{return city.id})} onChange={handleLieuxProductionSelect} title="Lieux de production" readOnly={false} isFilter={false} />
+			<SelectLieu selectedItems={lieuxProductionList} onChange={handleLieuxProductionSelect} title="Lieux de production" readOnly={false} isFilter={false} />
 		</div>
 		<div className='recap__lieux'>
 			<div className='recap__lieux__villes'>
@@ -409,7 +400,7 @@ function Localisations({ data, handleChanges }) {
 		<hr className='step__line' />
 		<div className="step__localisation__header">
 			<div><h1 className='step__title'>Lieux de vente</h1></div>
-			<SelectLieu selectedItems={lieuxVente.map(city=>{return city.id})} onChange={handleLieuxVenteSelect} title="Lieux de vente" readOnly={false} />
+			<SelectLieu selectedItems={lieuxVenteList} onChange={handleLieuxVenteSelect} title="Lieux de vente" readOnly={false} isFilter={false} />
 		</div>
 		<div className='recap__lieux'>
 			<div className='recap__lieux__villes'>
@@ -433,6 +424,7 @@ function Localisations({ data, handleChanges }) {
 			</div>
 			<input ref={storeLinkRef} className={storeSelected ? "input__text step__input__text step__localisation__store__link" : "invisible"} type="text" placeholder="https://www.nom-de-boutique.com" onBlur={() => storeLinkRef.current.value.length === 0 ? setStoreSelected(false) : setStoreSelected(true)} onPaste={handleInputTextChange} onChange={handleInputTextChange} value={storeLink} />
 		</div>
+		
 	</div>
 }
 

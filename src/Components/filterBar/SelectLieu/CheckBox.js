@@ -16,8 +16,9 @@ function CheckBox({id, label, isChecked, handleChanges, labelOnClick, readOnly})
     useEffect(() => {
         setChecked(isChecked);
       }, [isChecked]);
+      
     return <div className="checkbox" data={id}>
-        <img data={id} src={checked !== null ?  checked ? checkedBox : uncheckedBox : semiChecked} alt="checkBox" className="checkbox__icon" onClick={readOnly ? null : check}></img>
+        <img data={id} src={checked !== undefined ?  ( checked ? checkedBox : uncheckedBox ) : semiChecked} alt="checkBox" className="checkbox__icon" onClick={readOnly ? null : check}></img>
         <label className='checkbox__label' data={id} onClick={labelOnClick}>{label}</label>
     </div>
 }

@@ -63,7 +63,7 @@ let offre = {
 };
 
 function OffreCreation() {
-	const [currentStep, setCurrentStep] = useState(6);
+	const [currentStep, setCurrentStep] = useState(5);
 	useEffect(e => {
 		window.scrollTo(0, 0);
 	}, [currentStep]);
@@ -203,6 +203,8 @@ function OffreCreation() {
 			case 7:
 				setMedia(data);
 				break;
+			case 8:
+				setCurrentStep(data);
 		}
 	}
 
@@ -238,7 +240,7 @@ function OffreCreation() {
 							localisations: localisations,
 							services: services,
 							media: media
-						}}></Recapitulatif>
+						}} handleChanges={handleStepChanges}></Recapitulatif>
 				}
 			})()}
 			<div className='buttons'>

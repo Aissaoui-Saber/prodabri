@@ -3318,7 +3318,8 @@ let testData = {
     }
 };
 
-function Recapitulatif({ data }) {
+function Recapitulatif({ data, handleChanges }) {
+    console.log(data);
     useEffect(() => {
         const L = require("leaflet");
 
@@ -3363,7 +3364,7 @@ function Recapitulatif({ data }) {
 
     useEffect(() => {
         if (selectedRdvPoint !== null) {
-            rdvMapRef.current.flyTo([testData.services.rdv[selectedRdvPoint].point.lat, testData.services.rdv[selectedRdvPoint].point.lng], 10);
+            rdvMapRef.current.flyTo([data.services.rdv[selectedRdvPoint].point.lat, data.services.rdv[selectedRdvPoint].point.lng], 10);
         }
     }, [selectedRdvPoint])
 
@@ -3386,26 +3387,30 @@ function Recapitulatif({ data }) {
         }
     }
 
+    function modify(stepNumber){
+        handleChanges(stepNumber);
+    }
+
     return <div className="step step__recap">
         <div className="step__recap__header">
             <h1 className="step__title">Sécteur</h1>
-            <label className="step__recap__modifier">Modifier</label>
+            <label className="step__recap__modifier" onClick={()=>{modify(0)}}>Modifier</label>
         </div>
         <div className="step__recap__branche">
-            <img className='step__secteurs__branche__icon' src={getSecteur(testData.secteur.id).fr.icon} alt="secteur" />
-            <label className='step__recap__branche__name'>{getSecteur(testData.secteur.id).fr.text}</label>
+            <img className='step__secteurs__branche__icon' src={getSecteur(data.secteur.id).fr.icon} alt="secteur" />
+            <label className='step__recap__branche__name'>{getSecteur(data.secteur.id).fr.text}</label>
         </div>
         <hr className='step__line'></hr>
         <div className="step__recap__header">
             <h1 className="step__title">Type</h1>
-            <label className="step__recap__modifier">Modifier</label>
+            <label className="step__recap__modifier" onClick={()=>{modify(1)}}>Modifier</label>
         </div>
         <div className="step__recap__type">
-            <img className='step__secteurs__branche__icon' src={testData.type === "C" ? consomation : production} alt="secteur" />
-            <label className='step__recap__branche__name'>{testData.type === "C" ? "Bien de consomation" : "Bien de production"}</label>
+            <img className='step__secteurs__branche__icon' src={data.type === "C" ? consomation : production} alt="secteur" />
+            <label className='step__recap__branche__name'>{data.type === "C" ? "Bien de consomation" : "Bien de production"}</label>
         </div>
         {
-            testData.type === "CP" ? <div className="step__recap__type">
+            data.type === "CP" ? <div className="step__recap__type">
                 <img className='step__secteurs__branche__icon' src={consomation} alt="secteur" />
                 <label className='step__recap__branche__name'>Bien de consomation</label>
             </div> : ""
@@ -3414,39 +3419,39 @@ function Recapitulatif({ data }) {
 
         <div className="step__recap__header">
             <h1 className="step__title">Origine</h1>
-            <label className="step__recap__modifier">Modifier</label>
+            <label className="step__recap__modifier" onClick={()=>{modify(2)}}>Modifier</label>
         </div>
         <div className="step__recap__origine">
-            <img className='step__recap__origine__icon' src={testData.origine.origine !== "DZ" ? Countries.fr[testData.origine.pays].icon : Countries.fr[3].icon} alt="secteur" />
-            <label className='step__recap__branche__name'>{testData.origine.origine === "DZ" ? "Produit Algérien" : "Produit étranger"}</label>
-            <label className='step__recap__origine__country'>{testData.origine.origine === "DZ" ? "Algérie" : Countries.fr[testData.origine.pays].text}</label>
+            <img className='step__recap__origine__icon' src={data.origine.origine !== "DZ" ? Countries.fr[data.origine.pays].icon : Countries.fr[3].icon} alt="secteur" />
+            <label className='step__recap__branche__name'>{data.origine.origine === "DZ" ? "Produit Algérien" : "Produit étranger"}</label>
+            <label className='step__recap__origine__country'>{data.origine.origine === "DZ" ? "Algérie" : Countries.fr[data.origine.pays].text}</label>
         </div>
         <hr className='step__line'></hr>
 
         <div className="step__recap__header">
             <h1 className="step__title">Durabilité</h1>
-            <label className="step__recap__modifier">Modifier</label>
+            <label className="step__recap__modifier" onClick={()=>{modify(3)}}>Modifier</label>
         </div>
         <div className="step__recap__durabilite">
-            <img className='step__secteurs__branche__icon' src={testData.durabilite === "D" ? durable : nonDurable} alt="secteur" />
-            <label className='step__recap__branche__name'>{testData.durabilite === "D" ? "Durable" : "Non durable"}</label>
+            <img className='step__secteurs__branche__icon' src={data.durabilite === "D" ? durable : nonDurable} alt="secteur" />
+            <label className='step__recap__branche__name'>{data.durabilite === "D" ? "Durable" : "Non durable"}</label>
         </div>
         <hr className='step__line'></hr>
 
         <div className="step__recap__header">
             <h1 className="step__title">Détails</h1>
-            <label className="step__recap__modifier">Modifier</label>
+            <label className="step__recap__modifier" onClick={()=>{modify(4)}}>Modifier</label>
         </div>
         <div className="step__recap__details">
             <h2 className='step__recap__details__title'>Titre</h2>
-            <p className='step__recap__details__text'>{testData.details.title}</p>
+            <p className='step__recap__details__text'>{data.details.title}</p>
             <h2 className='step__recap__details__title'>Marque</h2>
-            <p className='step__recap__details__text'>{testData.details.brand === undefined ? "" : testData.details.brand}</p>
+            <p className='step__recap__details__text'>{data.details.brand === undefined ? "" : data.details.brand}</p>
             <h2 className='step__recap__details__title'>description</h2>
-            <p className='step__recap__details__text'>{testData.details.description}</p>
+            <p className='step__recap__details__text'>{data.details.description}</p>
             <h2 className='step__recap__details__title'>Liens</h2>
             {
-                testData.details.links.map((link, index) => {
+                data.details.links.map((link, index) => {
                     return <div key={index} className='step__recap__details__link'>
                         <img className='step__recap__details__link__icon' src={link.icon} alt="lien"></img>
                         <label className='step__recap__details__link__title'>{link.name}</label>
@@ -3459,13 +3464,13 @@ function Recapitulatif({ data }) {
 
         <div className="step__recap__header">
             <h1 className="step__title">Emplacements</h1>
-            <label className="step__recap__modifier">Modifier</label>
+            <label className="step__recap__modifier" onClick={()=>{modify(5)}}>Modifier</label>
         </div>
-        <h2 className='step__recap__details__title'>Lieux de production ({testData.localisations.lieuxProduction.length} Villes)</h2>
+        <h2 className='step__recap__details__title'>Lieux de production ({data.localisations.lieuxProduction.length} Villes)</h2>
         <div className='recap__lieux'>
             <div className='recap__lieux__villes'>
                 {
-                    testData.localisations.lieuxProduction.map((lieu, index) => {
+                    data.localisations.lieuxProduction.map((lieu, index) => {
                         return <div key={index} className={selectedProdVille?.id === lieu.id ? 'recap__lieux__ville--selected' : 'recap__lieux__ville'} onClick={() => { selectProdVille(lieu) }}>
                             <img className='recap__lieux__ville__icon' alt='pin' src={pin}></img>
                             <label className='recap__lieux__ville__commune'>{lieu.name} ({lieu.points.length} lieux)</label>
@@ -3488,20 +3493,20 @@ function Recapitulatif({ data }) {
 
             </MapContainer>
         </div>
-        <h2 className='step__recap__details__title'>Lieux de vente ({testData.localisations.lieuxVente.lieux.length} Villes)</h2>
+        <h2 className='step__recap__details__title'>Lieux de vente ({data.localisations.lieuxVente.lieux.length} Villes)</h2>
         <br></br>
         {
-            testData.localisations.lieuxVente.storeLink !== undefined ?
+            data.localisations.lieuxVente.storeLink !== undefined ?
                 <div className='step__recap__lieux__store'>
                     <img className='step__recap__lieux__store__icon' src={store} alt="store"></img>
                     <label className='step__recap__lieux__store__title'>Boutique en ligne</label>
-                    <p className='step__recap__lieux__store__url'>{testData.localisations.lieuxVente.storeLink}</p>
+                    <p className='step__recap__lieux__store__url'>{data.localisations.lieuxVente.storeLink}</p>
                 </div> : ""
         }
         <div className='recap__lieux'>
             <div className='recap__lieux__villes'>
                 {
-                    testData.localisations.lieuxVente.lieux.map((lieu, index) => {
+                    data.localisations.lieuxVente.lieux.map((lieu, index) => {
                         return <div className={selectedVenteVille?.id === lieu.id ? 'recap__lieux__ville--selected' : 'recap__lieux__ville'} onClick={() => { selectVenteVille(lieu) }}>
                             <img className='recap__lieux__ville__icon' alt='pin' src={pin}></img>
                             <label className='recap__lieux__ville__commune'>{lieu.name} ({lieu.points.length} lieux)</label>
@@ -3603,7 +3608,7 @@ function Recapitulatif({ data }) {
         <hr className='step__line'></hr>
         <div className="step__recap__header">
             <h1 className="step__title">Services</h1>
-            <label className="step__recap__modifier">Modifier</label>
+            <label className="step__recap__modifier" onClick={()=>{modify(6)}}>Modifier</label>
         </div>
         <div className='step__recap__services__title'>
             <h2>Commande</h2>
@@ -3612,13 +3617,13 @@ function Recapitulatif({ data }) {
         <p className='step__paragraph' style={{ textDecoration: "underline" }}>Méthode de réception</p>
 
         {
-            testData.services.commande.retrait ? <div className="step__recap__type">
+            data.services.commande.retrait ? <div className="step__recap__type">
                 <img className='step__secteurs__branche__icon' src={retrait} alt="secteur" />
                 <label className='step__recap__branche__name'>Retrait sur place</label>
             </div> : ""
         }
         {
-            testData.services.commande.livraison ? <div className="step__recap__type">
+            data.services.commande.livraison ? <div className="step__recap__type">
                 <img className='step__secteurs__branche__icon' src={livraison} alt="secteur" />
                 <label className='step__recap__branche__name'>Livraison a domicile</label>
             </div> : ""
@@ -3627,14 +3632,14 @@ function Recapitulatif({ data }) {
         <p className='step__paragraph' style={{ textDecoration: "underline" }}>Tarifs</p>
         <div className='step__services__commande__tarifs'>
             {
-                testData.services.commande.tarifs.map((tarif, index) => {
-                    return <label key={index}>{`${tarif.prix} DA/${tarif.quantite}${units.getUnit(tarif.unite).label}`}</label>
+                data.services.commande.tarifs.map((tarif, index) => {
+                    return <label key={index}>{`${tarif.prix} DA / ${tarif.quantite} ${units.getUnit(tarif.unite).label}`}</label>
                 })
             }
         </div>
         <p className='step__paragraph' style={{ textDecoration: "underline", marginBottom: "10px" }}>Règles et conditions</p>
         {
-            testData.services.commande.conditions.map((condition, index) => {
+            data.services.commande.conditions.map((condition, index) => {
                 return <label key={index} className='step__recap__services__contition'>{condition.value}</label>
             })
         }
@@ -3652,7 +3657,7 @@ function Recapitulatif({ data }) {
             //url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             {
-                testData.services.rdv.map((rdv, index) => {
+                data.services.rdv.map((rdv, index) => {
                     return <Marker key={index} icon={selectedRdvPoint !== index ? rdvMarker : selectedPointMarker} position={[rdv.point.lat, rdv.point.lng]} eventHandlers={{
                         click: (event) => {
                             if (index === selectedRdvPoint) {
@@ -3672,7 +3677,7 @@ function Recapitulatif({ data }) {
             selectedRdvPoint === null ? '' :
                 <div className="step__services__horairesRDV__plages">
                     {
-                        testData.services.rdv[selectedRdvPoint].horaires.map((element, index) => {
+                        data.services.rdv[selectedRdvPoint].horaires.map((element, index) => {
                             return <RDVjour key={index} data={{ ...element, index: index }} handleChanges={null} readOnly={true}></RDVjour>
                         })
                     }
@@ -3682,7 +3687,7 @@ function Recapitulatif({ data }) {
         <p className='step__paragraph' style={{ textDecoration: "underline" }}>Motifs</p>
         <br />
         {
-            testData.services.rdv[selectedRdvPoint]?.motifs.map((motif, index) => {
+            data.services.rdv[selectedRdvPoint]?.motifs.map((motif, index) => {
                 return <label key={index} className='step__recap__services__contition'>{motif.value}</label>
             })
         }
@@ -3690,7 +3695,7 @@ function Recapitulatif({ data }) {
         <p className='step__paragraph' style={{ textDecoration: "underline" }}>Règles et conditions</p>
         <br />
         {
-            testData.services.rdv[selectedRdvPoint]?.conditions.map((condition, index) => {
+            data.services.rdv[selectedRdvPoint]?.conditions.map((condition, index) => {
                 return <label key={index} className='step__recap__services__contition'>{condition.value}</label>
             })
         }
@@ -3700,13 +3705,13 @@ function Recapitulatif({ data }) {
             <div></div>
         </div>
         <div style={{ width: "40%", margin: "10px 0px" }}>
-            {testData.services.livraison === null ? <></> : <SelectLieu readOnly={true} title={"Lieux de livraison"} selectedItems={testData.services.livraison.map((item)=>{return item.id})}></SelectLieu>}
+            {data.services.livraison === null ? <></> : <SelectLieu readOnly={true} title={"Lieux de livraison"} selectedItems={data.services.livraison.map((item)=>{return item.id})}></SelectLieu>}
         </div>
         <hr className='step__line'></hr>
 
         <div className="step__recap__header">
             <h1 className="step__title">Média</h1>
-            <label className="step__recap__modifier">Modifier</label>
+            <label className="step__recap__modifier" onClick={()=>{modify(7)}}>Modifier</label>
         </div>
         <h2 className='step__recap__details__title'>Images ({data.media.images.length} / 10)</h2>
         <div className="step__recap__media__grid">

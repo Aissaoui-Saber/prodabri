@@ -4,74 +4,79 @@ import './Tree.scss';
 import CheckBox from "./CheckBox";
 
 
+function testWilayaCheck(list) {
+    let selectedItemsNumber = list.filter((element, index) => {
+        if (element) {
+            return element;
+        }
+    }).length;
+    if (selectedItemsNumber === 0) {
+        return false;
+    } else if (selectedItemsNumber === list.length) {
+        return true;
+    } else {
+        return undefined;
+    }
+}
 
-function Tree({ data, handleChanges, readOnly }) {
+function Tree({ data, handleChanges, readOnly, selectedItems, allSelected }) {
     const [expanded, setExpanded] = useState(false);
-    const [wilaya, setWilaya] = useState({ wilayaNumber: data.wilayaNumber, name: data.name, checked: data.checked });
-    const [communes, setCommunes] = useState([...data.communes]);
+    const [wilayaCheked, setWilayaChecked] = useState(testWilayaCheck(selectedItems));
+    const [selectedCommunes, setSelectedCommunes] = useState(selectedItems);
 
-
-    useEffect(()=>{
-        setWilaya({ wilayaNumber: data.wilayaNumber, name: data.name, checked: data.checked });
-        let temp = [...data.communes];
-        setCommunes([...temp]);
-    },[data.checked]);
+    useEffect(() => {
+        if (allSelected) {
+            setSelectedCommunes(selectedItems);
+            setWilayaChecked(true);
+        } else if (allSelected !== undefined && allSelected === false) {
+            setSelectedCommunes(selectedItems);
+            setWilayaChecked(false);
+        }
+    }, [allSelected]);
 
     function handleCheckChanges(checkedItem) {
-        let tempCommunes = communes.map(commune => {
-            return { ...commune };
-        });
-        let tempWilaya = { ...wilaya };
-        if (checkedItem.id === wilaya.wilayaNumber) {//Wilaya click
-            for (let i = 0; i < data.communes.length; i++) {
-                tempCommunes[i].checked = checkedItem.check;
-            }
-            tempWilaya.checked = checkedItem.check;
-            //setWilaya({...wilaya, checked : checkedItem.check});
-            setWilaya(tempWilaya);
+        let selectedCommunesTemp = [...selectedCommunes];
+        let selectedCommunesListTemp = [];
+
+        if (checkedItem.id === -1) {//Wilaya click
+            selectedCommunesTemp = selectedCommunesTemp.map((item, index) => {
+                if (checkedItem.check) {
+                    selectedCommunesListTemp.push(index);
+                }
+                return checkedItem.check;
+            });
+            setWilayaChecked(checkedItem.check);
+            //checkedItem.check ? setExpanded(true) : expanded ? setExpanded(false) : setExpanded(false);
         } else {//commune click
-            for (let i = 0; i < data.communes.length; i++) {
-                if (data.communes[i].id === checkedItem.id) {
-                    tempCommunes[i].checked = checkedItem.check;
-                    break;
+            selectedCommunesTemp[checkedItem.id] = checkedItem.check;
+            let selectedItemsNumber = selectedCommunesTemp.filter((element, index) => {
+                if (element) {
+                    selectedCommunesListTemp.push(index);
+                    return element;
                 }
-            }
-            if (!checkedItem.check) {//uncheck commune
-                if (wilaya.checked) {
-                    tempWilaya.checked = false;
-                    setWilaya({ ...tempWilaya });
-                }
-            } else {//check commune
-                let unCheckedCommunes = 0;
-                for (let i = 0; i < data.communes.length; i++) {
-                    if (data.communes[i].id !== checkedItem.id) {
-                        if (!communes[i].checked) {
-                            unCheckedCommunes++;
-                        }
-                    }
-                }
-                if (unCheckedCommunes === 0) {
-                    tempWilaya.checked = true;
-                    setWilaya({ ...tempWilaya });
-                }
+            }).length;
+            if (selectedItemsNumber === 0) {
+                setWilayaChecked(false);
+            } else if (selectedItemsNumber === selectedCommunesTemp.length) {
+                setWilayaChecked(true);
+            } else {
+                setWilayaChecked(undefined);
             }
         }
-        setCommunes(tempCommunes);
-
-        handleChanges({ ...tempWilaya, communes: tempCommunes });
+        setSelectedCommunes([...selectedCommunesTemp]);
+        handleChanges({ wilaya: data.wilayaNumber - 1, selectedCommunes: [...selectedCommunesTemp], selectedCommunesList: selectedCommunesListTemp });
     }
-
 
     return <div className="tree">
         <div className={expanded ? "tree__triangle tree__triangle--open" : "tree__triangle"} onClick={() => setExpanded(!expanded)}></div>
         <div className="parent">
-            <CheckBox label={wilaya.wilayaNumber + "- " + wilaya.name} id={wilaya.wilayaNumber} isChecked={wilaya.checked} handleChanges={handleCheckChanges} labelOnClick={() => setExpanded(!expanded)} readOnly={readOnly}></CheckBox>
+            <CheckBox label={data.wilayaNumber + ". " + data.name} id={-1} isChecked={wilayaCheked} handleChanges={handleCheckChanges} labelOnClick={() => setExpanded(!expanded)} readOnly={readOnly}></CheckBox>
         </div>
         <div className={expanded ? "line" : "line line--hidden"}></div>
         <div className={expanded ? "children" : "children children--closed"}>
             {
-                communes.map((commune) => {
-                    return <CheckBox key={commune.id} label={commune.name} id={commune.id} handleChanges={handleCheckChanges} isChecked={commune.checked} readOnly={readOnly}></CheckBox>
+                data.communes.map((commune, index) => {
+                    return <CheckBox key={commune.id} label={commune.name} id={index} handleChanges={handleCheckChanges} isChecked={selectedCommunes[index]} readOnly={readOnly}></CheckBox>
                 })
             }
         </div>
