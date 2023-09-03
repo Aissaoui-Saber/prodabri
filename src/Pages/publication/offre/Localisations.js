@@ -372,7 +372,7 @@ function Localisations({ data, handleChanges }) {
 	return <div className="step step__localisations">
 		<div className="step__localisation__header">
 			<div><h1 className='step__title'>Lieux de production</h1></div>
-			<SelectLieu selectedItems={lieuxProductionList} onChange={handleLieuxProductionSelect} title="Lieux de production" readOnly={false} isFilter={false} />
+			<SelectLieu selectedItems={[]} onChange={handleLieuxProductionSelect} title="Lieux de production" readOnly={false} isFilter={false} />
 		</div>
 		<div className='recap__lieux'>
 			<div className='recap__lieux__villes'>
@@ -400,7 +400,7 @@ function Localisations({ data, handleChanges }) {
 		<hr className='step__line' />
 		<div className="step__localisation__header">
 			<div><h1 className='step__title'>Lieux de vente</h1></div>
-			<SelectLieu selectedItems={lieuxVenteList} onChange={handleLieuxVenteSelect} title="Lieux de vente" readOnly={false} isFilter={false} />
+			{/*<SelectLieu selectedItems={lieuxVenteList} onChange={handleLieuxVenteSelect} title="Lieux de vente" readOnly={false} isFilter={false} />*/}
 		</div>
 		<div className='recap__lieux'>
 			<div className='recap__lieux__villes'>

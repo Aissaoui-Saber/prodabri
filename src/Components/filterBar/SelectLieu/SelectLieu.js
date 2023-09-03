@@ -20,22 +20,13 @@ function getTotalSelectedCities(cities) {
     return checkedCities;
 }
 
-function convertToBooleanList(list){
-    let output = [...cities.DEFAULT_UNSELECTED_VILLES];
-    list.forEach((wilaya,index)=>{
-        wilaya.forEach(commune=>{
-            output[index][commune] = true;
-        });
-    });
-    return output;
-}
-
 function SelectLieu({ selectedItems, onChange, title, readOnly, isFilter }) {
+    //const [villes, setVilles] = useState(JSON.parse(JSON.stringify([...cities.FR])));
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedVilles, setSelectedVilles] = useState(convertToBooleanList(selectedItems));
-    const [totalCities, setTotalCities] = useState(selectedItems !== undefined && selectedItems !== null ? getTotalSelectedCities(selectedVilles) : 0);
-    const [allSelected, setAllSelected] = useState(totalCities === 0 ? false : totalCities === 1541 ? true : undefined);
-    const [selectedVillesList, setSelectedVillesList] = useState(selectedItems);
+    const [totalCities, setTotalCities] = useState(selectedItems !== undefined && selectedItems !== null ? selectedItems.length : 0);
+    const [allSelected, setAllSelected] = useState(false);
+    const [selectedVilles, setSelectedVilles] = useState([...cities.DEFAULT_UNSELECTED_VILLES]);
+    const [selectedVillesList, setSelectedVillesList] = useState([...cities.DEFAULT_UNSELECTED_VILLES_LIST]);
 
     const refOne = useRef(null);
     const refTwo = useRef(null);
@@ -52,6 +43,16 @@ function SelectLieu({ selectedItems, onChange, title, readOnly, isFilter }) {
         document.addEventListener("click", handleOutsideClick, true);
     }, []);
 
+    useEffect(()=>{
+        if (totalCities === 0){
+            setAllSelected(false);
+        } else if (totalCities === 1541){
+            setAllSelected(true)
+        }else{
+            setAllSelected(undefined);
+        }
+    },[totalCities])
+
     function handleCheckChanges(checkedCities) {       
         let dataTemp = [...selectedVilles];
         let listTemp = [...selectedVillesList];
@@ -59,15 +60,7 @@ function SelectLieu({ selectedItems, onChange, title, readOnly, isFilter }) {
         listTemp[checkedCities.wilaya] = checkedCities.selectedCommunesList;
         setSelectedVilles([...dataTemp]);
         setSelectedVillesList([...listTemp]);
-        let t = getTotalSelectedCities(dataTemp);
-        if (t === 0){
-            setAllSelected(false);
-        } else if (t === 1541){
-            setAllSelected(true);
-        }else{
-            setAllSelected(undefined);
-        }
-        setTotalCities(t);        
+        setTotalCities(getTotalSelectedCities(dataTemp));
         onChange(listTemp);
     }
 
@@ -78,14 +71,12 @@ function SelectLieu({ selectedItems, onChange, title, readOnly, isFilter }) {
             setSelectedVilles([...cities.DEFAULT_UNSELECTED_VILLES]);
             setSelectedVillesList([...cities.DEFAULT_UNSELECTED_VILLES_LIST]);
             setTotalCities(0);
-            setAllSelected(false);
-            onChange([...cities.DEFAULT_UNSELECTED_VILLES_LIST]);
+            onChange(cities.DEFAULT_UNSELECTED_VILLES_LIST);
         }else{
             setAllSelected(true);
             setSelectedVilles([...cities.DEFAULT_SELECTED_VILLES]);
             setSelectedVillesList([...cities.DEFAULT_SELECTED_VILLES_LIST]);
             setTotalCities(1541);
-            setAllSelected(true);
             onChange([...cities.DEFAULT_SELECTED_VILLES_LIST]);
         }
     }
