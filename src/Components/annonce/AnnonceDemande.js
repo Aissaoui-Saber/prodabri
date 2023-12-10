@@ -11,7 +11,7 @@ import domaines from '../../Utils/Domaines';
 import Demande from '../../Utils/DemandeTypes';
 
 
-import SelectLieu from '../filterBar/SelectLieu/SelectLieu';
+import SelectCities from '../filterBar/SelectCities/SelectCities';
 
 
 function AnnonceDemande({ data }) {
@@ -43,7 +43,7 @@ function AnnonceDemande({ data }) {
 							<label className="annonce__info__tiles__tile__data__value">{data.comments}</label>
 						</div>
 					</div>
-					<SelectLieu title="Lieux de la demande" totalCities={1} data={data.lieux_de_demande} readOnly={true}></SelectLieu>
+					<SelectCities title="Lieux de la demande" totalCities={1} data={data.lieux_de_demande} readOnly={true}></SelectCities>
 				</div>
 				<label className="annonce__info__tiles__tile__data__title">Domaine d'expertise</label><br />
 				<div className="annonce__info__dommaines">

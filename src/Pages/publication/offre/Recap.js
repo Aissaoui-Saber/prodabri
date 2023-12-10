@@ -18,7 +18,7 @@ import pin from './../../../Assets/images/icons/filterBar/placeholder.png'
 import timePin from './../../../Assets/images/icons/time-pin.png';
 
 import store from '../../../Assets/images/store.png';
-import SelectLieu from '../../../Components/filterBar/SelectLieu/SelectLieu';
+import SelectCities from '../../../Components/filterBar/SelectCities/SelectCities';
 import productImage from './../../../Assets/images/icons/annonce/product.jpg';
 
 
@@ -3705,7 +3705,7 @@ function Recapitulatif({ data, handleChanges }) {
             <div></div>
         </div>
         <div style={{ width: "40%", margin: "10px 0px" }}>
-            {data.services.livraison === null ? <></> : <SelectLieu readOnly={true} title={"Lieux de livraison"} selectedItems={data.services.livraison.map((item)=>{return item.id})}></SelectLieu>}
+            {data.services.livraison === null ? <></> : <SelectCities readOnly={true} title={"Lieux de livraison"} selectedItems={data.services.livraison.map((item)=>{return item.id})}></SelectCities>}
         </div>
         <hr className='step__line'></hr>
 

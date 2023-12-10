@@ -6,7 +6,7 @@ import Demandes from './Pages/Demandes/Demandes';
 import Home from './Pages/Home/Home';
 import Publication from './Pages/publication/Publication';
 import OffreCreation from './Pages/publication/offre/OffreCreation';
-
+import Test from './Test';
 
 export default function App() {
     return (
@@ -17,6 +17,7 @@ export default function App() {
                 <Route path="/Demandes" element={<Demandes />} />
                 <Route path="/Publication" element={<Publication />} />
                 <Route path="/Publication/Offre" element={<OffreCreation />} />
+                <Route path="/test" element={<Test />} />
             </Routes>
         </BrowserRouter>
     );

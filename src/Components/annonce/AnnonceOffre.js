@@ -1,5 +1,6 @@
 import './Annonce.css';
-import SelectLieux from './../../Components/filterBar/SelectLieu/SelectLieu';
+import SelectCities from '../filterBar/SelectCities/SelectCities';
+
 import creatorImage from '../../Assets/images/profile.png';
 
 import favoriteUnchecked from '../../Assets/images/icons/annonce/favorite-unchecked.png';
@@ -41,9 +42,9 @@ function AnnonceOffre({ data }) {
 				<label className='annonce__info__title'>{data.title}</label>
 				<p className='annonce__info__description--image'>{data.description}</p>
 				<div className="annonce__info__lieux">
-					<SelectLieux title="Lieux de productions" value={47} data={data.lieux_de_production} readOnly={true}></SelectLieux>
-					<SelectLieux title="Lieux de vente" value={565} data={data.lieux_de_production} readOnly={true}></SelectLieux>
-					<SelectLieux title="Lieux de livraison" value={1541} data={data.lieux_de_production} readOnly={true}></SelectLieux>
+					<SelectCities title="Lieux de productions" value={47} data={data.lieux_de_production} readOnly={true}></SelectCities>
+					<SelectCities title="Lieux de vente" value={565} data={data.lieux_de_production} readOnly={true}></SelectCities>
+					<SelectCities title="Lieux de livraison" value={1541} data={data.lieux_de_production} readOnly={true}></SelectCities>
 				</div>
 				<div className="annonce__info__tiles">
 					<div className="annonce__info__tiles__tile">

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Commande from "./commande/Commande";
 import RDV from "./rdv/RDV";
-import SelectLieu from "../../../../Components/filterBar/SelectLieu/SelectLieu";
+import SelectCities from "../../../../Components/filterBar/SelectCities/SelectCities";
 import villes from "../../../../Utils/Villes";
 
 import commandeIcon from '../../../../Assets/images/icons/commande.png';
@@ -130,7 +130,7 @@ function Services({ data, handleChanges }) {
         </div>
         {livraisonSelected ? <div className="step__services__commande" style={{ backgroundColor: "var(--dark-foreground)", width: "40%" }}>
             <h1 className="step__subTitle">Villes de livraison</h1>
-            <SelectLieu selectedItems={lieuxLivraison === undefined ? [] : lieuxLivraison} onChange={handleLieuxLivraisonChanges} title="Lieux de livraison" readOnly={false} isFilter={false}></SelectLieu>
+            <SelectCities selectedItems={lieuxLivraison === undefined ? [] : lieuxLivraison} onChange={handleLieuxLivraisonChanges} title="Lieux de livraison" readOnly={false} isFilter={false}></SelectCities>
         </div> : <br></br>}
     </div>
 }
